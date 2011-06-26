@@ -12,8 +12,8 @@
 	<url>https://wiki.openmrs.org/display/projects/Atlas+Module+%28Design+Page%29</url>
 
 	<scm>
-		<connection>scm:svn:http://svn.openmrs.org/openmrs-modules/basicmodule/trunk/</connection>
-		<developerConnection>scm:svn:http://svn.openmrs.org/openmrs-modules/basicmodule/trunk/</developerConnection>
+		<connection>scm:svn:http://svn.openmrs.org/openmrs-modules/atlas/trunk/</connection>
+		<developerConnection>scm:svn:http://svn.openmrs.org/openmrs-modules/atlas/trunk/</developerConnection>
 		<url>http://svn.openmrs.org/openmrs-modules/basicmodule/trunk/</url>
 	</scm>
 

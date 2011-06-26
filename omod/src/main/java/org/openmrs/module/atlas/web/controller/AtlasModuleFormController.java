@@ -22,6 +22,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.atlas.AtlasData;
+import org.openmrs.module.atlas.AtlasService;
+import org.openmrs.module.atlas.impl.AtlasServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,14 +35,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * This class configured as controller using annotation and mapped with the URL of 'module/basicmodule/basicmoduleLink.form'.
  */
 @Controller
-@RequestMapping(value = "module/atlas/basicmoduleLink.form")
+@RequestMapping(value = "/module/atlas/managemarker.form")
 public class AtlasModuleFormController{
 	
 	/** Logger for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
 	
 	/** Success form view name */
-	private final String SUCCESS_FORM_VIEW = "/module/atlas/basicmoduleForm";
+	private final String SUCCESS_FORM_VIEW = "/module/atlas/managemarker";
 	
 	/**
 	 * Initially called after the formBackingObject method to get the landing form name  
@@ -74,16 +77,16 @@ public class AtlasModuleFormController{
 	 * pojo. The bean name defined in the ModelAttribute annotation and the type can be just
 	 * defined by the return type of this method
 	 */
-	@ModelAttribute("thePatientList")
-	protected Collection<Patient> formBackingObject(HttpServletRequest request) throws Exception {
-		// get all patients that have an identifier "101" (from the demo sample data)
-		// see http://resources.openmrs.org/doc/index.html?org/openmrs/api/PatientService.html for
-		// a list of all PatientService methods
-		Collection<Patient> patients = Context.getPatientService().findPatients("101", false);
+	@ModelAttribute("atlasData")
+	protected AtlasData formBackingObject(HttpServletRequest request) throws Exception {
+		//Object o = Context.getService(AtlasService.class);
+		AtlasService service =  new AtlasServiceImpl();//(AtlasService)o;    
+		AtlasData data = service.getAtlasData();
+        System.out.println(data.toString()); 
 		
 		// this object will be made available to the jsp page under the variable name
 		// that is defined in the @ModuleAttribute tag
-		return patients;
+		return data;
 	}
 	
 }

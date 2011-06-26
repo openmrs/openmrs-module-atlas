@@ -37,7 +37,7 @@ public class AdminList extends AdministrationSectionExt {
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getTitle()
 	 */
 	public String getTitle() {
-		return "Atlas Module";
+		return "atlas.title";
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("module/atlas/basicmoduleLink.form", "Atlas Page");
+		map.put("/module/atlas/managemarker.form", "atlas.manageMarkerLink");
 		
 		return map;
 	}
