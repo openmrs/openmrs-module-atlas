@@ -30,6 +30,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /**
  * This class configured as controller using annotation and mapped with the URL of 'module/basicmodule/basicmoduleLink.form'.
@@ -79,14 +80,20 @@ public class AtlasModuleFormController{
 	 */
 	@ModelAttribute("atlasData")
 	protected AtlasData formBackingObject(HttpServletRequest request) throws Exception {
-		//Object o = Context.getService(AtlasService.class);
-		AtlasService service =  new AtlasServiceImpl();//(AtlasService)o;    
-		AtlasData data = service.getAtlasData();
-        System.out.println(data.toString()); 
+		if ("POST".equalsIgnoreCase(request.getMethod())) {
+			return null;
+		} else {
+			Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//
+			AtlasData data = service.getAtlasData();
+	        System.out.println(data.toString()); 
+			
+			// this object will be made available to the jsp page under the variable name
+			// that is defined in the @ModuleAttribute tag
+			return data;
+		}
+         
 		
-		// this object will be made available to the jsp page under the variable name
-		// that is defined in the @ModuleAttribute tag
-		return data;
 	}
 	
 }

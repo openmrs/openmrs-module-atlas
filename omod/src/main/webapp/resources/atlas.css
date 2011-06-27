@@ -1,0 +1,37 @@
+ html { height: 100% }
+  body { height: 100%; margin: 0px; padding: 0px }
+
+  #infoDiv, #infoDiv-edit {
+	float: left;
+	display: inline;
+	background: 
+  }
+  #imgDiv, #imgDiv-edit  {
+	display: inline;
+	float: left;
+  }
+  #contactDiv, #contactDiv-edit {
+	clear: both;
+  }
+  
+  #lblName
+  {
+	width:200px;
+	min-width: 200px;
+  }
+  
+  .placeholder
+  {
+  color: #aaa;
+   }
+   
+   #mapCanvas {
+   	width:75%; 
+   	height:400px;
+   	float: left;
+   }
+   
+   #leftColumnDiv {
+   	width:25%;
+   	float: left;
+   }

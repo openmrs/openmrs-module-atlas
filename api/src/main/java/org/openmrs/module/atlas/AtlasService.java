@@ -13,11 +13,14 @@
  */
 package org.openmrs.module.atlas;
 
+
 import org.openmrs.api.APIException;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  */
+@Transactional
 public interface AtlasService {
 	AtlasData getAtlasData() throws APIException;
 	void setAtlasData(AtlasData data) throws APIException;	
