@@ -19,11 +19,14 @@
                     <table>
                         <tr>
                             <td>
-                              <span id="lblName"><c:out value="${atlasData.name}"/></span>
+                              <span id="lblName" class="spanView"><c:out value="${atlasData.name}"/></span>
+                              <span id="lblNamePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.namePlaceHolder" /></span>
                             </td>
                         </tr>
                         <tr>
-                            <td><span id="lblWebsite"> <c:out value="${atlasData.website}"/></span>
+                            <td>
+                            	<span id="lblWebsite" class="spanView"><c:out value="${atlasData.website}"/></span>
+                            	<span id="lblWebsitePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.websitePlaceHolder" /></span>
                             </td>
                         </tr>
                         <tr>
@@ -42,15 +45,27 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><span class="contact" id="lblEmail"> Email</span> </td>
+                <td colspan="2">
+                	<span class="contact spanView" id="lblEmail"><c:out value="${atlasData.contactPhoneNumber}"/></span>
+                	<span id="lblEmailPlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.emailPlaceHolder" /></span>
+                </td>
             </tr> 
             <tr>
-                <td colspan="2"><span class="contact" id="lblPhone"> Phone </span> </td>
+                <td colspan="2">
+                	<span class="contact spanView" id="lblPhone"><c:out value="${atlasData.contactEmailAddress}"/></span>
+                	<span id="lblPhonePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.phonePlaceHolder" /></span>
+                </td>
             </tr> 
 			<tr>
-				<td colspan="2"><a id="editLink" href="">Edit</a></td>
+				<td colspan="2">
+						<a id="editLink" href=""><spring:message code="atlas.edit"/></a>
+				</td>
 			</tr>
-           
+           	<tr>
+                <td colspan="2">
+					<br /><br />
+                </td>
+            </tr> 
         </table>	
 		
 <table id="containerDiv-edit" style="display:hidden" >
@@ -64,46 +79,84 @@
                     <table>
                         <tr>
                             <td>
-                             <input type="text" id="tbName" placeholder="Name...">
+                             <input type="text" id="tbName" placeholder="<spring:message code="atlas.namePlaceHolder" />">
                             </td>
                         </tr>
                         <tr>
-                            <td><input type="text" id="tbWebsite" placeholder="Website...">
+                            <td><input type="text" id="tbWebsite" placeholder="<spring:message code="atlas.websitePlaceHolder" />">
                             </td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" id="cbPatients">
+                            <td>
+                            	<input type="checkbox" id="cbPatients">
+                            	<label for="cbPatients">
+                            		<spring:message code="atlas.includeNrOfPatients"/>
+                            	</label>
                             </td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" id="cbObservations">
+                            <td>
+                            	<input type="checkbox" id="cbObservations">
+                            	<label for="cbObservations">
+                            		<spring:message code="atlas.includeNrOfObservations"/>
+                            	</label>
                             </td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" id="cbVisits">
+                            <td>
+                            	<input type="checkbox" id="cbVisits">
+                            	<label for="cbVisits">
+                            		<spring:message code="atlas.includeNrOfVisits"/>
+                            	</label>
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><input type="text" id="tbEmail" placeholder="Email.."></td>
+                <td colspan="2">
+                	<input type="text" id="tbEmail" placeholder="<spring:message code="atlas.emailPlaceHolder" />">
+                </td>
             </tr> 
             <tr>
-                <td colspan="2"><input type="text" id="tbPhone" placeholder="Phone.."></td>
+                <td colspan="2">
+                	<input type="text" id="tbPhone" placeholder="<spring:message code="atlas.phonePlaceHolder" />">
+                </td>
             </tr> 
 			<tr>
-				<td colspan="2"><a id="saveLink" href="">Save</a> | <a id="cancelLink" href="">Cancel</a></td>
+				<td colspan="2">
+					<a id="saveLink" href=""><spring:message code="atlas.save"/></a> | 
+					<a id="cancelLink" href=""><spring:message code="atlas.cancel"/></a>
+				</td>
 			</tr>
+			<tr>
+                <td colspan="2">
+                	<br />
+                </td>
+            </tr> 
            
         </table>	
 	
   <div id="leftColumnDiv"> 
   	<form method="post">
-		<input type="submit" value="<spring:message code="atlas.submit" />" />
-  		<input type="hidden" name="atlasDataID" value="${atlasData.id}"/>      
+		<input id="btnSubmit" type="submit" value="<spring:message code="atlas.submit" />" />
+  		<input type="hidden" id="atlasID" name="atlasID" value="${atlasData.id}"/> 
+  		<input type="hidden" id="atlasLatitude" name="atlasLatitude" value="${atlasData.latitude}"/>
+  		<input type="hidden" id="atlasLongitude" name="atlasLongitude" value="${atlasData.longitude}"/> 
+  		<input type="hidden" id="atlasName" name="atlasName" value="${atlasData.name}"/>
+  		<input type="hidden" id="atlasWebsite" name="atlasWebsite" value="${atlasData.website}"/> 
+  		<input type="hidden" id="atlasContactPhoneNumber" name="atlasContactPhoneNumber" value="${atlasData.contactPhoneNumber}"/> 
+  		<input type="hidden" id="atlasContactEmailAddress" name="atlasDontactEmailAddress" value="${atlasData.contactEmailAddress}"/> 
+  		<input type="hidden" id="atlasIncludeNumberOfPatients" name="atlasIncludeNumberOfPatients" value="${atlasData.includeNumberOfPatients}"/> 
+  		<input type="hidden" id="atlasIncludeNumberOfObservations" name="atlasIncludeNumberOfObservations" value="${atlasData.includeNumberOfObservations}"/> 
+  		<input type="hidden" id="atlasIncludeNumberOfVisits" name="atlasIncludeNumberOfVisits" value="${atlasData.includeNumberOfVisits}"/> 
 	</form>
+  </div>
+  <div id="rightColumnDiv">
+  	 <input type="text" value="" id="searchbox" style=" width:800px;height:30px; font-size:15px;" 
+  	  placeholder="<spring:message code="atlas.addressPlaceHolder" />" >
+  	 <div id="mapCanvas"></div>
   </div>	
-  <div id="mapCanvas"></div>
+  
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>

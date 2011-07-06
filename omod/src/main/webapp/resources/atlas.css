@@ -1,6 +1,3 @@
- html { height: 100% }
-  body { height: 100%; margin: 0px; padding: 0px }
-
   #infoDiv, #infoDiv-edit {
 	float: left;
 	display: inline;
@@ -22,12 +19,17 @@
   
   .placeholder
   {
-  color: #aaa;
-   }
+  	color: #aaa;
+  }
+  
+  .labelPlaceHolder
+  {
+  	color: #aaa;
+  }
    
-   #mapCanvas {
-   	width:75%; 
-   	height:400px;
+   #rightColumnDiv {
+   	width:800px; 
+   	height:500px;
    	float: left;
    }
    
@@ -35,3 +37,9 @@
    	width:25%;
    	float: left;
    }
+   
+   #mapCanvas {
+   	height: 100%;
+   }
+   
+ 

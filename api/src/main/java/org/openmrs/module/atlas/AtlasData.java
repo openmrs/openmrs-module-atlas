@@ -22,8 +22,8 @@ import java.util.UUID;
 public class AtlasData {
 	 private UUID id;
 	 private String name;
-	 private String latitude;
-	 private String longitude;
+	 private Double latitude;
+	 private Double longitude;
 	 private String website;
 	 //contact details
 	 private String contactPhoneNumber;
@@ -32,6 +32,9 @@ public class AtlasData {
 	 private Boolean includeNumberOfPatients;
 	 private Boolean includeNumberOfObservations;
 	 private Boolean includeNumberOfVisits;
+	 private Long numberOfPatients;
+	 private Long numberOfObservations;
+	 private Long numberOfVisits;
 
 
 	 
@@ -46,14 +49,14 @@ public class AtlasData {
   	    this.includeNumberOfObservations = false;
   	    this.includeNumberOfPatients = false;
   	    this.includeNumberOfVisits = false;
-  	    this.latitude = "";
-  	    this.longitude = "";
+  	    this.latitude = 0.0;
+  	    this.longitude = 0.0;
   	    this.website ="";
     }
     /**
      * 
      */
-    public AtlasData(UUID id, String name, String website, String latitude, String longitude, 
+    public AtlasData(UUID id, String name, String website, Double latitude, Double longitude, 
                      String contactPhoneNumber, String contactEmailAddress, 
                      Boolean includeNumberOfPatients, Boolean includeNumberOfObservations, Boolean includeNumberOfVisits) {
 	    this.contactEmailAddress = contactEmailAddress;
@@ -156,27 +159,27 @@ public class AtlasData {
     /**
      * @return the latitude
      */
-    public String getLatitude() {
+    public Double getLatitude() {
 	    return latitude;
     }
     
     /**
      * @param latitude the latitude to set
      */
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
 	    this.latitude = latitude;
     }
     /**
      * @return the longitude
      */
-    public String getLongitude() {
+    public Double getLongitude() {
 	    return longitude;
     }
     
     /**
      * @param longitude the longitude to set
      */
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
 	    this.longitude = longitude;
     }
     
@@ -207,6 +210,55 @@ public class AtlasData {
     public void setWebsite(String website) {
 	    this.website = website;
     } 
+    
+    
+    /**
+     * @return the numberOfObservations
+     */
+    public Long getNumberOfObservations() {
+	    return numberOfObservations;
+    }
+    
+    
+    /**
+     * @param numberOfObservations the numberOfObservations to set
+     */
+    public void setNumberOfObservations(Long numberOfObservations) {
+	    this.numberOfObservations = numberOfObservations;
+    }
+    
+    
+    /**
+     * @return the numberOfPatients
+     */
+    public Long getNumberOfPatients() {
+	    return numberOfPatients;
+    }
+    
+    
+    /**
+     * @param numberOfPatients the numberOfPatients to set
+     */
+    public void setNumberOfPatients(Long numberOfPatients) {
+	    this.numberOfPatients = numberOfPatients;
+    }
+    
+    
+    /**
+     * @return the numberOfVisits
+     */
+    public Long getNumberOfVisits() {
+	    return numberOfVisits;
+    }
+    
+    
+    /**
+     * @param numberOfVisits the numberOfVisits to set
+     */
+    public void setNumberOfVisits(Long numberOfVisits) {
+	    this.numberOfVisits = numberOfVisits;
+    }
+    
     
     /**
      * @see java.lang.Object#toString()

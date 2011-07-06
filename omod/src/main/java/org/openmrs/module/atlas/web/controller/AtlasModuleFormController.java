@@ -14,6 +14,7 @@
 package org.openmrs.module.atlas.web.controller;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -81,17 +82,35 @@ public class AtlasModuleFormController{
 	@ModelAttribute("atlasData")
 	protected AtlasData formBackingObject(HttpServletRequest request) throws Exception {
 		if ("POST".equalsIgnoreCase(request.getMethod())) {
-			return null;
-		} else {
+			UUID id = UUID.fromString(request.getParameter("atlasID"));
+			Double lat = Double.valueOf(request.getParameter("atlasLatitude"));
+			Double lng = Double.valueOf(request.getParameter("atlasLongitude"));
+			String name = request.getParameter("atlasName");
+			String website = request.getParameter("atlasWebsite");
+			String phone = request.getParameter("atlasContactPhoneNumber");
+			String email = request.getParameter("atlasContactEmailAddress");
+			Boolean includeNumberOfObservations = Boolean.getBoolean(request.getParameter("atlasIncludeNumberOfObservations"));
+			Boolean includeNumberOfPatients = Boolean.getBoolean(request.getParameter("atlasIncludeNumberOfPatients"));
+			Boolean includeNumberOfVisits = Boolean.getBoolean(request.getParameter("atlasIncludeNumberOfVisits"));
+			
+			AtlasData data = new AtlasData(id, name, website, lat, lng, phone, email, includeNumberOfPatients, includeNumberOfObservations, includeNumberOfVisits);
+			System.out.println(data.toString());
 			Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//
-			AtlasData data = service.getAtlasData();
-	        System.out.println(data.toString()); 
+			service.setAtlasData(data);
+	        
+		} else {
 			
-			// this object will be made available to the jsp page under the variable name
-			// that is defined in the @ModuleAttribute tag
-			return data;
 		}
+		
+		Object o = Context.getService(AtlasService.class);
+		AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//
+		AtlasData data = service.getAtlasData();
+        System.out.println(data.toString()); 
+		
+		// this object will be made available to the jsp page under the variable name
+		// that is defined in the @ModuleAttribute tag
+		return data;
          
 		
 	}

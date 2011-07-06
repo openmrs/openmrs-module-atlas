@@ -28,4 +28,7 @@ public class GlobalPropertiesKeys {
 	public final static String INCLUDE_NUMBER_OF_PATIENTS = "atlasmodule.includeNumberOfPatients";
 	public final static String INCLUDE_NUMBER_OF_OBSERVATIONS = "atlasmodule.includeNumberOfObservations";
 	public final static String INCLUDE_NUMBER_OF_VISITS = "atlasmodule.includeNumberOfVisits";
+	public final static String NUMBER_OF_PATIENTS = "atlasmodule.numberOfPatients";
+	public final static String NUMBER_OF_OBSERVATIONS = "atlasmodule.numberOfObservations";
+	public final static String NUMBER_OF_VISITS = "atlasmodule.numberOfVisits";
 }
