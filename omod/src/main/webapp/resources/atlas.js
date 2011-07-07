@@ -103,6 +103,7 @@ function BindEvents(infowindow) {
 	});
 	
 	jQuery('#cancelLink').click(function(e) {
+		jQuery(containerView).show();
 		infowindow.setContent(containerView);
 		return false;
 	});
@@ -167,7 +168,7 @@ function StyleContainers() {
 function GetCurrentLatLng() {
 	var lng = jQuery('#atlasLongitude').val();
 	var lat = jQuery('#atlasLatitude').val();
-	if ( lng != '' && lat != '' ){
+	if ( lng != '0.0' && lat != '0.0' ){
 		return new google.maps.LatLng(lat, lng);
 	} else { 
 		return null;
@@ -209,7 +210,7 @@ function GetCurrentLatLng() {
             });
  }
 
- function PinToCenterControl(controlDiv) {
+ function MarkerToCenterControl(controlDiv) {
 
      // Set CSS styles for the DIV containing the control
      // Setting padding to 5 px will offset the control
@@ -232,12 +233,12 @@ function GetCurrentLatLng() {
      controlText.style.fontSize = '12px';
      controlText.style.paddingLeft = '4px';
      controlText.style.paddingRight = '4px';
-     controlText.innerHTML = '<b>Pin to Center</b>';
+     controlText.innerHTML = '<b>Marker to Center</b>';
      controlUI.appendChild(controlText);
 
      // Setup the click event listeners: simply set the map to
      google.maps.event.addDomListener(controlUI, 'click', function () {
-         pinToCenter();
+         markerToCenter();
      });
 }
  
@@ -245,8 +246,8 @@ function GetCurrentLatLng() {
 	var myLatlng = GetCurrentLatLng();
 	var zoom = 12;
 	if (myLatlng == null) {
-		myLatlng = new google.maps.LatLng(47.112002,27.706801);
-		zoom = 4;
+		myLatlng = new google.maps.LatLng(-0.351560293992, 23.642578125);
+		zoom = 3;
 	}
 	var myOptions = {
 		zoom: zoom,
@@ -301,10 +302,10 @@ function GetCurrentLatLng() {
     locateMeControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locateMeControlDiv);	
     
-    var pinToCenterDiv = document.createElement('DIV');
-    var pinToCenterControl = new PinToCenterControl(pinToCenterDiv);
-    pinToCenterDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(pinToCenterDiv);		
+    var markerToCenterDiv = document.createElement('DIV');
+    var markerToCenterControl = new MarkerToCenterControl(markerToCenterDiv);
+    markerToCenterDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(markerToCenterDiv);		
   }
 
 
@@ -316,7 +317,7 @@ function GetCurrentLatLng() {
      }
  }
  
- function pinToCenter() {
+ function markerToCenter() {
 	 marker.setPosition(map.getCenter());
  }
  
