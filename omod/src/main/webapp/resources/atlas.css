@@ -26,6 +26,11 @@
   {
   	color: #aaa;
   }
+  
+  .fail 
+  {
+  	color: red;
+  }
    
    #rightColumnDiv {
    	width:800px; 
@@ -41,5 +46,7 @@
    #mapCanvas {
    	height: 100%;
    }
+   
+  
    
  

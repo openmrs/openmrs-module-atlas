@@ -24,6 +24,7 @@ public class AtlasConstants {
 	public final static String GLOBALPROPERTY_LATITUDE= "atlasmodule.latitude";
 	public final static String GLOBALPROPERTY_LONGITUDE= "atlasmodule.longitude";
 	public final static String GLOBALPROPERTY_WEBSITE = "atlasmodule.website";
+	public final static String GLOBALPROPERTY_IMAGE_URL= "atlasmodule.imageURL";
 	public final static String GLOBALPROPERTY_CONTACT_PHONE_NUMBER = "atlasmodule.contactPhoneNumber";
 	public final static String GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS = "atlasmodule.contactEmailAddress";
 	public final static String GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS = "atlasmodule.includeNumberOfPatients";

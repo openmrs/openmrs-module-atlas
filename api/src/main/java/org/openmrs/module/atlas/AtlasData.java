@@ -22,6 +22,7 @@ import java.util.UUID;
 public class AtlasData {
 	 private UUID id;
 	 private String name;
+	 private String imageURL;
 	 private Double latitude;
 	 private Double longitude;
 	 private String website;
@@ -46,6 +47,7 @@ public class AtlasData {
   	    this.contactPhoneNumber = "";
   	    this.id = null;
   	    this.name = "";
+  	    this.imageURL = "";
   	    this.includeNumberOfObservations = false;
   	    this.includeNumberOfPatients = false;
   	    this.includeNumberOfVisits = false;
@@ -56,13 +58,14 @@ public class AtlasData {
     /**
      * 
      */
-    public AtlasData(UUID id, String name, String website, Double latitude, Double longitude, 
+    public AtlasData(UUID id, String name, String website, String imageURL, Double latitude, Double longitude, 
                      String contactPhoneNumber, String contactEmailAddress, 
                      Boolean includeNumberOfPatients, Boolean includeNumberOfObservations, Boolean includeNumberOfVisits) {
 	    this.contactEmailAddress = contactEmailAddress;
 	    this.contactPhoneNumber = contactPhoneNumber;
 	    this.id = id;
 	    this.name = name;
+	    this.imageURL = imageURL;
 	    this.includeNumberOfObservations = includeNumberOfObservations;
 	    this.includeNumberOfPatients = includeNumberOfPatients;
 	    this.includeNumberOfVisits = includeNumberOfVisits;
@@ -261,6 +264,21 @@ public class AtlasData {
     
     
     /**
+     * @return the imageURL
+     */
+    public String getImageURL() {
+	    return imageURL;
+    }
+    
+    
+    /**
+     * @param imageURL the imageURL to set
+     */
+    public void setImageURL(String imageURL) {
+	    this.imageURL = imageURL;
+    }
+    
+    /**
      * @see java.lang.Object#toString()
      */
     @Override
@@ -270,6 +288,7 @@ public class AtlasData {
     		   +"\nID: "+id
     		   +"\nName: "+name
     		   +"\nWebsite: "+website
+    		   +"\nImageURL: "+imageURL
     		   +"\nLatitude: "+latitude
     		   +"\nLongitude: "+longitude
     		   +"\nContact Phone Number: "+contactPhoneNumber

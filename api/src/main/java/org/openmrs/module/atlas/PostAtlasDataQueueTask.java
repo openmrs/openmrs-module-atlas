@@ -46,6 +46,7 @@ public class PostAtlasDataQueueTask extends AbstractTask {
     public void execute() {
 		log.debug("Posting atlas data ... ");
 		try {
+			processor.updateStatistics();
 			processor.postAtlasData(processor.getAtlasData());
 		} catch (APIException e) {
 			log.error("Error running PostAtlasDataQueueTask", e);

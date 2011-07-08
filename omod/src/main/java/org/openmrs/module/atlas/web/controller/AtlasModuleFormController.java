@@ -87,13 +87,14 @@ public class AtlasModuleFormController{
 			Double lng = Double.valueOf(request.getParameter("atlasLongitude"));
 			String name = request.getParameter("atlasName");
 			String website = request.getParameter("atlasWebsite");
+			String imageURL = request.getParameter("atlasImageURL");
 			String phone = request.getParameter("atlasContactPhoneNumber");
 			String email = request.getParameter("atlasContactEmailAddress");
-			Boolean includeNumberOfObservations = Boolean.getBoolean(request.getParameter("atlasIncludeNumberOfObservations"));
-			Boolean includeNumberOfPatients = Boolean.getBoolean(request.getParameter("atlasIncludeNumberOfPatients"));
-			Boolean includeNumberOfVisits = Boolean.getBoolean(request.getParameter("atlasIncludeNumberOfVisits"));
+			Boolean includeNumberOfObservations = Boolean.parseBoolean(request.getParameter("atlasIncludeNumberOfObservations"));
+			Boolean includeNumberOfPatients = Boolean.parseBoolean(request.getParameter("atlasIncludeNumberOfPatients"));
+			Boolean includeNumberOfVisits = Boolean.parseBoolean(request.getParameter("atlasIncludeNumberOfVisits"));
 			
-			AtlasData data = new AtlasData(id, name, website, lat, lng, phone, email, includeNumberOfPatients, includeNumberOfObservations, includeNumberOfVisits);
+			AtlasData data = new AtlasData(id, name, website, imageURL, lat, lng, phone, email, includeNumberOfPatients, includeNumberOfObservations, includeNumberOfVisits);
 			System.out.println(data.toString());
 			Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//

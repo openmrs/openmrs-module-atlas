@@ -2,7 +2,7 @@ var marker;
 var map;
 var containerEdit;
 var containerView;
-var firstTimeEdit = 1;
+var imgPlaceholder = 'http://a0.twimg.com/profile_images/672560906/OpenMRS-twitter-icon_bigger.png';
 
 jQuery(document).ready (function() {
 	containerEdit = document.getElementById('containerDiv-edit');
@@ -35,9 +35,15 @@ function CopyValuesFromViewToHiddenFields() {
 	jQuery('#atlasContactEmailAddress', div).val(jQuery('#lblPhone', containerView).text());
 	jQuery('#atlasLatitude', div).val(position.lat());
 	jQuery('#atlasLongitude', div).val(position.lng());
-	jQuery('#atlasIncludeNumberOfPatients', div).val(true);
-	jQuery('#atlasIncludeNumberOfObservations', div).val(true);
-	jQuery('#atlasIncludeNumberOfVisits', div).val(true);
+	jQuery('#atlasIncludeNumberOfPatients', div).val(jQuery('#cbPatients', containerEdit).attr('checked'));
+	jQuery('#atlasIncludeNumberOfObservations', div).val(jQuery('#cbObservations', containerEdit).attr('checked'));
+	jQuery('#atlasIncludeNumberOfVisits', div).val(jQuery('#cbVisits', containerEdit).attr('checked'));
+	var imgSrc = jQuery('#imgImplementation', containerView).attr('src');
+	if (imgSrc != imgPlaceholder) {
+		jQuery('#atlasImageURL', div).val(imgSrc);
+	} else {
+		jQuery('#atlasImageURL', div).val('');
+	}
 }
 
 /*
@@ -89,6 +95,7 @@ function BindEvents(infowindow) {
 	jQuery('#editLink').click(function(e) {
 		View2Edit();
 		RemovePlaceHolderClass(containerEdit);
+		validateInput(containerEdit);
 		jQuery(containerEdit).show();
 		infowindow.setContent(containerEdit);
 		return false;
@@ -96,9 +103,13 @@ function BindEvents(infowindow) {
 	
 	jQuery('#saveLink').click(function(e) {
 		containerEdit = infowindow.getContent();
-		Edit2View();
-		jQuery(containerView).show();
-		infowindow.setContent(containerView);
+		if (validateInput(containerEdit)) {
+			Edit2View();
+			jQuery(containerView).show();
+			infowindow.setContent(containerView);
+		} else {
+			infowindow.setContent(containerEdit);
+		}
 		return false;
 	});
 	
@@ -109,6 +120,17 @@ function BindEvents(infowindow) {
 	});
 }
 
+function validateInput(div) {
+	var input = jQuery('#tbName', div);
+	if (StringIsEmpty(input.val())
+			||  (input.val() == input.attr('placeholder'))) {
+		jQuery('#nameError', div).show();
+		return false;
+	} else {
+		jQuery('#nameError', div).hide();
+		return true;
+	}
+}
 /*
  * This is used to provide some sort of placeholders to labels in the view info window,
  * when they do not contain text
@@ -122,6 +144,11 @@ function SetViewPlaceholders() {
 			$this.siblings('.labelPlaceHolder').hide();
 		}
 	});
+	
+	var img = jQuery('#imgImplementation', containerView);
+	if (StringIsEmpty(img.attr('src'))) {
+		img.attr('src', imgPlaceholder);
+	} 
 }
 
 function StringIsEmpty(str) {
@@ -136,6 +163,12 @@ function View2Edit() {
 	jQuery('#tbWebsite', containerEdit).val(jQuery('#lblWebsite', containerView).text());
 	jQuery('#tbEmail', containerEdit).val(jQuery('#lblEmail', containerView).text());
 	jQuery('#tbPhone', containerEdit).val(jQuery('#lblPhone', containerView).text());
+	
+	if (jQuery('#imgImplementation', containerView).attr('src') != imgPlaceholder) {
+		jQuery('#tbImage', containerEdit).val(jQuery('#imgImplementation', containerView).attr('src'));
+	} else {
+		jQuery('#tbImage', containerEdit).val("");
+	}
 }
 
 /*
@@ -143,11 +176,29 @@ function View2Edit() {
  */
 function Edit2View() {
 	RemovePlaceHolderText(containerEdit);
+
+	jQuery('#imgImplementation', containerView).attr('src', jQuery("#tbImage", containerEdit).val());
 	jQuery('#lblName', containerView).text(jQuery('#tbName', containerEdit).val());
 	jQuery('#lblWebsite', containerView).text(jQuery('#tbWebsite', containerEdit).val());
+	jQuery('#aWebsite', containerView).attr('href', jQuery('#tbWebsite', containerEdit).val());
 	jQuery('#lblEmail', containerView).text(jQuery('#tbEmail', containerEdit).val());
 	jQuery('#lblPhone', containerView).text(jQuery('#tbPhone', containerEdit).val());
 	
+	if (jQuery('#cbVisits', containerEdit).attr('checked')) {
+		jQuery('#lblVisits', containerView).show();
+	} else {
+		jQuery('#lblVisits', containerView).hide();
+	}
+	if (jQuery('#cbPatients', containerEdit).attr('checked')) {
+		jQuery('#lblPatients', containerView).show();
+	} else {
+		jQuery('#lblPatients', containerView).hide();
+	}
+	if (jQuery('#cbObservations', containerEdit).attr('checked')) {
+		jQuery('#lblObservations', containerView).show();
+	} else {
+		jQuery('#lblObservations', containerView).hide();
+	}
 	SetViewPlaceholders();
 }
 

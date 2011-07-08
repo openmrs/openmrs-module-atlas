@@ -13,7 +13,7 @@
 <table id="containerDiv" style="display:hidden" >
             <tr>
                 <td>
-                    <img src="http://www.knol-knol.com/google-knol.jpg" width="80px" height="80px" alt ="thumbnail" />
+                    <img id ="imgImplementation" src="${atlasData.imageURL}" width="80px" height="80px" alt ="thumbnail" />
                 </td>
                 <td>
                     <table>
@@ -25,20 +25,33 @@
                         </tr>
                         <tr>
                             <td>
-                            	<span id="lblWebsite" class="spanView"><c:out value="${atlasData.website}"/></span>
+                            	<a id="aWebsite" target='_blank' href="${atlasData.website}" class="spanView"><span id="lblWebsite"><c:out value="${atlasData.website}"/></span></a>
                             	<span id="lblWebsitePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.websitePlaceHolder" /></span>
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="stats" id="lblPatients"> Patients </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="stats" id="lblVisits"> Visits </span> <br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="stats" id="lblObservations"> Observations</span> 
+                            <td>
+                            <span class="stats" id="lblPatients" 
+                            	<c:if test="${atlasData.includeNumberOfPatients == false}">
+										style="display: none"
+							    </c:if>
+                            >
+                            	<c:out value="${atlasData.numberOfPatients}"/> <spring:message code="atlas.patients" /><br/>
+                            </span> 
+                            <span class="stats" id="lblVisits" 
+                               <c:if test="${atlasData.includeNumberOfVisits == false}">
+										style="display: none"
+							   </c:if>
+                            >
+                            	<c:out value="${atlasData.numberOfVisits}"/> <spring:message code="atlas.visits" /><br/>
+                            </span> 
+                            <span class="stats" id="lblObservations"
+                               <c:if test="${atlasData.includeNumberOfObservations == false}">
+										style="display: none"
+							   </c:if>
+                            >
+                            	<c:out value="${atlasData.numberOfObservations}"/> <spring:message code="atlas.observations" />
+                            </span> 
                             </td>
                         </tr>
                     </table>
@@ -72,7 +85,7 @@
             <tr>
                 <td>
                     <div id="imgDiv-edit">
-						<img src="http://www.knol-knol.com/google-knol.jpg" width="80px" height="80px" alt ="thumbnail" />
+						<input type="text" id="tbImage" style="width:90px;" placeholder="<spring:message code="atlas.imagePlaceHolder" />">
 					</div>
                 </td>
                 <td>
@@ -80,6 +93,7 @@
                         <tr>
                             <td>
                              <input type="text" id="tbName" placeholder="<spring:message code="atlas.namePlaceHolder" />">
+                             <span id="nameError" class="fail" style="display: none;">*</span> 
                             </td>
                         </tr>
                         <tr>
@@ -88,7 +102,11 @@
                         </tr>
                         <tr>
                             <td>
-                            	<input type="checkbox" id="cbPatients">
+                            	<input type="checkbox" id="cbPatients" 
+                            		<c:if test="${atlasData.includeNumberOfPatients == true}">
+										checked="checked"
+									</c:if>
+                            	>
                             	<label for="cbPatients">
                             		<spring:message code="atlas.includeNrOfPatients"/>
                             	</label>
@@ -96,17 +114,25 @@
                         </tr>
                         <tr>
                             <td>
-                            	<input type="checkbox" id="cbObservations">
-                            	<label for="cbObservations">
-                            		<spring:message code="atlas.includeNrOfObservations"/>
+                            	<input type="checkbox" id="cbVisits" 
+                            		<c:if test="${atlasData.includeNumberOfVisits == true}">
+							    		checked="checked"
+							    	</c:if>
+							    >
+                            	<label for="cbVisits">
+                            		<spring:message code="atlas.includeNrOfVisits"/>
                             	</label>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                            	<input type="checkbox" id="cbVisits">
-                            	<label for="cbVisits">
-                            		<spring:message code="atlas.includeNrOfVisits"/>
+                          		<input type="checkbox" id="cbObservations" 
+                          			<c:if test="${atlasData.includeNumberOfObservations == true}">
+							    		checked="checked"
+							    	</c:if>
+                          		>
+                            	<label for="cbObservations">
+                            		<spring:message code="atlas.includeNrOfObservations"/>
                             	</label>
                             </td>
                         </tr>
@@ -141,6 +167,7 @@
   	<form method="post">
 		<input id="btnSubmit" type="submit" value="<spring:message code="atlas.submit" />" />
   		<input type="hidden" id="atlasID" name="atlasID" value="${atlasData.id}"/> 
+  		<input type="hidden" id="atlasImageURL" name="atlasImageURL" value="${atlasData.imageURL}"/> 
   		<input type="hidden" id="atlasLatitude" name="atlasLatitude" value="${atlasData.latitude}"/>
   		<input type="hidden" id="atlasLongitude" name="atlasLongitude" value="${atlasData.longitude}"/> 
   		<input type="hidden" id="atlasName" name="atlasName" value="${atlasData.name}"/>
