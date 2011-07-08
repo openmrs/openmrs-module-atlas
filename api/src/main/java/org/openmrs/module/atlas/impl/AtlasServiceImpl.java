@@ -17,11 +17,16 @@ import org.openmrs.module.atlas.AtlasData;
 import org.openmrs.module.atlas.AtlasDataProcessor;
 import org.openmrs.module.atlas.AtlasService;
 import org.openmrs.module.atlas.AtlasConstants;
+import org.openmrs.module.atlas.PostAtlasDataQueueTask;
+import org.openmrs.scheduler.SchedulerException;
+import org.openmrs.scheduler.Task;
+import org.openmrs.scheduler.TaskDefinition;
 
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 import org.apache.commons.logging.Log;
@@ -63,25 +68,65 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public void setAtlasData(AtlasData data) throws APIException {
     	processor.setAtlasData(data);
-    	processor.postAtlasData(data);
+    	//processor.postAtlasData(data);
+    	registerPostAtlasDataTask(60 * 60 * 24 * 7l);
     }
 
- 
-    
-    private void setDummyData(){
-    	AtlasData data = new AtlasData();
-    	data.setId(UUID.fromString("d697e132-1554-440d-9cca-cf472c9686db"));
-    	data.setContactEmailAddress("testing@openmrs.org");
-    	data.setContactPhoneNumber("123456789");
-    	data.setIncludeNumberOfObservations(false);
-    	data.setIncludeNumberOfPatients(false);
-    	data.setIncludeNumberOfVisits(false);
-    	data.setLatitude(47.170151);
-    	data.setLongitude(27.58354899999);
-    	data.setName("Testing");
-    	data.setWebsite("http:\\www.openmrs.org");
-    	
-    	setAtlasData(data);
+    public boolean registerPostAtlasDataTask(long interval) {
+    	return registerTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME
+    		, AtlasConstants.POST_ATLAS_DATA_TASK_DESCRIPTION
+    		, PostAtlasDataQueueTask.class,
+    		interval);
     }
+    
+	private boolean registerTask(String name, String description, Class<? extends Task> clazz, long interval) {
+		try {
+			Context.addProxyPrivilege("Manage Scheduler");
+		
+			TaskDefinition taskDef = Context.getSchedulerService().getTaskByName(name);
+			if (taskDef == null) {
+				taskDef = new TaskDefinition();
+				taskDef.setTaskClass(clazz.getCanonicalName());
+				taskDef.setStartOnStartup(true);
+				taskDef.setRepeatInterval(interval);
+				taskDef.setStarted(true);
+				taskDef.setStartTime(getPreviousMidnight(null));
+				taskDef.setName(name);
+				taskDef.setUuid(UUID.randomUUID().toString()); 
+				taskDef.setDescription(description);
+				Context.getSchedulerService().scheduleTask(taskDef);
+			}
+			
+		} catch (SchedulerException ex) {
+			log.warn("Unable to register task '" + name + "' with scheduler", ex);
+			return false;
+		} finally {
+			Context.removeProxyPrivilege("Manage Scheduler");
+		}
+		return true;
+	}
+	
+	/**
+	 * Unregisters the named task
+	 * @param name the task name
+	 */
+	private void unregisterTask(String name) {
+		TaskDefinition taskDef = Context.getSchedulerService().getTaskByName(name);
+		if (taskDef != null)
+			Context.getSchedulerService().deleteTask(taskDef.getId());
+	}
+	
+	   public static Date getPreviousMidnight(Date date) {
+	    	// Initialize with date if it was specified
+	    	Calendar cal = new GregorianCalendar();
+			if (date != null)
+				cal.setTime(date);
+			  
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			return cal.getTime();
+	    }
     
 }

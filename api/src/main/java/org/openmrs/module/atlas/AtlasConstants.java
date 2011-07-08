@@ -18,6 +18,7 @@ package org.openmrs.module.atlas;
  *
  */
 public class AtlasConstants {
+		
 	public final static String GLOBALPROPERTY_ID = "atlasmodule.id";
 	public final static String GLOBALPROPERTY_NAME = "atlasmodule.name";
 	public final static String GLOBALPROPERTY_LATITUDE= "atlasmodule.latitude";
@@ -31,5 +32,9 @@ public class AtlasConstants {
 	public final static String GLOBALPROPERTY_NUMBER_OF_PATIENTS = "atlasmodule.numberOfPatients";
 	public final static String GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS = "atlasmodule.numberOfObservations";
 	public final static String GLOBALPROPERTY_NUMBER_OF_VISITS = "atlasmodule.numberOfVisits";
+	
+	public final static String POST_ATLAS_DATA_TASK_NAME = "Post Atlas Data Task";
+	public final static String POST_ATLAS_DATA_TASK_DESCRIPTION = "Send Atlas information to OpenMRS on a weekly basis.";
+	
 	public final static String SERVER_URL = "http://redirect.openmrs.org/atlas.php";
 }
