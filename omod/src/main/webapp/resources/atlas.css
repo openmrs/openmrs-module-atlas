@@ -11,11 +11,32 @@
 	clear: both;
   }
   
+  .floatLeft {
+  	float: left;
+  }
+  
+  .clearBoth {
+  	clear: both;
+  }
   #lblName
   {
+  	font-weight: bold;
+  	font-size: 1.1em;
 	width:200px;
 	min-width: 200px;
   }
+  
+  #lblContactName
+  {
+  	font-weight: bold;
+  	font-size: 1em;
+  }
+  
+  #lblNotes
+  {
+  	font-size: 0.9em;
+  }
+  
   
   .placeholder
   {
@@ -45,6 +66,23 @@
    
    #mapCanvas {
    	height: 100%;
+   }
+   
+   .btnEnabled {
+   	  width: 150px;
+   	  height: 80px;
+   	  padding-right: 10px;
+      text-align: right;
+   	  background: url("/openmrs/moduleResources/atlas/green.jpeg") no-repeat center left;
+   	  
+   }
+   
+   .btnDisabled {
+      width: 150px;
+   	  height: 80px;
+      padding-right: 10px;
+      text-align: right;
+   	  background: url("/openmrs/moduleResources/atlas/red.jpeg") no-repeat center left;
    }
    
   

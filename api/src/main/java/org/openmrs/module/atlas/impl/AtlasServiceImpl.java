@@ -21,6 +21,7 @@ import org.openmrs.module.atlas.PostAtlasDataQueueTask;
 import org.openmrs.scheduler.SchedulerException;
 import org.openmrs.scheduler.Task;
 import org.openmrs.scheduler.TaskDefinition;
+import org.openmrs.module.atlas.db.StatisticsDAO;
 
 
 import java.util.ArrayList;
@@ -44,13 +45,23 @@ public class AtlasServiceImpl implements AtlasService {
 	
 	private Log log = LogFactory.getLog(this.getClass());	
 	private AtlasDataProcessor processor = null;
+	private StatisticsDAO statisticsDAO;
 	
+	
+	private StatisticsDAO getStatisticsDAO() {
+		return statisticsDAO;
+	}
+	
+	public void setStatisticsDAO(StatisticsDAO dao) {
+		this.statisticsDAO = dao;
+	}
 	
     /**
      * 
      */
     public AtlasServiceImpl() {
 	   processor = new AtlasDataProcessor();
+	   
     }
 	/**
      * @see org.openmrs.module.atlas.AtlasService#getAtlasData()
@@ -77,6 +88,10 @@ public class AtlasServiceImpl implements AtlasService {
     		, AtlasConstants.POST_ATLAS_DATA_TASK_DESCRIPTION
     		, PostAtlasDataQueueTask.class,
     		interval);
+    }
+    
+    public void updateStatistics() {
+    	System.out.println("XXXX" + statisticsDAO.getNumberOfPatients());
     }
     
 	private boolean registerTask(String name, String description, Class<? extends Task> clazz, long interval) {

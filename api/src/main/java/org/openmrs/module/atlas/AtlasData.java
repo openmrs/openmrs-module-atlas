@@ -27,15 +27,21 @@ public class AtlasData {
 	 private Double longitude;
 	 private String website;
 	 //contact details
-	 private String contactPhoneNumber;
+	 private String contactName;
 	 private String contactEmailAddress;
 	 //statistics
 	 private Boolean includeNumberOfPatients;
 	 private Boolean includeNumberOfObservations;
 	 private Boolean includeNumberOfVisits;
-	 private Long numberOfPatients;
-	 private Long numberOfObservations;
-	 private Long numberOfVisits;
+	 private String numberOfPatients;
+	 private String numberOfObservations;
+	 private String numberOfVisits;
+	 
+	 private String notes;
+	 private Boolean usageDisclamerAccepted;
+	 private Boolean moduleEnabled;
+	 private Boolean includeModules;
+	 private ImplementationType implementationType;
 
 
 	 
@@ -44,7 +50,7 @@ public class AtlasData {
      */
     public AtlasData() {
     	this.contactEmailAddress = "";
-  	    this.contactPhoneNumber = "";
+  	    this.contactName = "";
   	    this.id = null;
   	    this.name = "";
   	    this.imageURL = "";
@@ -54,15 +60,23 @@ public class AtlasData {
   	    this.latitude = 0.0;
   	    this.longitude = 0.0;
   	    this.website ="";
+  	    this.numberOfObservations = "?";
+  	    this.numberOfPatients = "?";
+  	    this.numberOfVisits = "?";
+  	    this.notes = "";
+  	    this.includeModules = true;
+  	    this.usageDisclamerAccepted = false;
+  	    this.moduleEnabled = false;
+  	    this.implementationType = ImplementationType.Clinical;
     }
     /**
      * 
      */
     public AtlasData(UUID id, String name, String website, String imageURL, Double latitude, Double longitude, 
-                     String contactPhoneNumber, String contactEmailAddress, 
+                     String contactName, String contactEmailAddress, 
                      Boolean includeNumberOfPatients, Boolean includeNumberOfObservations, Boolean includeNumberOfVisits) {
 	    this.contactEmailAddress = contactEmailAddress;
-	    this.contactPhoneNumber = contactPhoneNumber;
+	    this.contactName = contactName;
 	    this.id = id;
 	    this.name = name;
 	    this.imageURL = imageURL;
@@ -106,15 +120,15 @@ public class AtlasData {
     /**
      * @return the contactPhoneNumber
      */
-    public String getContactPhoneNumber() {
-	    return contactPhoneNumber;
+    public String getContactName() {
+	    return contactName;
     }
     
     /**
      * @param contactPhoneNumber the contactPhoneNumber to set
      */
-    public void setContactPhoneNumber(String contactPhoneNumber) {
-	    this.contactPhoneNumber = contactPhoneNumber;
+    public void setContactName(String contactName) {
+	    this.contactName = contactName;
     }
     
     /**
@@ -218,7 +232,7 @@ public class AtlasData {
     /**
      * @return the numberOfObservations
      */
-    public Long getNumberOfObservations() {
+    public String getNumberOfObservations() {
 	    return numberOfObservations;
     }
     
@@ -226,7 +240,7 @@ public class AtlasData {
     /**
      * @param numberOfObservations the numberOfObservations to set
      */
-    public void setNumberOfObservations(Long numberOfObservations) {
+    public void setNumberOfObservations(String numberOfObservations) {
 	    this.numberOfObservations = numberOfObservations;
     }
     
@@ -234,7 +248,7 @@ public class AtlasData {
     /**
      * @return the numberOfPatients
      */
-    public Long getNumberOfPatients() {
+    public String getNumberOfPatients() {
 	    return numberOfPatients;
     }
     
@@ -242,7 +256,7 @@ public class AtlasData {
     /**
      * @param numberOfPatients the numberOfPatients to set
      */
-    public void setNumberOfPatients(Long numberOfPatients) {
+    public void setNumberOfPatients(String numberOfPatients) {
 	    this.numberOfPatients = numberOfPatients;
     }
     
@@ -250,7 +264,7 @@ public class AtlasData {
     /**
      * @return the numberOfVisits
      */
-    public Long getNumberOfVisits() {
+    public String getNumberOfVisits() {
 	    return numberOfVisits;
     }
     
@@ -258,7 +272,7 @@ public class AtlasData {
     /**
      * @param numberOfVisits the numberOfVisits to set
      */
-    public void setNumberOfVisits(Long numberOfVisits) {
+    public void setNumberOfVisits(String numberOfVisits) {
 	    this.numberOfVisits = numberOfVisits;
     }
     
@@ -278,6 +292,86 @@ public class AtlasData {
 	    this.imageURL = imageURL;
     }
     
+    
+    /**
+     * @return the implementationType
+     */
+    public ImplementationType getImplementationType() {
+	    return implementationType;
+    }
+    
+    
+    /**
+     * @param implementationType the implementationType to set
+     */
+    public void setImplementationType(ImplementationType implementationType) {
+	    this.implementationType = implementationType;
+    }
+    
+    
+    /**
+     * @return the includeModules
+     */
+    public Boolean getIncludeModules() {
+	    return includeModules;
+    }
+    
+    
+    /**
+     * @param includeModules the includeModules to set
+     */
+    public void setIncludeModules(Boolean includeModules) {
+	    this.includeModules = includeModules;
+    }
+    
+    
+    /**
+     * @return the moduleEnabled
+     */
+    public Boolean getModuleEnabled() {
+	    return moduleEnabled;
+    }
+    
+    
+    /**
+     * @param moduleEnabled the moduleEnabled to set
+     */
+    public void setModuleEnabled(Boolean moduleEnabled) {
+	    this.moduleEnabled = moduleEnabled;
+    }
+    
+    
+    /**
+     * @return the notes
+     */
+    public String getNotes() {
+	    return notes;
+    }
+    
+    
+    /**
+     * @param notes the notes to set
+     */
+    public void setNotes(String notes) {
+	    this.notes = notes;
+    }
+    
+    
+    /**
+     * @return the usageDisclamerAccepted
+     */
+    public Boolean getUsageDisclamerAccepted() {
+	    return usageDisclamerAccepted;
+    }
+    
+    
+    /**
+     * @param usageDisclamerAccepted the usageDisclamerAccepted to set
+     */
+    public void setUsageDisclamerAccepted(Boolean usageDisclamerAccepted) {
+	    this.usageDisclamerAccepted = usageDisclamerAccepted;
+    }
+    
     /**
      * @see java.lang.Object#toString()
      */
@@ -287,15 +381,25 @@ public class AtlasData {
     	text = "Atlast Data"
     		   +"\nID: "+id
     		   +"\nName: "+name
+    		   +"\nImplementation type: "+implementationType
     		   +"\nWebsite: "+website
     		   +"\nImageURL: "+imageURL
     		   +"\nLatitude: "+latitude
     		   +"\nLongitude: "+longitude
-    		   +"\nContact Phone Number: "+contactPhoneNumber
+    		   +"\nContact Name: "+contactName
     		   +"\nContact Email: "+contactEmailAddress
+    		   +"\nNotes: "+notes
     		   +"\nInclude nr of patients: "+includeNumberOfPatients.toString()
     		   +"\nInclude nr of observations: "+includeNumberOfObservations.toString()
-    		   +"\nInclude nr of visits: "+includeNumberOfVisits.toString();
+    		   +"\nInclude nr of visits: "+includeNumberOfVisits.toString()
+    		   +"\nNr of patients: "+numberOfPatients
+		       +"\nNr of observations: "+numberOfObservations
+		       +"\nNr of visits: "+numberOfVisits
+    		   +"\nUsage disclamer accepted: "+usageDisclamerAccepted
+    		   +"\nInclude running modules: "+includeModules
+    		   +"\nModule is enabled: "+moduleEnabled;
+    		   
+		      
     	return text;
     }
 

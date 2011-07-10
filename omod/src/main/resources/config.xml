@@ -42,35 +42,49 @@
 	 /Required Privileges -->
 
 
-	<!-- Required Global Properties 
+	
 	<globalProperty>
-		<property>@MODULE_ID@.someProperty</property>
-		<defaultValue></defaultValue>
+		<property>@MODULE_ID@.numberOfPatients</property>
+		<defaultValue>?</defaultValue>
 		<description>
-			A description of the global property goes here.  The description
-			should explain enough for administrators to understand the purpose
-			and possible values for the global property.
+		    TEMPORARY -	Shows ? instead of the actual number of Patients, until it gets updated
 		</description>
 	</globalProperty>
-	/Required Global Properties -->
+	<globalProperty>
+		<property>@MODULE_ID@.numberOfObservations</property>
+		<defaultValue>?</defaultValue>
+		<description>
+		    TEMPORARY -	Shows ? instead of the actual number of Observations, until it gets updated
+		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.numberOfVisits</property>
+		<defaultValue>?</defaultValue>
+		<description>
+		    TEMPORARY -	Shows ? instead of the actual number of Visits, until it gets updated
+		</description>
+	</globalProperty>
 	
-	<!--
+	
+	
 	<dwr>
 		<allow>
-			<create creator="new" javascript="DWRFormEntryService">
-				<param name="class" value="org.openmrs.module.@MODULE_ID@.web.DWRFormEntryService"/>
-				<include method="enterForm"/>
+			<create creator="new" javascript="DWRAtlasService">
+				<param name="class" value="org.openmrs.module.@MODULE_ID@.web.dwr.DWRAtlasService"/>
+				<include method="saveAtlasData"/>
 			</create>
 		</allow>
 
 		<signatures>
 			<![CDATA[
-			import @MODULE_PACKAGE@.web.DWRFormEntryService;
-			DWRFormEntryService.enterForm(Integer patientId, Integer formId, boolean useEncounter, List<String> fields);
+			import @MODULE_PACKAGE@.web.dwr.DWRAtlasService;
+			DWRAtlasService.saveAtlasData(String id, String lat, String lng,
+			String name, String website, String imageURL, String phone,	String email,
+			String includeNumberOfObservations, String includeNumberOfPatients, String includeNumberOfVisits)
 			]]>
 		</signatures>	
 	</dwr>
-	-->
+	
 	
 	<!-- Servlets -->
 	<!-- Accessed through the url /pageContext()/moduleServlet/<moduleId>/<servlet-name> 
@@ -98,5 +112,6 @@
 	</messages>
 	<!-- /Internationalization -->
 	
+
 </module>
 

@@ -3,6 +3,7 @@ var map;
 var containerEdit;
 var containerView;
 var imgPlaceholder = 'http://a0.twimg.com/profile_images/672560906/OpenMRS-twitter-icon_bigger.png';
+var mailtoSubject = "?Subject=OpenMRS%20contact";
 
 jQuery(document).ready (function() {
 	containerEdit = document.getElementById('containerDiv-edit');
@@ -21,6 +22,9 @@ jQuery(document).ready (function() {
  	jQuery("#btnSubmit").click(function() {
  		CopyValuesFromViewToHiddenFields();
  	});
+ 	jQuery("#includeModulesTip").click(function() {
+ 		return false;
+ 	});
 });
 
 /*
@@ -31,8 +35,8 @@ function CopyValuesFromViewToHiddenFields() {
 	var div = jQuery("#leftColumnDiv");
 	jQuery('#atlasName', div).val(jQuery('#lblName', containerView).text());
 	jQuery('#atlasWebsite', div).val(jQuery('#lblWebsite', containerView).text());
-	jQuery('#atlasContactPhoneNumber', div).val(jQuery('#lblEmail', containerView).text());
-	jQuery('#atlasContactEmailAddress', div).val(jQuery('#lblPhone', containerView).text());
+	jQuery('#atlasContactName', div).val(jQuery('#lblEmail', containerView).text());
+	jQuery('#atlasContactEmailAddress', div).val(jQuery('#lblContactName', containerView).text());
 	jQuery('#atlasLatitude', div).val(position.lat());
 	jQuery('#atlasLongitude', div).val(position.lng());
 	jQuery('#atlasIncludeNumberOfPatients', div).val(jQuery('#cbPatients', containerEdit).attr('checked'));
@@ -145,6 +149,15 @@ function SetViewPlaceholders() {
 		}
 	});
 	
+	jQuery('.spanViewParent', containerView).each(function() {
+		$this = jQuery(this);
+		if (StringIsEmpty($this.text())) {
+			$this.parent().siblings('.labelPlaceHolder').show();
+		} else {
+			$this.parent().siblings('.labelPlaceHolder').hide();
+		}
+	});
+	
 	var img = jQuery('#imgImplementation', containerView);
 	if (StringIsEmpty(img.attr('src'))) {
 		img.attr('src', imgPlaceholder);
@@ -162,8 +175,9 @@ function View2Edit() {
 	jQuery('#tbName', containerEdit).val(jQuery('#lblName', containerView).text());
 	jQuery('#tbWebsite', containerEdit).val(jQuery('#lblWebsite', containerView).text());
 	jQuery('#tbEmail', containerEdit).val(jQuery('#lblEmail', containerView).text());
-	jQuery('#tbPhone', containerEdit).val(jQuery('#lblPhone', containerView).text());
-	
+	jQuery('#tbContactName', containerEdit).val(jQuery('#lblContactName', containerView).text());
+	jQuery('#tbNotes', containerEdit).val(jQuery('#lblNotes', containerView).text());
+
 	if (jQuery('#imgImplementation', containerView).attr('src') != imgPlaceholder) {
 		jQuery('#tbImage', containerEdit).val(jQuery('#imgImplementation', containerView).attr('src'));
 	} else {
@@ -181,9 +195,14 @@ function Edit2View() {
 	jQuery('#lblName', containerView).text(jQuery('#tbName', containerEdit).val());
 	jQuery('#lblWebsite', containerView).text(jQuery('#tbWebsite', containerEdit).val());
 	jQuery('#aWebsite', containerView).attr('href', jQuery('#tbWebsite', containerEdit).val());
-	jQuery('#lblEmail', containerView).text(jQuery('#tbEmail', containerEdit).val());
-	jQuery('#lblPhone', containerView).text(jQuery('#tbPhone', containerEdit).val());
+	jQuery('#lblContactName', containerView).text(jQuery('#tbContactName', containerEdit).val());
+	jQuery('#lblNotes', containerView).text(jQuery('#tbNotes', containerEdit).val());
 	
+	var email = jQuery('#tbEmail', containerEdit).val();
+	jQuery('#lblEmail', containerView).text(email);
+	if (!StringIsEmpty(email)) {
+		jQuery('#aEmail',containerView).attr('href','mailto:'+email+mailtoSubject);
+	}
 	if (jQuery('#cbVisits', containerEdit).attr('checked')) {
 		jQuery('#lblVisits', containerView).show();
 	} else {
@@ -206,7 +225,7 @@ function ViewIsEmpty() {
 	return (   (jQuery('#lblName', containerView).text() == '')
 			&& (jQuery('#lblWebsite', containerView).text() == '')
 			&& (jQuery('#lblEmail', containerView).text() == '')
-			&& (jQuery('#lblPhone', containerView).text() == ''));
+			&& (jQuery('#lblContactName', containerView).text() == ''));
 }
 
 function StyleContainers() {
@@ -275,7 +294,7 @@ function GetCurrentLatLng() {
      controlUI.style.borderWidth = '1px';
      controlUI.style.cursor = 'pointer';
      controlUI.style.textAlign = 'center';
-     controlUI.title = 'Click drop your Atlas Marker in the center of the map';
+     controlUI.title = 'Click to move the Atlas marker in the center of the map';
      controlDiv.appendChild(controlUI);
 
      // Set CSS for the control interior
@@ -284,7 +303,7 @@ function GetCurrentLatLng() {
      controlText.style.fontSize = '12px';
      controlText.style.paddingLeft = '4px';
      controlText.style.paddingRight = '4px';
-     controlText.innerHTML = '<b>Marker to Center</b>';
+     controlText.innerHTML = '<b>Center Marker</b>';
      controlUI.appendChild(controlText);
 
      // Setup the click event listeners: simply set the map to
@@ -346,17 +365,16 @@ function GetCurrentLatLng() {
 		}
 		infowindow.open(map,marker);
 	});
-
+    var markerToCenterDiv = document.createElement('DIV');
+    var markerToCenterControl = new MarkerToCenterControl(markerToCenterDiv);
+    markerToCenterDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(markerToCenterDiv);	
 	
     var locateMeControlDiv = document.createElement('DIV');
     var locateMeControl = new LocateMeControl(locateMeControlDiv);
     locateMeControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locateMeControlDiv);	
-    
-    var markerToCenterDiv = document.createElement('DIV');
-    var markerToCenterControl = new MarkerToCenterControl(markerToCenterDiv);
-    markerToCenterDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(markerToCenterDiv);		
+	
   }
 
 

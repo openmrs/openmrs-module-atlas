@@ -31,8 +31,13 @@
 					<property name="transactionManager"><ref bean="transactionManager"/></property>
 					<property name="target">
 						<bean class="org.openmrs.module.atlas.impl.AtlasServiceImpl">
+							<property name="statisticsDAO">
+								<bean class="org.openmrs.module.atlas.db.hibernate.HibernateStatisticsDAO">
+									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
+								</bean>
+							</property>	
 						</bean>
-					</property>
+				    </property>
                                         <property name="preInterceptors">
                                                 <ref bean="serviceInterceptors"/>
                                         </property> 
