@@ -19,6 +19,10 @@ jQuery(document).ready (function() {
  	InitializeMap();
  	bindSearchBox();
  	BindPlaceHolder(jQuery('#rightColumnDiv'));
+ 	initializeImplementationType();
+ 	
+ 	initializeGutter();
+ 	
  	jQuery("#btnSubmit").click(function() {
  		CopyValuesFromViewToHiddenFields();
  	});
@@ -26,6 +30,52 @@ jQuery(document).ready (function() {
  		return false;
  	});
 });
+
+function initializeGutter() {
+	$btnEnabled = jQuery('#btnEnable');
+	$btnDisabled = jQuery('#btnDisable');
+	jQuery('#cbDisclaimer').click(function() {
+	    if (jQuery(this).is(':checked')) {
+	    } else {
+	       if ($btnEnabled.is(':visible')) {
+	           $btnEnabled.click();
+	           $btnEnabled.attr("disabled", true);
+	       }  
+	    }
+	});
+}
+function initializeImplementationType() {
+ 	var $impl = jQuery('#implementationTypeOrdinal');
+ 	
+	jQuery("#tbType", containerEdit).val(getImplementationType($impl.val()));
+	jQuery('#lblImplementationType', containerView).text(getImplementationType($impl.val()));
+	jQuery('#btnPreviousType',containerEdit ).click(function () {
+		changeImplementationType(parseInt($impl.val()) - 1);
+	});
+	
+	jQuery('#btnNextType',containerEdit).click(function () {
+		changeImplementationType(parseInt($impl.val()) + 1);
+	});
+}
+function getImplementationType(ord) {
+	var str = '#implementationType'+ord;
+	return jQuery(str).val();
+}
+
+function getImplementationTypeLength() {
+	return parseInt(jQuery("#implementationTypeLength").val());
+}
+function changeImplementationType(ord) {
+	var length = getImplementationTypeLength();
+	if (ord == -1) {
+		ord = length-1;
+	} else if (ord == length) {
+		ord = 0;
+	}
+	
+	jQuery("#tbType",containerEdit).val(getImplementationType(ord));
+	jQuery('#implementationTypeOrdinal').val(ord);
+}
 
 /*
  * Function called before form submit
@@ -177,7 +227,7 @@ function View2Edit() {
 	jQuery('#tbEmail', containerEdit).val(jQuery('#lblEmail', containerView).text());
 	jQuery('#tbContactName', containerEdit).val(jQuery('#lblContactName', containerView).text());
 	jQuery('#tbNotes', containerEdit).val(jQuery('#lblNotes', containerView).text());
-
+	jQuery("#tbType", containerEdit).val(jQuery('#lblImplementationType', containerView).text());
 	if (jQuery('#imgImplementation', containerView).attr('src') != imgPlaceholder) {
 		jQuery('#tbImage', containerEdit).val(jQuery('#imgImplementation', containerView).attr('src'));
 	} else {
@@ -197,7 +247,7 @@ function Edit2View() {
 	jQuery('#aWebsite', containerView).attr('href', jQuery('#tbWebsite', containerEdit).val());
 	jQuery('#lblContactName', containerView).text(jQuery('#tbContactName', containerEdit).val());
 	jQuery('#lblNotes', containerView).text(jQuery('#tbNotes', containerEdit).val());
-	
+	jQuery('#lblImplementationType', containerView).text(jQuery("#tbType", containerEdit).val());
 	var email = jQuery('#tbEmail', containerEdit).val();
 	jQuery('#lblEmail', containerView).text(email);
 	if (!StringIsEmpty(email)) {

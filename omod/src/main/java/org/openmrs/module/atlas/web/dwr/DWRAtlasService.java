@@ -18,6 +18,7 @@ import java.util.UUID;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.atlas.AtlasData;
 import org.openmrs.module.atlas.AtlasService;
+import org.openmrs.module.atlas.ImplementationType;
 
 
 /**
@@ -41,5 +42,15 @@ public class DWRAtlasService {
 			Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//
 			service.setAtlasData(data);
+	}
+	
+	public String[] getImplementationTypes() {
+		String[] types = new String[ImplementationType.values().length];
+		int i = 0;
+		for (ImplementationType type :ImplementationType.values()) {
+			types[i] = type.toString();
+			i++;
+		}
+		return types;
 	}
 }

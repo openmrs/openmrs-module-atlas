@@ -2,8 +2,10 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 
+<openmrs:htmlInclude file="/scripts/jQuery/dataTables/dataTables.css" />
 <openmrs:htmlInclude file="/moduleResources/atlas/atlas.css" />
 <openmrs:htmlInclude file="/moduleResources/atlas/atlas.js" />
+<openmrs:htmlInclude file="/moduleResources/atlas/yqlgeo.js" />
 <openmrs:htmlInclude file="/moduleResources/atlas/yqlgeo.js" />
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
@@ -13,7 +15,7 @@
  
 function x() {
 	CopyValuesFromViewToHiddenFields();
-DWRAtlasService.saveAtlasData(jQuery("#atlasID").val(), jQuery("#atlasLatitude").val(), jQuery("#atlasLongitude").val()
+    DWRAtlasService.saveAtlasData(jQuery("#atlasID").val(), jQuery("#atlasLatitude").val(), jQuery("#atlasLongitude").val()
 		, jQuery("#atlasName").val(), jQuery("#atlasWebsite").val(), jQuery("#atlasImageURL").val()
 		, jQuery("#atlasContactName").val(), jQuery("#atlasContactEmailAddress").val()
 		, jQuery("#atlasIncludeNumberOfObservations").val()
@@ -27,11 +29,6 @@ DWRAtlasService.saveAtlasData(jQuery("#atlasID").val(), jQuery("#atlasLatitude")
 
 
 <br/>
-
-<c:set var="implementationTypes">
-    <%= ImplementationType.values() %>
-</c:set>
-
 
 <table id="containerDiv" style="display:hidden" >
             <tr>
@@ -49,7 +46,8 @@ DWRAtlasService.saveAtlasData(jQuery("#atlasID").val(), jQuery("#atlasLatitude")
                          <tr>
                             <td>
                               <span id="lblImplementationTypeLabel" class="spanView"><spring:message code="atlas.implementationTypeLabel" /></span>
-                              <span id="lblImplementationType" class="spanView"><spring:message code="atlas.${atlasData.implementationType}" /></span>
+                              <span id="lblImplementationType" class="spanView"></span>
+                            
                             </td>
                         </tr>
                         <tr>
@@ -139,13 +137,12 @@ DWRAtlasService.saveAtlasData(jQuery("#atlasID").val(), jQuery("#atlasLatitude")
                          <tr>
                             <td>
                              <span id="lblImplementationTypeLabel" class="spanView"><spring:message code="atlas.implementationTypeLabel" /></span>
-                            <select id="ddlImplemntationType">
-                             <option>Clinical</option>
-                             <option>Research</option>
-                             <option>Development</option>
-                             <option>Evaluation</option>
-                             <option>Other</option> 
-							</select>
+                             <input type="text" id="tbType" style="width: 137px" readonly="readonly">
+                             
+                             <div id="btnNextType" class="paginate_enabled_next" title="Next">
+                             </div>
+                             <div id="btnPreviousType" class="paginate_enabled_previous" title="Previous">
+                             </div>
                             </td>
                         </tr>
                         <tr>
@@ -237,7 +234,17 @@ DWRAtlasService.saveAtlasData(jQuery("#atlasID").val(), jQuery("#atlasLatitude")
   		<input type="hidden" id="atlasIncludeNumberOfPatients" name="atlasIncludeNumberOfPatients" value="${atlasData.includeNumberOfPatients}"/> 
   		<input type="hidden" id="atlasIncludeNumberOfObservations" name="atlasIncludeNumberOfObservations" value="${atlasData.includeNumberOfObservations}"/> 
   		<input type="hidden" id="atlasIncludeNumberOfVisits" name="atlasIncludeNumberOfVisits" value="${atlasData.includeNumberOfVisits}"/>
-  		
+  	
+  	    <input type="hidden" id="implementationTypeOrdinal" value="${atlasData.implementationType}" >
+  	    
+  	    <% String prefix = "implementationType"; Integer cnt = 0;
+  	       for (ImplementationType type: ImplementationType.values())  { 
+  	       String str = prefix+ cnt.toString();
+  	       %>
+  	    	 <input type="hidden" id="<%= str %>" value="<%= type.toString() %>" >
+  	    <% cnt++; } %>
+  	     <input type="hidden" id="implementationTypeLength" value="<%= cnt %>" >
+  	    	
   		<b class="boxHeader"><spring:message code="atlas.enableDisableHeader"/></b>
 		<div class="box">
         <table>

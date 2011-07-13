@@ -48,6 +48,24 @@
   	color: #aaa;
   }
   
+  .paginate_enabled_next 
+  {
+    float: right;
+    height: 19px;
+    margin-left: 3px;
+    width: 19px;
+  	background-image: url("/openmrs/moduleResources/atlas/next.jpg");
+  }
+  
+  .paginate_enabled_previous
+  {
+  	float: right;
+    height: 19px;
+    margin-left: 3px;
+    width: 19px;
+  	background-image: url("/openmrs/moduleResources/atlas/back.jpg");
+  }
+  
   .fail 
   {
   	color: red;

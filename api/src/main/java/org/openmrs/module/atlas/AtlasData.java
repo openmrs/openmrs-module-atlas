@@ -41,7 +41,7 @@ public class AtlasData {
 	 private Boolean usageDisclamerAccepted;
 	 private Boolean moduleEnabled;
 	 private Boolean includeModules;
-	 private ImplementationType implementationType;
+	 private int implementationType;
 
 
 	 
@@ -67,7 +67,7 @@ public class AtlasData {
   	    this.includeModules = true;
   	    this.usageDisclamerAccepted = false;
   	    this.moduleEnabled = false;
-  	    this.implementationType = ImplementationType.Clinical;
+  	    this.implementationType = 0;
     }
     /**
      * 
@@ -296,7 +296,7 @@ public class AtlasData {
     /**
      * @return the implementationType
      */
-    public ImplementationType getImplementationType() {
+    public int getImplementationType() {
 	    return implementationType;
     }
     
@@ -304,7 +304,7 @@ public class AtlasData {
     /**
      * @param implementationType the implementationType to set
      */
-    public void setImplementationType(ImplementationType implementationType) {
+    public void setImplementationType(int implementationType) {
 	    this.implementationType = implementationType;
     }
     

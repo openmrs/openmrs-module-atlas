@@ -72,6 +72,7 @@
 			<create creator="new" javascript="DWRAtlasService">
 				<param name="class" value="org.openmrs.module.@MODULE_ID@.web.dwr.DWRAtlasService"/>
 				<include method="saveAtlasData"/>
+				<include method="getImplementationTypes" />
 			</create>
 		</allow>
 
@@ -80,7 +81,8 @@
 			import @MODULE_PACKAGE@.web.dwr.DWRAtlasService;
 			DWRAtlasService.saveAtlasData(String id, String lat, String lng,
 			String name, String website, String imageURL, String phone,	String email,
-			String includeNumberOfObservations, String includeNumberOfPatients, String includeNumberOfVisits)
+			String includeNumberOfObservations, String includeNumberOfPatients, String includeNumberOfVisits);
+			DWRAtlasService.getImplementationTypes();
 			]]>
 		</signatures>	
 	</dwr>
