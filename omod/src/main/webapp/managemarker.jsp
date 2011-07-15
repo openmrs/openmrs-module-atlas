@@ -258,6 +258,7 @@ function x() {
                             			</td>
         	</tr>
         <tr><td colspan="2">
+        <div class="divCenter">
   		<input id="btnEnable" type="submit" class="btnEnabled" onclick=""
   					<c:if test="${atlasData.moduleEnabled == false}">
 										style="display: none"
@@ -270,6 +271,7 @@ function x() {
 					</c:if>
   		value="<spring:message code="atlas.buttonDisabled" />"
   		 /> 
+  		 </div>
   		 
   		</td></tr>
   		</table> 
