@@ -45,9 +45,10 @@ function x() {
                         </tr>
                          <tr>
                             <td>
+                            <span>
                               <span id="lblImplementationTypeLabel" class="spanView"><spring:message code="atlas.implementationTypeLabel" /></span>
                               <span id="lblImplementationType" class="spanView"></span>
-                            
+                            </span>
                             </td>
                         </tr>
                         <tr>
@@ -190,8 +191,7 @@ function x() {
             </tr>
             <tr>
                 <td colspan="2">
-                	<textarea rows="3" cols="40" id="tbNotes" style="resize: none;" placeholder="<spring:message code="atlas.notesPlaceHolder"/>">
-                	</textarea>
+                	<textarea rows="3" cols="40" id="tbNotes" style="resize: none;" placeholder="<spring:message code="atlas.notesPlaceHolder"/>"></textarea>
                 </td>
             </tr> 
             <tr>
@@ -224,27 +224,17 @@ function x() {
   	<form method="post">
 		
   		<input type="hidden" id="atlasID" name="atlasID" value="${atlasData.id}"/> 
-  		<input type="hidden" id="atlasImageURL" name="atlasImageURL" value="${atlasData.imageURL}"/> 
   		<input type="hidden" id="atlasLatitude" name="atlasLatitude" value="${atlasData.latitude}"/>
   		<input type="hidden" id="atlasLongitude" name="atlasLongitude" value="${atlasData.longitude}"/> 
-  		<input type="hidden" id="atlasName" name="atlasName" value="${atlasData.name}"/>
-  		<input type="hidden" id="atlasWebsite" name="atlasWebsite" value="${atlasData.website}"/> 
-  		<input type="hidden" id="atlasContactName" name="atlasContactName" value="${atlasData.contactName}"/> 
-  		<input type="hidden" id="atlasContactEmailAddress" name="atlasContactEmailAddress" value="${atlasData.contactEmailAddress}"/> 
-  		<input type="hidden" id="atlasIncludeNumberOfPatients" name="atlasIncludeNumberOfPatients" value="${atlasData.includeNumberOfPatients}"/> 
-  		<input type="hidden" id="atlasIncludeNumberOfObservations" name="atlasIncludeNumberOfObservations" value="${atlasData.includeNumberOfObservations}"/> 
-  		<input type="hidden" id="atlasIncludeNumberOfVisits" name="atlasIncludeNumberOfVisits" value="${atlasData.includeNumberOfVisits}"/>
   	
   	    <input type="hidden" id="implementationTypeOrdinal" value="${atlasData.implementationType}" >
   	    
-  	    <% String prefix = "implementationType"; Integer cnt = 0;
-  	       for (ImplementationType type: ImplementationType.values())  { 
-  	       String str = prefix+ cnt.toString();
-  	       %>
-  	    	 <input type="hidden" id="<%= str %>" value="<%= type.toString() %>" >
-  	    <% cnt++; } %>
-  	     <input type="hidden" id="implementationTypeLength" value="<%= cnt %>" >
-  	    	
+  	     <input type="hidden" id="implementationTypeLength" value="${atlasData.implementationTypesLength}" >
+  	    
+  	     <c:forEach items="${atlasData.implementationTypes}" var="impType" varStatus="loopStatus">
+               <input type="hidden" id="implementationType${loopStatus.index}" value="<spring:message code="atlas.implementationType${impType}"/>" >
+         </c:forEach>         
+              	
   		<b class="boxHeader"><spring:message code="atlas.enableDisableHeader"/></b>
 		<div class="box">
         <table>

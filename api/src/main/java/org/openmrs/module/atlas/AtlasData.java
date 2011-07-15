@@ -379,28 +379,42 @@ public class AtlasData {
     public String toString() {
     	String text = "";
     	text = "Atlast Data"
-    		   +"\nID: "+id
+    		   +"\nID: "+id +"||"
     		   +"\nName: "+name
-    		   +"\nImplementation type: "+implementationType
-    		   +"\nWebsite: "+website
-    		   +"\nImageURL: "+imageURL
-    		   +"\nLatitude: "+latitude
-    		   +"\nLongitude: "+longitude
-    		   +"\nContact Name: "+contactName
-    		   +"\nContact Email: "+contactEmailAddress
-    		   +"\nNotes: "+notes
-    		   +"\nInclude nr of patients: "+includeNumberOfPatients.toString()
-    		   +"\nInclude nr of observations: "+includeNumberOfObservations.toString()
-    		   +"\nInclude nr of visits: "+includeNumberOfVisits.toString()
-    		   +"\nNr of patients: "+numberOfPatients
-		       +"\nNr of observations: "+numberOfObservations
-		       +"\nNr of visits: "+numberOfVisits
-    		   +"\nUsage disclamer accepted: "+usageDisclamerAccepted
-    		   +"\nInclude running modules: "+includeModules
-    		   +"\nModule is enabled: "+moduleEnabled;
+    		   +"\nImplementation type: "+implementationType +"||"
+    		   +"\nWebsite: "+website +"||"
+    		   +"\nImageURL: "+imageURL +"||"
+    		   +"\nLatitude: "+latitude +"||"
+    		   +"\nLongitude: "+longitude +"||"
+    		   +"\nContact Name: "+contactName +"||"
+    		   +"\nContact Email: "+contactEmailAddress +"||"
+    		   +"\nNotes: "+notes +"||"
+    		   +"\nInclude nr of patients: "+includeNumberOfPatients.toString() +"||"
+    		   +"\nInclude nr of observations: "+includeNumberOfObservations.toString() +"||"
+    		   +"\nInclude nr of visits: "+includeNumberOfVisits.toString() +"||"
+    		   +"\nNr of patients: "+numberOfPatients +"||"
+		       +"\nNr of observations: "+numberOfObservations +"||"
+		       +"\nNr of visits: "+numberOfVisits +"||"
+    		   +"\nUsage disclamer accepted: "+usageDisclamerAccepted +"||"
+    		   +"\nInclude running modules: "+includeModules +"||"
+    		   +"\nModule is enabled: "+moduleEnabled +"||";
     		   
 		      
     	return text;
+    }
+    
+    public String[] getImplementationTypes() {
+    	String[] impTypes = new String[ImplementationType.values().length];
+    	int i = 0;
+    	for (ImplementationType type : ImplementationType.values()) {
+    		impTypes[i] = type.toString();
+    		i++;
+    	}
+    	return impTypes;
+    }
+    
+    public Integer getImplementationTypesLength() {
+    	return ImplementationType.values().length;
     }
 
 }

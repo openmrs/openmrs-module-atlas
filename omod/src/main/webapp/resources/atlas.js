@@ -335,6 +335,12 @@ function Edit2View() {
 	jQuery('#lblContactName', containerView).text(jQuery('#tbContactName', containerEdit).val());
 	jQuery('#lblNotes', containerView).text(jQuery('#tbNotes', containerEdit).val());
 	jQuery('#lblImplementationType', containerView).text(jQuery("#tbType", containerEdit).val());
+	if (jQuery('#implementationTypeOrdinal').val() == '0') {
+		jQuery('#lblImplementationType', containerView).parent().hide();
+	} else {
+		jQuery('#lblImplementationType', containerView).parent().show();
+	}
+	
 	var email = jQuery('#tbEmail', containerEdit).val();
 	jQuery('#lblEmail', containerView).text(email);
 	if (!StringIsEmpty(email)) {
@@ -497,6 +503,11 @@ function GetCurrentLatLng() {
 			infowindow.setContent(containerEdit);
 		} else { 
 			SetViewPlaceholders();
+			if (jQuery('#implementationTypeOrdinal').val() == '0') {
+				jQuery('#lblImplementationType', containerView).parent().hide();
+			} else {
+				jQuery('#lblImplementationType', containerView).parent().show();
+			}
 			jQuery(containerView).show();
 			infowindow.setContent(containerView);
 		}

@@ -18,6 +18,7 @@ package org.openmrs.module.atlas;
  *
  */
 public enum ImplementationType {
+	Blank,
     Clinical,
     Research,
     Development,
