@@ -23,25 +23,110 @@ jQuery(document).ready (function() {
  	
  	initializeGutter();
  	
- 	jQuery("#btnSubmit").click(function() {
- 		CopyValuesFromViewToHiddenFields();
- 	});
+ 	getStatisticsFromServer();
  	jQuery("#includeModulesTip").click(function() {
  		return false;
  	});
 });
 
+function saveAtlasBubbleDataOnServer() {
+	var position = marker.getPosition();
+	
+	var id = jQuery("#atlasID").val();
+	var name = jQuery('#lblName', containerView).text();
+	var website = jQuery('#lblWebsite', containerView).text();
+	var contactName = jQuery('#lblContactName', containerView).text();
+	var contactEmailAddress = jQuery('#lblEmail', containerView).text();
+	var notes = jQuery('#lblNotes', containerView).text();
+	var implementationType = jQuery('#implementationTypeOrdinal').val();
+	var latitude = position.lat();
+	var longitude = position.lng();
+	var includeNumberOfPatients = jQuery('#cbPatients', containerEdit).attr('checked');
+	var includeNumberOfObservations = jQuery('#cbObservations', containerEdit).attr('checked');
+	var includeNumberOfVisits = jQuery('#cbVisits', containerEdit).attr('checked');
+	var imgSrc = jQuery('#imgImplementation', containerView).attr('src');
+	if (imgSrc != imgPlaceholder) {
+		//jQuery('#atlasImageURL', div).val(imgSrc);
+	} else {
+		imgSrc = '';
+	}
+	
+	DWRAtlasService.saveAtlasBubbleData(id, latitude, longitude, 
+			name, implementationType ,website, imgSrc
+			,notes, contactName, contactEmailAddress
+			,includeNumberOfPatients, includeNumberOfObservations, includeNumberOfVisits);
+}
+
+function getStatisticsFromServer() {
+	DWRAtlasService.updateAndGetStatistics(getStatisticsFromServerCallback);
+}
+
+function getStatisticsFromServerCallback(stats) {
+	jQuery('#lblVisitsNr', containerView).text(stats[1]);
+	jQuery('#lblPatientsNr', containerView).text(stats[0]);
+	jQuery('#lblObservationsNr', containerView).text(stats[2]);
+}
+
+function enableAtlasModuleOnServer() {
+	DWRAtlasService.enableAtlasModule();
+}
+
+function disableAtlasModuleOnServer(cbDisclamerIsChecked) {
+	DWRAtlasService.disableAtlasModule(cbDisclamerIsChecked);
+}
+
+function setIncludeModulesOnServer(value) {
+	DWRAtlasService.setIncludeModules(value);
+}
+
+function updatePositionOnServer() {
+var position = marker.getPosition();
+	DWRAtlasService.setPosition(position.lat(), position.lng());
+}
+
 function initializeGutter() {
 	$btnEnabled = jQuery('#btnEnable');
 	$btnDisabled = jQuery('#btnDisable');
+	
+	jQuery('#cbIncludeModules').click(function() {
+		setIncludeModulesOnServer(jQuery(this).is(':checked'));
+	});
+	
+	if (!jQuery('#cbDisclaimer').is(':checked')) {
+		  $btnDisabled.addClass('btnDisabledDisabled');
+          $btnDisabled.removeClass('btnDisabled');
+          $btnDisabled.attr("disabled", true);
+	}
+	
 	jQuery('#cbDisclaimer').click(function() {
 	    if (jQuery(this).is(':checked')) {
+	    	if ($btnDisabled.attr("disabled") == true) {
+	    		$btnDisabled.attr("disabled", false);
+	    		$btnDisabled.removeClass('btnDisabledDisabled');
+	    		$btnDisabled.addClass('btnDisabled');
+	    	}
 	    } else {
 	       if ($btnEnabled.is(':visible')) {
 	           $btnEnabled.click();
-	           $btnEnabled.attr("disabled", true);
 	       }  
-	    }
+	       $btnDisabled.addClass('btnDisabledDisabled');
+           $btnDisabled.removeClass('btnDisabled');
+           $btnDisabled.attr("disabled", true);
+	    } 
+	});
+	
+	$btnEnabled.click(function() {
+		$btnDisabled.show();
+		$btnEnabled.hide();
+		disableAtlasModuleOnServer(jQuery('#cbDisclaimer').is(':checked'));
+		return false;
+	});
+	
+	$btnDisabled.click(function() {
+		$btnDisabled.hide();
+		$btnEnabled.show();
+		enableAtlasModuleOnServer();
+		return false;
 	});
 }
 function initializeImplementationType() {
@@ -78,6 +163,7 @@ function changeImplementationType(ord) {
 }
 
 /*
+ * NOT USED
  * Function called before form submit
  */
 function CopyValuesFromViewToHiddenFields() {
@@ -161,6 +247,7 @@ function BindEvents(infowindow) {
 			Edit2View();
 			jQuery(containerView).show();
 			infowindow.setContent(containerView);
+			saveAtlasBubbleDataOnServer();
 		} else {
 			infowindow.setContent(containerEdit);
 		}
@@ -415,6 +502,11 @@ function GetCurrentLatLng() {
 		}
 		infowindow.open(map,marker);
 	});
+	
+	google.maps.event.addListener(marker, 'dragend', function() {
+		updatePositionOnServer();
+	});
+	
     var markerToCenterDiv = document.createElement('DIV');
     var markerToCenterControl = new MarkerToCenterControl(markerToCenterDiv);
     markerToCenterDiv.index = 1;
@@ -438,6 +530,7 @@ function GetCurrentLatLng() {
  
  function markerToCenter() {
 	 marker.setPosition(map.getCenter());
+	 updatePositionOnServer();
  }
  
  //todo localized strings
@@ -482,6 +575,7 @@ function handle_geolocation_query(position) {
     marker.setPosition(myLatlng); 
 	map.setCenter(myLatlng);
 	map.setZoom(14);
+	updatePositionOnServer();
 }  
   
 function bindSearchBox() {

@@ -103,6 +103,14 @@
    	  background: url("/openmrs/moduleResources/atlas/red.jpeg") no-repeat center left;
    }
    
+    .btnDisabledDisabled {
+      width: 150px;
+   	  height: 80px;
+      padding-right: 10px;
+      text-align: right;
+   	  background: url("/openmrs/moduleResources/atlas/red.jpeg") no-repeat center left;
+   }
+   
   
    
  

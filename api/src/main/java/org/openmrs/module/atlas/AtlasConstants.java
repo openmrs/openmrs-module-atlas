@@ -23,9 +23,11 @@ public class AtlasConstants {
 	public final static String GLOBALPROPERTY_NAME = "atlas.name";
 	public final static String GLOBALPROPERTY_LATITUDE= "atlas.latitude";
 	public final static String GLOBALPROPERTY_LONGITUDE= "atlas.longitude";
+	public final static String GLOBALPROPERTY_IMPLEMENTATION_TYPE = "atlas.implementationType";
 	public final static String GLOBALPROPERTY_WEBSITE = "atlas.website";
 	public final static String GLOBALPROPERTY_IMAGE_URL= "atlas.imageURL";
-	public final static String GLOBALPROPERTY_CONTACT_PHONE_NUMBER = "atlas.contactPhoneNumber";
+	public final static String GLOBALPROPERTY_NOTES = "atlas.notes";
+	public final static String GLOBALPROPERTY_CONTACT_NAME = "atlas.contactName";
 	public final static String GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS = "atlas.contactEmailAddress";
 	public final static String GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS = "atlas.includeNumberOfPatients";
 	public final static String GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS = "atlas.includeNumberOfObservations";
@@ -33,6 +35,10 @@ public class AtlasConstants {
 	public final static String GLOBALPROPERTY_NUMBER_OF_PATIENTS = "atlas.numberOfPatients";
 	public final static String GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS = "atlas.numberOfObservations";
 	public final static String GLOBALPROPERTY_NUMBER_OF_VISITS = "atlas.numberOfVisits";
+	
+	public final static String GLOBALPROPERTY_MODULE_ENABLED = "atlas.moduleEnabled";
+	public final static String GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED = "atlas.usageDisclaimerAccepted";
+	public final static String GLOBALPROPERTY_INCLUDE_MODULES = "atlas.includeModules";
 	
 	public final static String POST_ATLAS_DATA_TASK_NAME = "Post Atlas Data Task";
 	public final static String POST_ATLAS_DATA_TASK_DESCRIPTION = "Send Atlas information to OpenMRS on a weekly basis.";

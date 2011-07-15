@@ -15,6 +15,7 @@ package org.openmrs.module.atlas;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.Activator;
 
 /**
@@ -36,6 +37,9 @@ public class AtlasModuleActivator implements Activator {
 	 */
 	public void shutdown() {
 		log.info("Shutting down Atlas Module");
+		Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			service.disableAtlasModule(false);
 	}
 	
 }

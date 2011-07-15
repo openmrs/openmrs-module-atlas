@@ -71,18 +71,32 @@
 		<allow>
 			<create creator="new" javascript="DWRAtlasService">
 				<param name="class" value="org.openmrs.module.@MODULE_ID@.web.dwr.DWRAtlasService"/>
-				<include method="saveAtlasData"/>
-				<include method="getImplementationTypes" />
+				<include method="saveAtlasBubbleData"/>
+				<include method="enableAtlasModule"/>
+				<include method="disableAtlasModule"/>
+				<include method="setIncludeModules"/>
+				<include method="setPosition"/>
+				<include method="updateAndGetStatistics"/>
 			</create>
 		</allow>
 
 		<signatures>
 			<![CDATA[
 			import @MODULE_PACKAGE@.web.dwr.DWRAtlasService;
-			DWRAtlasService.saveAtlasData(String id, String lat, String lng,
-			String name, String website, String imageURL, String phone,	String email,
-			String includeNumberOfObservations, String includeNumberOfPatients, String includeNumberOfVisits);
-			DWRAtlasService.getImplementationTypes();
+			DWRAtlasService.saveAtlasBubbleData(String idStr, String latStr,	String lngStr,
+			String name, String implementationTypeStr, String website, String imageURL, 
+			String notes, String contactName, String contactEmail,
+			String includeNumberOfPatientsStr, String includeNumberOfObservationsStr, String includeNumberOfVisitsStr);
+			
+			DWRAtlasService.enableAtlasModule();
+			
+			DWRAtlasService.disableAtlasModule(String disclaimerAcceptedStr);
+			
+			DWRAtlasService.setIncludeModules(String includeModulesStr);
+			
+			DWRAtlasService.setPosition(String latStr, String lngStr);
+			
+			DWRAtlasService.updateAndGetStatistics();
 			]]>
 		</signatures>	
 	</dwr>

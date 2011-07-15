@@ -18,39 +18,75 @@ import java.util.UUID;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.atlas.AtlasData;
 import org.openmrs.module.atlas.AtlasService;
-import org.openmrs.module.atlas.ImplementationType;
 
 
 /**
  *
  */
 public class DWRAtlasService {
-	public void saveAtlasData(String idStr, String latStr,	String lngStr,
-			String name, String website, String imageURL, String phone,	String email,
-			String includeNumberOfObservationsStr, String includeNumberOfPatientsStr, String includeNumberOfVisitsStr)
+	public void saveAtlasBubbleData(String idStr, String latStr,	String lngStr,
+			String name, String implementationTypeStr, String website, String imageURL, 
+			String notes, String contactName, String contactEmail,
+			String includeNumberOfPatientsStr, String includeNumberOfObservationsStr, String includeNumberOfVisitsStr)
 	{
 		
 		UUID id = UUID.fromString(idStr);
 		Double lat = Double.valueOf(latStr);
 		Double lng = Double.valueOf(lngStr);
+		Integer implementationType = Integer.parseInt(implementationTypeStr);
 		Boolean includeNumberOfObservations = Boolean.parseBoolean(includeNumberOfObservationsStr);
 		Boolean includeNumberOfPatients = Boolean.parseBoolean(includeNumberOfPatientsStr);
 		Boolean includeNumberOfVisits = Boolean.parseBoolean(includeNumberOfVisitsStr);
 		
-			AtlasData data = new AtlasData(id, name, website, imageURL, lat, lng, phone, email, includeNumberOfPatients, includeNumberOfObservations, includeNumberOfVisits);
+			AtlasData data = new AtlasData();
+			data.setId(id);
+			data.setName(name);
+			data.setImplementationType(implementationType);
+			data.setWebsite(website);
+			data.setImageURL(imageURL);
+			data.setLatitude(lat);
+			data.setLongitude(lng);
+			data.setNotes(notes);
+			data.setContactName(contactName);
+			data.setContactEmailAddress(contactEmail);
+			data.setIncludeNumberOfPatients(includeNumberOfPatients);
+			data.setIncludeNumberOfObservations(includeNumberOfObservations);
+			data.setIncludeNumberOfVisits(includeNumberOfVisits);
+			 
 			System.out.println("DWR" + data.toString());
 			Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//
-			service.setAtlasData(data);
+			AtlasService service =  (AtlasService)o;  
+			service.setAtlasBubbleData(data);
 	}
 	
-	public String[] getImplementationTypes() {
-		String[] types = new String[ImplementationType.values().length];
-		int i = 0;
-		for (ImplementationType type :ImplementationType.values()) {
-			types[i] = type.toString();
-			i++;
-		}
-		return types;
-	}
+     public void enableAtlasModule() {
+    	 Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			service.enableAtlasModule();
+     }
+
+
+      public void disableAtlasModule(String disclaimerAcceptedStr) {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			service.disableAtlasModule(Boolean.parseBoolean(disclaimerAcceptedStr));
+      }
+      
+      public void setIncludeModules(String includeModulesStr) {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			service.setIncludeModules(Boolean.parseBoolean(includeModulesStr));
+      }
+      
+      public void setPosition(String latStr, String lngStr) {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			service.setPosition(Double.parseDouble(latStr), Double.parseDouble(lngStr));
+      }
+      
+      public String[] updateAndGetStatistics() {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			return service.updateAndGetStatistics();
+      }
 }

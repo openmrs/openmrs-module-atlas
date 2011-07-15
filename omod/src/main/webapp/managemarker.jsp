@@ -63,21 +63,21 @@ function x() {
 										style="display: none"
 							    </c:if>
                             >
-                            	<c:out value="${atlasData.numberOfPatients}"/> <spring:message code="atlas.patients" /><br/>
+                            	<span id="lblPatientsNr"><c:out value="${atlasData.numberOfPatients}"/> </span> <spring:message code="atlas.patients" /><br/>
                             </span> 
                             <span class="stats" id="lblVisits" 
                                <c:if test="${atlasData.includeNumberOfVisits == false}">
 										style="display: none"
 							   </c:if>
                             >
-                            	<c:out value="${atlasData.numberOfVisits}"/> <spring:message code="atlas.visits" /><br/>
+                            	<span id="lblVisitsNr"><c:out value="${atlasData.numberOfVisits}"/> </span> <spring:message code="atlas.visits" /><br/>
                             </span> 
                             <span class="stats" id="lblObservations"
                                <c:if test="${atlasData.includeNumberOfObservations == false}">
 										style="display: none"
 							   </c:if>
                             >
-                            	<c:out value="${atlasData.numberOfObservations}"/> <spring:message code="atlas.observations" />
+                            	 <span id="lblObservationsNr"><c:out value="${atlasData.numberOfObservations}"/> </span> <spring:message code="atlas.observations" />
                             </span> 
                             </td>
                         </tr>

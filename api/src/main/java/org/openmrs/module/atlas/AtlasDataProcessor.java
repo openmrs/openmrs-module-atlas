@@ -18,12 +18,17 @@ import org.apache.commons.logging.LogFactory;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.scheduler.SchedulerService;
+import org.openmrs.module.Module;
+import org.openmrs.module.ModuleFactory;
 
 
 
@@ -35,8 +40,6 @@ public class AtlasDataProcessor {
 	private  Log log = LogFactory.getLog(this.getClass());	
 	
 	   public void postAtlasData(AtlasData data) {
-	    	
-	        	
 	    	String jsonData = getJson(data);
 	    	try {
 		    	URL u = new URL(AtlasConstants.SERVER_URL);
@@ -62,10 +65,13 @@ public class AtlasDataProcessor {
 			}
 	    }
 	    
+
+	   
 	   private String getJson(AtlasData data) {
 	    	StringBuilder sb = new StringBuilder();
-	    	sb.append("{ 'geolocation' :  {'lat' : '"+ data.getLatitude()+"', 'lng' : '"+ data.getLongitude()+"'}, ");
+	    	sb.append("{ 'geolocation' :  {'latitude' : '"+ data.getLatitude()+"', 'longitude' : '"+ data.getLongitude()+"'}, ");
 	    	sb.append("'name' : '"+data.getName()+"',");
+	    	sb.append("'type' : '"+ ImplementationType.values()[data.getImplementationType()]+"',");
 	        sb.append("'website' : '"+ data.getWebsite() +"',");
 	        sb.append("'imageURL' : '"+ data.getImageURL() +"',");
 	        if (data.getIncludeNumberOfPatients()) {
@@ -78,7 +84,22 @@ public class AtlasDataProcessor {
 	        	sb.append("'visits' : '"+ data.getNumberOfVisits() + "',");
 	        }
 	        sb.append("'contact_details' :  {'email' : '" + data.getContactEmailAddress() + "',");
-	        sb.append("'phone' : '" + data.getContactName() + "' }  }");
+	        sb.append("'contact_name' : '" + data.getContactName() + "' }");
+	        
+	        if (data.getIncludeModules()) {
+	        	Collection<Module> modules = ModuleFactory.getLoadedModules();
+	        	sb.append(", 'modules' : [");
+	   		    for (Module mod : modules) {
+	   		    	sb.append("{'id': '" + mod.getModuleId() + "',");
+	   			    sb.append("'name': '" + mod.getName() + "',");
+	   			    sb.append("'version': '" + mod.getVersion() + "',");
+	   			    sb.append("'isStarted' : '" + mod.isStarted() + "'},");
+	   		    }
+	   		    //delete last "," 
+	   		    sb.deleteCharAt(sb.length() - 1);
+  			    sb.append("]");
+	        }
+	        sb.append("}");
 	        return sb.toString();
 	    }
 
@@ -87,6 +108,7 @@ public class AtlasDataProcessor {
 	    	AtlasData atlasData = new AtlasData();
 			try {
 				
+			
 				svc = Context.getAdministrationService();
 				String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
 
@@ -101,6 +123,9 @@ public class AtlasDataProcessor {
 					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME)) != null) {
 						atlasData.setName(globalProperty);
 					}
+					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE)) != null) {
+						atlasData.setImplementationType(Integer.valueOf(globalProperty));
+					}
 					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL)) != null) {
 						atlasData.setImageURL(globalProperty);
 					}
@@ -110,10 +135,13 @@ public class AtlasDataProcessor {
 					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE)) != null) {
 						atlasData.setLongitude(Double.valueOf(globalProperty));
 					}
+					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES)) != null) {
+						atlasData.setNotes(globalProperty);
+					}
 					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS)) != null) {
 						atlasData.setContactEmailAddress(globalProperty);
 					}
-					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_PHONE_NUMBER)) != null) {
+					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME)) != null) {
 						atlasData.setContactName(globalProperty);
 					}
 					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS)) != null) {
@@ -135,6 +163,16 @@ public class AtlasDataProcessor {
 					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_VISITS)) != null) {
 						atlasData.setNumberOfVisits(globalProperty);
 					}
+					
+					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_MODULES)) != null) {
+						atlasData.setIncludeModules(Boolean.parseBoolean(globalProperty));
+					}
+					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED)) != null) {
+						atlasData.setModuleEnabled(Boolean.parseBoolean(globalProperty));
+					}
+					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED)) != null) {
+						atlasData.setUsageDisclamerAccepted(Boolean.parseBoolean(globalProperty));
+					}
 				}
 			}
 			catch (APIException apiEx) {
@@ -142,6 +180,7 @@ public class AtlasDataProcessor {
 					log.error("Could not get atlas data. Exception:"+apiEx.getMessage());
 			}
 			
+			System.out.println("GetAtlasData: " + getJson(atlasData));
 			System.out.println("GetAtlasData: " + atlasData.toString());
 			return atlasData;
 	    }
@@ -156,10 +195,45 @@ public class AtlasDataProcessor {
 					svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
 				} 
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString()));
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite()));
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL()));
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data.getContactEmailAddress()));
-				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_PHONE_NUMBER, data.getContactName()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES, data.getNotes()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude().toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data.getIncludeNumberOfPatients().toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_VISITS, data.getIncludeNumberOfVisits().toString()));
+				
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, data.getUsageDisclamerAccepted().toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_MODULES, data.getIncludeModules().toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled().toString()));
+			}
+			catch (APIException apiEx) {
+				if (log.isErrorEnabled())
+					log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
+			}
+			System.out.println("SetAtlasData: " + data.toString());
+	    }
+	    
+	    public void setAtlasBubbleData(AtlasData data)  {
+	    	AdministrationService svc = null;
+			try {
+				svc = Context.getAdministrationService();
+				String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
+
+				if (idString == null || idString.trim().equals(""))	{
+					svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
+				} 
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data.getContactEmailAddress()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES, data.getNotes()));
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString()));
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude().toString()));
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString()));
@@ -173,6 +247,69 @@ public class AtlasDataProcessor {
 			System.out.println("SetAtlasData: " + data.toString());
 	    }
 	    
-	  
+        
+	    public void setModuleEnabled(Boolean moduleEnabled) {
+			AdministrationService svc = null;
+			try {
+				svc = Context.getAdministrationService();
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, moduleEnabled.toString()));
+			}
+			catch (APIException apiEx) {
+				if (log.isErrorEnabled())
+					log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
+			}
+		}
+		
+	    public void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) {
+			AdministrationService svc = null;
+			try {
+				svc = Context.getAdministrationService();
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, usageDisclaimerAccepted.toString()));
+			}
+			catch (APIException apiEx) {
+				if (log.isErrorEnabled())
+					log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
+			}
+		}
+		
+	    public void setIncludeModules(Boolean includeModules) {
+			AdministrationService svc = null;
+			try {
+				svc = Context.getAdministrationService();
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_MODULES, includeModules.toString()));
+			}
+			catch (APIException apiEx) {
+				if (log.isErrorEnabled())
+					log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
+			}
+		}
 	    
+	    public void setStatistics(Long numberOfPatients, Long numberOfVisits, Long numberOfObservations) {
+	    	AdministrationService svc = null;
+			SchedulerService x;
+			try {
+				svc = Context.getAdministrationService();
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS, numberOfObservations.toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS, numberOfPatients.toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_VISITS, numberOfVisits.toString()));
+			}
+			catch (APIException apiEx) {
+				if (log.isErrorEnabled())
+					log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
+			}
+	    }
+	    
+	    public void setPosition(Double lat, Double lng) {
+			AdministrationService svc = null;
+			try {
+				svc = Context.getAdministrationService();
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, lat.toString()));
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, lng.toString()));
+				
+			}
+			catch (APIException apiEx) {
+				if (log.isErrorEnabled())
+					log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
+			}
+		}
 }

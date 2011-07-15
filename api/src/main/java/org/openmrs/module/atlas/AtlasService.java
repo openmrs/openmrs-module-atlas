@@ -14,6 +14,8 @@
 package org.openmrs.module.atlas;
 
 
+import java.util.List;
+
 import org.openmrs.api.APIException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,5 +26,12 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AtlasService {
 	AtlasData getAtlasData() throws APIException;
 	void setAtlasData(AtlasData data) throws APIException;	
-
+	void enableAtlasModule() throws APIException;
+	void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException;
+	void setAtlasBubbleData(AtlasData data) throws APIException;
+	void setPosition(Double lat, Double lng) throws APIException;
+	void setIncludeModules(Boolean includeModules) throws APIException;
+	void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException;
+    void updateStatistics() throws APIException;
+    String[] updateAndGetStatistics() throws APIException;
 }

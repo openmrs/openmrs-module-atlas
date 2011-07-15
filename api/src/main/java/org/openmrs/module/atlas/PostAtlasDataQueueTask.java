@@ -15,7 +15,9 @@ package org.openmrs.module.atlas;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
+import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.scheduler.tasks.AbstractTask;
 
@@ -45,12 +47,14 @@ public class PostAtlasDataQueueTask extends AbstractTask {
     @Override
     public void execute() {
 		log.debug("Posting atlas data ... ");
+		
 		try {
-			processor.updateStatistics();
+			Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;    
+			service.updateStatistics();
 			processor.postAtlasData(processor.getAtlasData());
-		} catch (APIException e) {
+		} catch (Exception e) {
 			log.error("Error running PostAtlasDataQueueTask", e);
-			throw e;
 		}
 	}
 	

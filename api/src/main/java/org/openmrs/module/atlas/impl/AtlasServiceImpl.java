@@ -45,15 +45,15 @@ public class AtlasServiceImpl implements AtlasService {
 	
 	private Log log = LogFactory.getLog(this.getClass());	
 	private AtlasDataProcessor processor = null;
-	private StatisticsDAO statisticsDAO;
+	private StatisticsDAO dao;
 	
 	
 	private StatisticsDAO getStatisticsDAO() {
-		return statisticsDAO;
+		return dao;
 	}
 	
 	public void setStatisticsDAO(StatisticsDAO dao) {
-		this.statisticsDAO = dao;
+		this.dao = dao;
 	}
 	
     /**
@@ -80,18 +80,71 @@ public class AtlasServiceImpl implements AtlasService {
     public void setAtlasData(AtlasData data) throws APIException {
     	processor.setAtlasData(data);
     	//processor.postAtlasData(data);
-    	registerPostAtlasDataTask(60 * 60 * 24 * 7l);
+    	//registerPostAtlasDataTask(60 * 60 * 24 * 7l);
     }
 
+    @Override
+    public String[] updateAndGetStatistics() throws APIException {
+    	AtlasData data = processor.getAtlasData();
+    	if (data.getNumberOfPatients() == "?"
+    		|| data.getNumberOfVisits() == "?"
+    		|| data.getNumberOfObservations() == "?") {
+    		updateStatistics();
+    	}
+    	String[] statsList = new String[3];
+    	statsList[0] = data.getNumberOfPatients();
+    	statsList[1] = data.getNumberOfVisits();
+    	statsList[2] = data.getNumberOfObservations();
+    	
+    	return statsList;
+    }
+    
+    @Override
+    public void updateStatistics() {
+		 Long nrOfObservations = getStatisticsDAO().getNumberOfObservations();
+		 Long nrOfVisits = getStatisticsDAO().getNumberOfVisits();
+		 Long nrOfPatients = getStatisticsDAO().getNumberOfPatients();
+		 processor.setStatistics(nrOfPatients, nrOfVisits, nrOfObservations);
+	}
+    
+    @Override
+    public void enableAtlasModule() throws APIException {
+    	registerPostAtlasDataTask(60 * 60 * 24 * 7l);
+    	processor.setModuleEnabled(true);
+    	processor.setUsageDisclaimerAccepted(true);
+    }
+    
+    @Override
+    public void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException {
+    	unregisterTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME);
+    	processor.setModuleEnabled(false);
+    	processor.setUsageDisclaimerAccepted(usageDisclaimerAccepted);
+    }
+
+    @Override
+    public void setAtlasBubbleData(AtlasData data) throws APIException {
+    	processor.setAtlasBubbleData(data);
+    }
+
+    @Override
+    public void setIncludeModules(Boolean includeModules) throws APIException {
+    	processor.setIncludeModules(includeModules);
+    }
+
+    @Override
+    public void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException {
+    	processor.setUsageDisclaimerAccepted(usageDisclaimerAccepted);
+    }
+	
+    @Override
+    public void setPosition(Double lat, Double lng) throws APIException {
+    	processor.setPosition(lat, lng);
+    }
     public boolean registerPostAtlasDataTask(long interval) {
     	return registerTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME
     		, AtlasConstants.POST_ATLAS_DATA_TASK_DESCRIPTION
     		, PostAtlasDataQueueTask.class,
     		interval);
-    }
-    
-    public void updateStatistics() {
-    	System.out.println("XXXX" + statisticsDAO.getNumberOfPatients());
     }
     
 	private boolean registerTask(String name, String description, Class<? extends Task> clazz, long interval) {

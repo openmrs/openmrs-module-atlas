@@ -81,6 +81,7 @@ public class AtlasModuleFormController{
 	 */
 	@ModelAttribute("atlasData")
 	protected AtlasData formBackingObject(HttpServletRequest request) throws Exception {
+	/*
 		if ("POST".equalsIgnoreCase(request.getMethod())) {
 			UUID id = UUID.fromString(request.getParameter("atlasID"));
 			Double lat = Double.valueOf(request.getParameter("atlasLatitude"));
@@ -104,6 +105,7 @@ public class AtlasModuleFormController{
 			
 		}
 		
+		*/
 		Object o = Context.getService(AtlasService.class);
 		AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//
 		AtlasData data = service.getAtlasData();

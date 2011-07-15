@@ -60,7 +60,7 @@ public class HibernateStatisticsDAO implements StatisticsDAO {
     @Override
     public Long getNumberOfPatients() throws DAOException {
     	return (Long) sessionFactory.getCurrentSession().createQuery(
-		"select count(*) from patient").uniqueResult();
+		"SELECT COUNT(*) FROM Patient where voided='false'").uniqueResult();
     }
 
 	/**
@@ -69,7 +69,7 @@ public class HibernateStatisticsDAO implements StatisticsDAO {
     @Override
     public Long getNumberOfVisits() throws DAOException {
     	return (Long) sessionFactory.getCurrentSession().createQuery(
-		"select count(*) from visit").uniqueResult();
+    		"SELECT COUNT(*) FROM Visit where voided='false'").uniqueResult();
     }
     
 	/**
@@ -78,7 +78,7 @@ public class HibernateStatisticsDAO implements StatisticsDAO {
     @Override
     public Long getNumberOfObservations() throws DAOException {
     	return (Long) sessionFactory.getCurrentSession().createQuery(
-		"select count(*) from obs").uniqueResult();
+		"SELECT COUNT(*) FROM Obs where voided='false'").uniqueResult();
     }
  
 
