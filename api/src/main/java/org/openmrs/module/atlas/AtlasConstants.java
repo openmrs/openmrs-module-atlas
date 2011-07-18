@@ -23,6 +23,7 @@ public class AtlasConstants {
 	public final static String GLOBALPROPERTY_NAME = "atlas.name";
 	public final static String GLOBALPROPERTY_LATITUDE= "atlas.latitude";
 	public final static String GLOBALPROPERTY_LONGITUDE= "atlas.longitude";
+	public final static String GLOBALPROPERTY_ZOOM= "atlas.zoom";
 	public final static String GLOBALPROPERTY_IMPLEMENTATION_TYPE = "atlas.implementationType";
 	public final static String GLOBALPROPERTY_WEBSITE = "atlas.website";
 	public final static String GLOBALPROPERTY_IMAGE_URL= "atlas.imageURL";
@@ -31,10 +32,10 @@ public class AtlasConstants {
 	public final static String GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS = "atlas.contactEmailAddress";
 	public final static String GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS = "atlas.includeNumberOfPatients";
 	public final static String GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS = "atlas.includeNumberOfObservations";
-	public final static String GLOBALPROPERTY_INCLUDE_NUMBER_OF_VISITS = "atlas.includeNumberOfVisits";
+	public final static String GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS = "atlas.includeNumberOfEncounters";
 	public final static String GLOBALPROPERTY_NUMBER_OF_PATIENTS = "atlas.numberOfPatients";
 	public final static String GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS = "atlas.numberOfObservations";
-	public final static String GLOBALPROPERTY_NUMBER_OF_VISITS = "atlas.numberOfVisits";
+	public final static String GLOBALPROPERTY_NUMBER_OF_ENCOUNTERS = "atlas.numberOfEncounters";
 	
 	public final static String GLOBALPROPERTY_MODULE_ENABLED = "atlas.moduleEnabled";
 	public final static String GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED = "atlas.usageDisclaimerAccepted";

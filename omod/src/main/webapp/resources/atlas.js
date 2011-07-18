@@ -43,7 +43,7 @@ function saveAtlasBubbleDataOnServer() {
 	var longitude = position.lng();
 	var includeNumberOfPatients = jQuery('#cbPatients', containerEdit).attr('checked');
 	var includeNumberOfObservations = jQuery('#cbObservations', containerEdit).attr('checked');
-	var includeNumberOfVisits = jQuery('#cbVisits', containerEdit).attr('checked');
+	var includeNumberOfEncounters = jQuery('#cbEncounters', containerEdit).attr('checked');
 	var imgSrc = jQuery('#imgImplementation', containerView).attr('src');
 	if (imgSrc != imgPlaceholder) {
 		//jQuery('#atlasImageURL', div).val(imgSrc);
@@ -54,7 +54,7 @@ function saveAtlasBubbleDataOnServer() {
 	DWRAtlasService.saveAtlasBubbleData(id, latitude, longitude, 
 			name, implementationType ,website, imgSrc
 			,notes, contactName, contactEmailAddress
-			,includeNumberOfPatients, includeNumberOfObservations, includeNumberOfVisits);
+			,includeNumberOfPatients, includeNumberOfObservations, includeNumberOfEncounters);
 }
 
 function getStatisticsFromServer() {
@@ -62,7 +62,10 @@ function getStatisticsFromServer() {
 }
 
 function getStatisticsFromServerCallback(stats) {
-	jQuery('#lblVisitsNr', containerView).text(stats[1]);
+	console.log(stats[0]);
+	console.log(stats[1]);
+	console.log(stats[2]);
+	jQuery('#lblEncountersNr', containerView).text(stats[1]);
 	jQuery('#lblPatientsNr', containerView).text(stats[0]);
 	jQuery('#lblObservationsNr', containerView).text(stats[2]);
 }
@@ -83,6 +86,11 @@ function updatePositionOnServer() {
 var position = marker.getPosition();
 	DWRAtlasService.setPosition(position.lat(), position.lng());
 }
+
+function updateZoomOnServer() {
+	var zoom = map.getZoom();
+		DWRAtlasService.setZoom(zoom.toString());
+	}
 
 function initializeGutter() {
 	$btnEnabled = jQuery('#btnEnable');
@@ -163,9 +171,6 @@ function changeImplementationType(ord) {
 }
 
 /*
- * NOT USED
- * Function called before form submit
- */
 function CopyValuesFromViewToHiddenFields() {
 	var position = marker.getPosition();
 	var div = jQuery("#leftColumnDiv");
@@ -177,7 +182,7 @@ function CopyValuesFromViewToHiddenFields() {
 	jQuery('#atlasLongitude', div).val(position.lng());
 	jQuery('#atlasIncludeNumberOfPatients', div).val(jQuery('#cbPatients', containerEdit).attr('checked'));
 	jQuery('#atlasIncludeNumberOfObservations', div).val(jQuery('#cbObservations', containerEdit).attr('checked'));
-	jQuery('#atlasIncludeNumberOfVisits', div).val(jQuery('#cbVisits', containerEdit).attr('checked'));
+	jQuery('#atlasIncludeNumberOfEncounters', div).val(jQuery('#cbEncounters', containerEdit).attr('checked'));
 	var imgSrc = jQuery('#imgImplementation', containerView).attr('src');
 	if (imgSrc != imgPlaceholder) {
 		jQuery('#atlasImageURL', div).val(imgSrc);
@@ -185,6 +190,7 @@ function CopyValuesFromViewToHiddenFields() {
 		jQuery('#atlasImageURL', div).val('');
 	}
 }
+*/
 
 /*
  * Bind events to input elements that have the placeholder attribute
@@ -276,30 +282,32 @@ function validateInput(div) {
  * This is used to provide some sort of placeholders to labels in the view info window,
  * when they do not contain text
  */
+
 function SetViewPlaceholders() {
-	jQuery('.spanView', containerView).each(function() {
-		$this = jQuery(this);
-		if (StringIsEmpty($this.text())) {
-			$this.siblings('.labelPlaceHolder').show();
-		} else {
-			$this.siblings('.labelPlaceHolder').hide();
-		}
-	});
-	
-	jQuery('.spanViewParent', containerView).each(function() {
-		$this = jQuery(this);
-		if (StringIsEmpty($this.text())) {
-			$this.parent().siblings('.labelPlaceHolder').show();
-		} else {
-			$this.parent().siblings('.labelPlaceHolder').hide();
-		}
-	});
+//	jQuery('.spanView', containerView).each(function() {
+//		$this = jQuery(this);
+//		if (StringIsEmpty($this.text())) {
+//			$this.siblings('.labelPlaceHolder').show();
+//		} else {
+//			$this.siblings('.labelPlaceHolder').hide();
+//		}
+//	});
+//	
+//	jQuery('.spanViewParent', containerView).each(function() {
+//		$this = jQuery(this);
+//		if (StringIsEmpty($this.text())) {
+//			$this.parent().siblings('.labelPlaceHolder').show();
+//		} else {
+//			$this.parent().siblings('.labelPlaceHolder').hide();
+//		}
+//	});
 	
 	var img = jQuery('#imgImplementation', containerView);
 	if (StringIsEmpty(img.attr('src'))) {
 		img.attr('src', imgPlaceholder);
 	} 
 }
+
 
 function StringIsEmpty(str) {
 	return jQuery.trim(str).length == 0;
@@ -322,12 +330,38 @@ function View2Edit() {
 	}
 }
 
+
+function SetElementsInView(isAfterEdit) {
+	
+	SetViewPlaceholders();
+	if (jQuery('#implementationTypeOrdinal').val() == '0') {
+		jQuery('#lblImplementationType', containerView).parent().hide();
+	} else {
+		jQuery('#lblImplementationType', containerView).parent().show();
+	}
+	
+	
+	var email;
+	if (isAfterEdit) {
+		email = jQuery('#tbEmail', containerEdit).val();
+	} else {
+		email = "";
+	}
+	if (!StringIsEmpty(email)) {
+		jQuery('#lblEmail', containerView).text(email);
+		jQuery('#aEmail',containerView).attr('href','mailto:'+email+mailtoSubject);
+		jQuery('#imgEmail',containerView).show();
+	} else {
+		jQuery('#imgEmail',containerView).hide();
+	}
+	
+}
 /*
  * Copy values from the edit container to the view container 
  */
 function Edit2View() {
 	RemovePlaceHolderText(containerEdit);
-
+	
 	jQuery('#imgImplementation', containerView).attr('src', jQuery("#tbImage", containerEdit).val());
 	jQuery('#lblName', containerView).text(jQuery('#tbName', containerEdit).val());
 	jQuery('#lblWebsite', containerView).text(jQuery('#tbWebsite', containerEdit).val());
@@ -335,21 +369,11 @@ function Edit2View() {
 	jQuery('#lblContactName', containerView).text(jQuery('#tbContactName', containerEdit).val());
 	jQuery('#lblNotes', containerView).text(jQuery('#tbNotes', containerEdit).val());
 	jQuery('#lblImplementationType', containerView).text(jQuery("#tbType", containerEdit).val());
-	if (jQuery('#implementationTypeOrdinal').val() == '0') {
-		jQuery('#lblImplementationType', containerView).parent().hide();
-	} else {
-		jQuery('#lblImplementationType', containerView).parent().show();
-	}
 	
-	var email = jQuery('#tbEmail', containerEdit).val();
-	jQuery('#lblEmail', containerView).text(email);
-	if (!StringIsEmpty(email)) {
-		jQuery('#aEmail',containerView).attr('href','mailto:'+email+mailtoSubject);
-	}
-	if (jQuery('#cbVisits', containerEdit).attr('checked')) {
-		jQuery('#lblVisits', containerView).show();
+	if (jQuery('#cbEncounters', containerEdit).attr('checked')) {
+		jQuery('#lblEncounters', containerView).show();
 	} else {
-		jQuery('#lblVisits', containerView).hide();
+		jQuery('#lblEncounters', containerView).hide();
 	}
 	if (jQuery('#cbPatients', containerEdit).attr('checked')) {
 		jQuery('#lblPatients', containerView).show();
@@ -361,7 +385,8 @@ function Edit2View() {
 	} else {
 		jQuery('#lblObservations', containerView).hide();
 	}
-	SetViewPlaceholders();
+	
+	SetElementsInView(true);
 }
 
 function ViewIsEmpty() {
@@ -457,10 +482,9 @@ function GetCurrentLatLng() {
  
  function InitializeMap() {
 	var myLatlng = GetCurrentLatLng();
-	var zoom = 12;
+	var zoom = parseInt(jQuery('#atlasZoom').val());
 	if (myLatlng == null) {
 		myLatlng = new google.maps.LatLng(-0.351560293992, 23.642578125);
-		zoom = 3;
 	}
 	var myOptions = {
 		zoom: zoom,
@@ -477,6 +501,12 @@ function GetCurrentLatLng() {
 	map = new google.maps.Map(document.getElementById("mapCanvas"), myOptions);
 	var infowindow = new google.maps.InfoWindow();
 	BindEvents(infowindow);
+	
+	
+	google.maps.event.addListener(map, 'zoom_changed', function() {
+		console.log("in zoom changed");
+		updateZoomOnServer();
+	});
 	
 	google.maps.event.addListener(infowindow, 'closeclick', function() {
 		var container = infowindow.getContent();
@@ -502,12 +532,7 @@ function GetCurrentLatLng() {
 			jQuery(containerEdit).show();
 			infowindow.setContent(containerEdit);
 		} else { 
-			SetViewPlaceholders();
-			if (jQuery('#implementationTypeOrdinal').val() == '0') {
-				jQuery('#lblImplementationType', containerView).parent().hide();
-			} else {
-				jQuery('#lblImplementationType', containerView).parent().show();
-			}
+			SetElementsInView(false);
 			jQuery(containerView).show();
 			infowindow.setContent(containerView);
 		}

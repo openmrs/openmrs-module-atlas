@@ -20,7 +20,7 @@ function x() {
 		, jQuery("#atlasContactName").val(), jQuery("#atlasContactEmailAddress").val()
 		, jQuery("#atlasIncludeNumberOfObservations").val()
 		, jQuery("#atlasIncludeNumberOfPatients").val()
-		, jQuery("#atlasIncludeNumberOfVisits").val());
+		, jQuery("#atlasIncludeNumberOfEncounters").val());
 }
  
 </script>
@@ -40,7 +40,7 @@ function x() {
                         <tr>
                             <td>
                               <span id="lblName" class="spanView"><c:out value="${atlasData.name}"/></span>
-                              <span id="lblNamePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.namePlaceHolder" /></span>
+<!--                               <span id="lblNamePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.namePlaceHolder" /></span> -->
                             </td>
                         </tr>
                          <tr>
@@ -54,7 +54,7 @@ function x() {
                         <tr>
                             <td>
                             	<a id="aWebsite" target='_blank' href="${atlasData.website}" class="spanView"><span id="lblWebsite"><c:out value="${atlasData.website}"/></span></a>
-                            	<span id="lblWebsitePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.websitePlaceHolder" /></span>
+<!--                             	<span id="lblWebsitePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.websitePlaceHolder" /></span> -->
                             </td>
                         </tr>
                         <tr>
@@ -66,12 +66,12 @@ function x() {
                             >
                             	<span id="lblPatientsNr"><c:out value="${atlasData.numberOfPatients}"/> </span> <spring:message code="atlas.patients" /><br/>
                             </span> 
-                            <span class="stats" id="lblVisits" 
-                               <c:if test="${atlasData.includeNumberOfVisits == false}">
+                            <span class="stats" id="lblEncounters" 
+                               <c:if test="${atlasData.includeNumberOfEncounters == false}">
 										style="display: none"
 							   </c:if>
                             >
-                            	<span id="lblVisitsNr"><c:out value="${atlasData.numberOfVisits}"/> </span> <spring:message code="atlas.visits" /><br/>
+                            	<span id="lblEncountersNr"><c:out value="${atlasData.numberOfEncounters}"/> </span> <spring:message code="atlas.encounters" /><br/>
                             </span> 
                             <span class="stats" id="lblObservations"
                                <c:if test="${atlasData.includeNumberOfObservations == false}">
@@ -88,22 +88,22 @@ function x() {
               <tr>
                 <td colspan="2">
                 	<span class="spanView" id="lblNotes"><c:out value="${atlasData.notes}"/></span>
-                	<span id="lblNotesPlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.notesPlaceHolder" /></span>
+<!--                 	<span id="lblNotesPlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.notesPlaceHolder" /></span> -->
                 </td>
             </tr> 
             <tr>
                 <td colspan="2">
                 	<span class="contact spanView" id="lblContactName"><c:out value="${atlasData.contactName}"/></span>
-                	<span id="lblContactNamePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.contactNamePlaceHolder" /></span>
+<!--                 	<span id="lblContactNamePlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.contactNamePlaceHolder" /></span> -->
                 </td>
             </tr> 
             <tr>
                 <td colspan="2">
-                	<img alt="mail" src="/openmrs/moduleResources/atlas/envelope.jpeg" height="20px" width="30px">
+                	<img alt="mail" id="imgEmail" src="/openmrs/moduleResources/atlas/envelope.jpeg" height="20px" width="30px">
                 	<a href="" id="aEmail">
                 	 <span class="contact spanViewParent" id="lblEmail"><c:out value="${atlasData.contactEmailAddress}"/></span>
                 	</a>
-                	<span id="lblEmailPlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.emailPlaceHolder" /></span>
+<!--                 	<span id="lblEmailPlaceHolder" class="labelPlaceHolder"><spring:message code="atlas.emailPlaceHolder" /></span> -->
                 </td>
             </tr> 
 			<tr>
@@ -164,13 +164,13 @@ function x() {
                         </tr>
                         <tr>
                             <td>
-                            	<input type="checkbox" id="cbVisits" 
-                            		<c:if test="${atlasData.includeNumberOfVisits == true}">
+                            	<input type="checkbox" id="cbEncounters" 
+                            		<c:if test="${atlasData.includeNumberOfEncounters == true}">
 							    		checked="checked"
 							    	</c:if>
 							    >
-                            	<label for="cbVisits">
-                            		<spring:message code="atlas.includeNrOfVisits"/>
+                            	<label for="cbEncounters">
+                            		<spring:message code="atlas.includeNrOfEncounters"/>
                             	</label>
                             </td>
                         </tr>
@@ -226,6 +226,7 @@ function x() {
   		<input type="hidden" id="atlasID" name="atlasID" value="${atlasData.id}"/> 
   		<input type="hidden" id="atlasLatitude" name="atlasLatitude" value="${atlasData.latitude}"/>
   		<input type="hidden" id="atlasLongitude" name="atlasLongitude" value="${atlasData.longitude}"/> 
+  		<input type="hidden" id="atlasZoom" name="atlasZoom" value="${atlasData.zoom}"/> 
   	
   	    <input type="hidden" id="implementationTypeOrdinal" value="${atlasData.implementationType}" >
   	    

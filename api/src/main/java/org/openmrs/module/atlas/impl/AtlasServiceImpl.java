@@ -86,14 +86,14 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public String[] updateAndGetStatistics() throws APIException {
     	AtlasData data = processor.getAtlasData();
-    	if (data.getNumberOfPatients() == "?"
-    		|| data.getNumberOfVisits() == "?"
-    		|| data.getNumberOfObservations() == "?") {
+    	if (data.getNumberOfPatients().trim() == "?"
+    		|| data.getNumberOfEncounters().trim() == "?"
+    		|| data.getNumberOfObservations().trim() == "?") {
     		updateStatistics();
     	}
     	String[] statsList = new String[3];
     	statsList[0] = data.getNumberOfPatients();
-    	statsList[1] = data.getNumberOfVisits();
+    	statsList[1] = data.getNumberOfEncounters();
     	statsList[2] = data.getNumberOfObservations();
     	
     	return statsList;
@@ -102,9 +102,10 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public void updateStatistics() {
 		 Long nrOfObservations = getStatisticsDAO().getNumberOfObservations();
-		 Long nrOfVisits = getStatisticsDAO().getNumberOfVisits();
+		 Long nrOfEncounters = getStatisticsDAO().getNumberOfEncounters();
 		 Long nrOfPatients = getStatisticsDAO().getNumberOfPatients();
-		 processor.setStatistics(nrOfPatients, nrOfVisits, nrOfObservations);
+		 System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXx"+nrOfEncounters);
+		 processor.setStatistics(nrOfPatients, nrOfEncounters, nrOfObservations);
 	}
     
     @Override
@@ -140,6 +141,12 @@ public class AtlasServiceImpl implements AtlasService {
     public void setPosition(Double lat, Double lng) throws APIException {
     	processor.setPosition(lat, lng);
     }
+    
+    @Override
+    public void setZoom(Integer zoom) throws APIException {
+    	processor.setZoom(zoom);
+    }
+    
     public boolean registerPostAtlasDataTask(long interval) {
     	return registerTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME
     		, AtlasConstants.POST_ATLAS_DATA_TASK_DESCRIPTION

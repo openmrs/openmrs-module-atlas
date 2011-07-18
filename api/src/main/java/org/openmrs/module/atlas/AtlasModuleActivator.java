@@ -13,8 +13,13 @@
  */
 package org.openmrs.module.atlas;
 
+import java.util.UUID;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.GlobalProperty;
+import org.openmrs.api.APIException;
+import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Activator;
 
@@ -30,6 +35,19 @@ public class AtlasModuleActivator implements Activator {
 	 */
 	public void startup() {
 		log.info("Starting Atlas Module");
+		try {
+			AdministrationService svc = Context.getAdministrationService();
+			String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
+
+			if (idString == null || idString.trim().equals(""))	{
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, UUID.randomUUID().toString()));
+			} 
+		}
+		catch (APIException apiEx) {
+			if (log.isErrorEnabled())
+				log.error("Could not set atlas id. Exception:"+apiEx.getMessage());
+		}
+		
 	}
 	
 	/**

@@ -64,12 +64,12 @@ public class HibernateStatisticsDAO implements StatisticsDAO {
     }
 
 	/**
-     * @see org.openmrs.module.atlas.db.StatisticsDAO#getNumberOfVisits()
+     * @see org.openmrs.module.atlas.db.StatisticsDAO#getNumberOfEncounters()
      */
     @Override
-    public Long getNumberOfVisits() throws DAOException {
+    public Long getNumberOfEncounters() throws DAOException {
     	return (Long) sessionFactory.getCurrentSession().createQuery(
-    		"SELECT COUNT(*) FROM Visit where voided='false'").uniqueResult();
+    		"SELECT COUNT(*) FROM Encounter where voided='false'").uniqueResult();
     }
     
 	/**

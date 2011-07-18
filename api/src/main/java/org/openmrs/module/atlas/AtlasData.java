@@ -25,6 +25,7 @@ public class AtlasData {
 	 private String imageURL;
 	 private Double latitude;
 	 private Double longitude;
+	 private Integer zoom;
 	 private String website;
 	 //contact details
 	 private String contactName;
@@ -32,10 +33,10 @@ public class AtlasData {
 	 //statistics
 	 private Boolean includeNumberOfPatients;
 	 private Boolean includeNumberOfObservations;
-	 private Boolean includeNumberOfVisits;
+	 private Boolean includeNumberOfEncounters;
 	 private String numberOfPatients;
 	 private String numberOfObservations;
-	 private String numberOfVisits;
+	 private String numberOfEncounters;
 	 
 	 private String notes;
 	 private Boolean usageDisclamerAccepted;
@@ -56,25 +57,26 @@ public class AtlasData {
   	    this.imageURL = "";
   	    this.includeNumberOfObservations = false;
   	    this.includeNumberOfPatients = false;
-  	    this.includeNumberOfVisits = false;
+  	    this.includeNumberOfEncounters = false;
   	    this.latitude = 0.0;
   	    this.longitude = 0.0;
   	    this.website ="";
   	    this.numberOfObservations = "?";
   	    this.numberOfPatients = "?";
-  	    this.numberOfVisits = "?";
+  	    this.numberOfEncounters = "?";
   	    this.notes = "";
   	    this.includeModules = true;
   	    this.usageDisclamerAccepted = false;
   	    this.moduleEnabled = false;
   	    this.implementationType = 0;
+  	    this.zoom = 3;
     }
     /**
      * 
      */
     public AtlasData(UUID id, String name, String website, String imageURL, Double latitude, Double longitude, 
                      String contactName, String contactEmailAddress, 
-                     Boolean includeNumberOfPatients, Boolean includeNumberOfObservations, Boolean includeNumberOfVisits) {
+                     Boolean includeNumberOfPatients, Boolean includeNumberOfObservations, Boolean includeNumberOfEncounters) {
 	    this.contactEmailAddress = contactEmailAddress;
 	    this.contactName = contactName;
 	    this.id = id;
@@ -82,7 +84,7 @@ public class AtlasData {
 	    this.imageURL = imageURL;
 	    this.includeNumberOfObservations = includeNumberOfObservations;
 	    this.includeNumberOfPatients = includeNumberOfPatients;
-	    this.includeNumberOfVisits = includeNumberOfVisits;
+	    this.includeNumberOfEncounters = includeNumberOfEncounters;
 	    this.latitude = latitude;
 	    this.longitude = longitude;
 	    this.website = website;
@@ -162,15 +164,15 @@ public class AtlasData {
     /**
      * @return the includeNumberOfVisits
      */
-    public Boolean getIncludeNumberOfVisits() {
-	    return includeNumberOfVisits;
+    public Boolean getIncludeNumberOfEncounters() {
+	    return includeNumberOfEncounters;
     }
     
     /**
      * @param includeNumberOfVisits the includeNumberOfVisits to set
      */
-    public void setIncludeNumberOfVisits(Boolean includeNumberOfVisits) {
-	    this.includeNumberOfVisits = includeNumberOfVisits;
+    public void setIncludeNumberOfEncounters(Boolean includeNumberOfEncounters) {
+	    this.includeNumberOfEncounters = includeNumberOfEncounters;
     }
     
     /**
@@ -200,6 +202,22 @@ public class AtlasData {
 	    this.longitude = longitude;
     }
     
+    
+    
+    /**
+     * @return the zoom
+     */
+    public Integer getZoom() {
+	    return zoom;
+    }
+    
+    
+    /**
+     * @param zoom the zoom to set
+     */
+    public void setZoom(Integer zoom) {
+	    this.zoom = zoom;
+    }
     /**
      * @return the name
      */
@@ -264,16 +282,16 @@ public class AtlasData {
     /**
      * @return the numberOfVisits
      */
-    public String getNumberOfVisits() {
-	    return numberOfVisits;
+    public String getNumberOfEncounters() {
+	    return numberOfEncounters;
     }
     
     
     /**
      * @param numberOfVisits the numberOfVisits to set
      */
-    public void setNumberOfVisits(String numberOfVisits) {
-	    this.numberOfVisits = numberOfVisits;
+    public void setNumberOfEncounters(String numberOfEncounters) {
+	    this.numberOfEncounters = numberOfEncounters;
     }
     
     
@@ -391,10 +409,10 @@ public class AtlasData {
     		   +"\nNotes: "+notes +"||"
     		   +"\nInclude nr of patients: "+includeNumberOfPatients.toString() +"||"
     		   +"\nInclude nr of observations: "+includeNumberOfObservations.toString() +"||"
-    		   +"\nInclude nr of visits: "+includeNumberOfVisits.toString() +"||"
+    		   +"\nInclude nr of visits: "+includeNumberOfEncounters.toString() +"||"
     		   +"\nNr of patients: "+numberOfPatients +"||"
 		       +"\nNr of observations: "+numberOfObservations +"||"
-		       +"\nNr of visits: "+numberOfVisits +"||"
+		       +"\nNr of visits: "+numberOfEncounters +"||"
     		   +"\nUsage disclamer accepted: "+usageDisclamerAccepted +"||"
     		   +"\nInclude running modules: "+includeModules +"||"
     		   +"\nModule is enabled: "+moduleEnabled +"||";

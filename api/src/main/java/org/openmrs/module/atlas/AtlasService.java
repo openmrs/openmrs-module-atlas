@@ -30,6 +30,7 @@ public interface AtlasService {
 	void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException;
 	void setAtlasBubbleData(AtlasData data) throws APIException;
 	void setPosition(Double lat, Double lng) throws APIException;
+	void setZoom(Integer zoom) throws APIException;
 	void setIncludeModules(Boolean includeModules) throws APIException;
 	void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException;
     void updateStatistics() throws APIException;

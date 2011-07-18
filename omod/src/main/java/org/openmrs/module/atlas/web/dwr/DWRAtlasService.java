@@ -27,7 +27,7 @@ public class DWRAtlasService {
 	public void saveAtlasBubbleData(String idStr, String latStr,	String lngStr,
 			String name, String implementationTypeStr, String website, String imageURL, 
 			String notes, String contactName, String contactEmail,
-			String includeNumberOfPatientsStr, String includeNumberOfObservationsStr, String includeNumberOfVisitsStr)
+			String includeNumberOfPatientsStr, String includeNumberOfObservationsStr, String includeNumberOfEncountersStr)
 	{
 		
 		UUID id = UUID.fromString(idStr);
@@ -36,7 +36,7 @@ public class DWRAtlasService {
 		Integer implementationType = Integer.parseInt(implementationTypeStr);
 		Boolean includeNumberOfObservations = Boolean.parseBoolean(includeNumberOfObservationsStr);
 		Boolean includeNumberOfPatients = Boolean.parseBoolean(includeNumberOfPatientsStr);
-		Boolean includeNumberOfVisits = Boolean.parseBoolean(includeNumberOfVisitsStr);
+		Boolean includeNumberOfEncounters = Boolean.parseBoolean(includeNumberOfEncountersStr);
 		
 			AtlasData data = new AtlasData();
 			data.setId(id);
@@ -51,7 +51,7 @@ public class DWRAtlasService {
 			data.setContactEmailAddress(contactEmail);
 			data.setIncludeNumberOfPatients(includeNumberOfPatients);
 			data.setIncludeNumberOfObservations(includeNumberOfObservations);
-			data.setIncludeNumberOfVisits(includeNumberOfVisits);
+			data.setIncludeNumberOfEncounters(includeNumberOfEncounters);
 			 
 			System.out.println("DWR" + data.toString());
 			Object o = Context.getService(AtlasService.class);
@@ -82,6 +82,12 @@ public class DWRAtlasService {
     	  Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;   
 			service.setPosition(Double.parseDouble(latStr), Double.parseDouble(lngStr));
+      }
+      
+      public void setZoom(String zoomStr) {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			service.setZoom(Integer.parseInt(zoomStr));
       }
       
       public String[] updateAndGetStatistics() {

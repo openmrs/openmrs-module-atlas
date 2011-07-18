@@ -75,6 +75,7 @@
    	width:800px; 
    	height:500px;
    	float: left;
+   	margin-left: 10px;
    }
    
    #leftColumnDiv {

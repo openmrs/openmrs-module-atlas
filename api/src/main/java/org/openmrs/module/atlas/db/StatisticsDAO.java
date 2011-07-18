@@ -23,7 +23,7 @@ public interface StatisticsDAO {
 	
 	public Long getNumberOfPatients() throws DAOException;
 	
-	public Long getNumberOfVisits() throws DAOException;
+	public Long getNumberOfEncounters() throws DAOException;
 	
 	public Long getNumberOfObservations() throws DAOException;
 
