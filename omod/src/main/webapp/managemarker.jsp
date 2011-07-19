@@ -286,6 +286,7 @@ function x() {
                             	<label for="cbIncludeModules" style="font-size: 1.2em">
                             		<spring:message code="atlas.addModulesLabel"/>
                             	</label>
+		<br>
 		<a id="includeModulesTip" href="" title="<spring:message code="atlas.addModulesTip" />"><spring:message code="atlas.addModulesLink" /></a>
 				</td>
   			</tr>
@@ -301,14 +302,16 @@ function x() {
   
   <div id="changeTypeDialog">
   	<form>
+  	<b><span id="selectTypeText"><spring:message code="atlas.selectType"/></span>:</b>
+  	<br><br>
   	<c:forEach items="${atlasData.implementationTypes}" var="impType" varStatus="loopStatus">
                <input type="radio" id="rbType${loopStatus.index}" class="rbTypes" name="rbTypes" value="<spring:message code="atlas.implementationType${impType}"/>" >
                <spring:message code="atlas.implementationType${impType}"/>
                <br>
     </c:forEach>  
+    <br><br>
     <input id="btnTypeSave" type="submit" value="<spring:message code="atlas.save" />"  /> 
     <input id="btnTypeCancel" type="submit" value="<spring:message code="atlas.cancel" />"  /> 
-    
     </form>  
   </div>
 

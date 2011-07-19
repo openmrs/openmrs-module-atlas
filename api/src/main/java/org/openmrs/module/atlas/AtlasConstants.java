@@ -44,5 +44,5 @@ public class AtlasConstants {
 	public final static String POST_ATLAS_DATA_TASK_NAME = "Post Atlas Data Task";
 	public final static String POST_ATLAS_DATA_TASK_DESCRIPTION = "Send Atlas information to OpenMRS on a weekly basis.";
 	
-	public final static String SERVER_URL = "http://redirect.openmrs.org/atlas.php";
+	public final static String SERVER_URL = "http://burkeware.com/atlas/ping.php";
 }

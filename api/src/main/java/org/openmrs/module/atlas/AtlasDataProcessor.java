@@ -44,13 +44,16 @@ public class AtlasDataProcessor {
 	   public void postAtlasData(AtlasData data) {
 	    	String jsonData = getJson(data);
 	    	try {
+//	    		String x = "{\"id\":\"1234\",\"geolocation\":{\"latitude\":0.123,\"longitude\":36.321},\"name\":\"Another 2 Implementation\",\"notes\":\"Lorem ipsum\"}";
+	    	    
 		    	URL u = new URL(AtlasConstants.SERVER_URL);
 		        HttpURLConnection connection = (HttpURLConnection)u.openConnection();
 		        connection.setConnectTimeout(30000);
 		        connection.setReadTimeout(30000);
 		        connection.setDoOutput(true);
 		        connection.setRequestMethod("POST");
-		       
+		        connection.setRequestProperty("Content-Type", "application/json");
+		        
 		        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
 		        writer.write(jsonData);
 		        writer.close(); 
@@ -58,9 +61,12 @@ public class AtlasDataProcessor {
 		        System.out.println(jsonData);
 		        int status = connection.getResponseCode();
 		        if(status == 200){
-		               System.out.println("ok");
+		               System.out.println("sent ok");
+		        } else {
+		        	System.out.println("sent FAILED");
 		        }
-	    	}
+		        
+		        	}
 	    	catch (Exception e) {
 	    		if (log.isErrorEnabled())
 					log.error("Could not post atlas data. Exception:"+e.getMessage());
@@ -71,32 +77,33 @@ public class AtlasDataProcessor {
 	   
 	   private String getJson(AtlasData data) {
 	    	StringBuilder sb = new StringBuilder();
-	    	sb.append("{'id' : '" + data.getId()+ "', ");
-	    	sb.append("'geolocation' :  {'latitude' : '"+ data.getLatitude()+"', 'longitude' : '"+ data.getLongitude()+"'}, ");
-	    	sb.append("'name' : '"+data.getName()+"',");
-	    	sb.append("'type' : '"+ ImplementationType.values()[data.getImplementationType()]+"',");
-	        sb.append("'website' : '"+ data.getWebsite() +"',");
-	        sb.append("'imageURL' : '"+ data.getImageURL() +"',");
+	    	sb.append("{\"id\" : \"" + data.getId()+ "\", ");
+	    	sb.append("\"geolocation\" :  {\"latitude\" : "+ data.getLatitude()+", \"longitude\" : "+ data.getLongitude()+"}, ");
+	    	sb.append("\"name\" : \""+data.getName()+"\",");
+	    	sb.append("\"type\" : \""+ ImplementationType.values()[data.getImplementationType()]+"\",");
+	        sb.append("\"website\" : \""+ data.getWebsite() +"\",");
+	        sb.append("\"notes\" : \""+ data.getNotes() +"\",");
+	        sb.append("\"imageURL\" : \""+ data.getImageURL() +"\",");
 	        if (data.getIncludeNumberOfPatients()) {
-	        	sb.append("'patients' : '"+ data.getNumberOfPatients() + "',");
+	        	sb.append("\"patients\" : "+ data.getNumberOfPatients() + ",");
 	        }
 	        if (data.getIncludeNumberOfObservations()) {
-	        	sb.append("'observations' : '"+ data.getNumberOfObservations() + "',");
+	        	sb.append("\"observations\" : "+ data.getNumberOfObservations() + ",");
 	        }
 	        if (data.getIncludeNumberOfEncounters()) {
-	        	sb.append("'visits' : '"+ data.getNumberOfEncounters() + "',");
+	        	sb.append("\"encounters\" : "+ data.getNumberOfEncounters() + ",");
 	        }
-	        sb.append("'contact_details' :  {'email' : '" + data.getContactEmailAddress() + "',");
-	        sb.append("'contact_name' : '" + data.getContactName() + "' }");
+	        sb.append("\"contact_details\" :  {\"email\" : \"" + data.getContactEmailAddress() + "\",");
+	        sb.append("\"contact_name\" : \"" + data.getContactName() + "\" }");
 	        
 	        if (data.getIncludeModules()) {
 	        	Collection<Module> modules = ModuleFactory.getLoadedModules();
-	        	sb.append(", 'modules' : [");
+	        	sb.append(", \"data\" : [");
 	   		    for (Module mod : modules) {
-	   		    	sb.append("{'id': '" + mod.getModuleId() + "',");
-	   			    sb.append("'name': '" + mod.getName() + "',");
-	   			    sb.append("'version': '" + mod.getVersion() + "',");
-	   			    sb.append("'isStarted' : '" + mod.isStarted() + "'},");
+	   		    	sb.append("{\"id\": \"" + mod.getModuleId() + "\",");
+	   			    sb.append("\"name\": \"" + mod.getName() + "\",");
+	   			    sb.append("\"version\": \"" + mod.getVersion() + "\",");
+	   			    sb.append("\"active\" : \"" + mod.isStarted() + "\"},");
 	   		    }
 	   		    //delete last "," 
 	   		    sb.deleteCharAt(sb.length() - 1);

@@ -233,7 +233,11 @@ function RemovePlaceHolderClass(div) {
 }
 
 function BindEventsChangeTypeModalWindow() {
-	$typeWindow.dialog({ autoOpen: false, title : "Change Type"});
+	var titleText = jQuery('#selectTypeText', $typeWindow).text();
+	$typeWindow.dialog({ autoOpen: false
+		               , modal: true
+		               , title : titleText
+		              });
 	
 	jQuery('#changeTypeLink').click(function(e) {
 		var rbId = "#rbType"+jQuery('#implementationTypeOrdinal').val();
