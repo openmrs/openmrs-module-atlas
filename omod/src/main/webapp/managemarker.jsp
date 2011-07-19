@@ -139,11 +139,7 @@ function x() {
                             <td>
                              <span id="lblImplementationTypeLabel" class="spanView"><spring:message code="atlas.implementationTypeLabel" /></span>
                              <input type="text" id="tbType" style="width: 137px" readonly="readonly">
-                             
-                             <div id="btnNextType" class="paginate_enabled_next" title="Next">
-                             </div>
-                             <div id="btnPreviousType" class="paginate_enabled_previous" title="Previous">
-                             </div>
+                             <a id="changeTypeLink" href=""><spring:message code="atlas.changeTypeLink"/></a> 
                             </td>
                         </tr>
                         <tr>
@@ -231,10 +227,6 @@ function x() {
   	    <input type="hidden" id="implementationTypeOrdinal" value="${atlasData.implementationType}" >
   	    
   	     <input type="hidden" id="implementationTypeLength" value="${atlasData.implementationTypesLength}" >
-  	    
-  	     <c:forEach items="${atlasData.implementationTypes}" var="impType" varStatus="loopStatus">
-               <input type="hidden" id="implementationType${loopStatus.index}" value="<spring:message code="atlas.implementationType${impType}"/>" >
-         </c:forEach>         
               	
   		<b class="boxHeader"><spring:message code="atlas.enableDisableHeader"/></b>
 		<div class="box">
@@ -307,5 +299,17 @@ function x() {
   	 <div id="mapCanvas"></div>
   </div>	
   
+  <div id="changeTypeDialog">
+  	<form>
+  	<c:forEach items="${atlasData.implementationTypes}" var="impType" varStatus="loopStatus">
+               <input type="radio" id="rbType${loopStatus.index}" class="rbTypes" name="rbTypes" value="<spring:message code="atlas.implementationType${impType}"/>" >
+               <spring:message code="atlas.implementationType${impType}"/>
+               <br>
+    </c:forEach>  
+    <input id="btnTypeSave" type="submit" value="<spring:message code="atlas.save" />"  /> 
+    <input id="btnTypeCancel" type="submit" value="<spring:message code="atlas.cancel" />"  /> 
+    
+    </form>  
+  </div>
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>

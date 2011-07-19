@@ -2,6 +2,7 @@ var marker;
 var map;
 var containerEdit;
 var containerView;
+var $typeWindow;
 var imgPlaceholder = 'http://a0.twimg.com/profile_images/672560906/OpenMRS-twitter-icon_bigger.png';
 var mailtoSubject = "?Subject=OpenMRS%20contact";
 
@@ -19,9 +20,12 @@ jQuery(document).ready (function() {
  	InitializeMap();
  	bindSearchBox();
  	BindPlaceHolder(jQuery('#rightColumnDiv'));
- 	initializeImplementationType();
  	
  	initializeGutter();
+ 	
+ 	$typeWindow = jQuery("#changeTypeDialog");
+ 	BindEventsChangeTypeModalWindow();
+ 	initializeImplementationType();
  	
  	getStatisticsFromServer();
  	jQuery("#includeModulesTip").click(function() {
@@ -142,30 +146,23 @@ function initializeImplementationType() {
  	
 	jQuery("#tbType", containerEdit).val(getImplementationType($impl.val()));
 	jQuery('#lblImplementationType', containerView).text(getImplementationType($impl.val()));
-	jQuery('#btnPreviousType',containerEdit ).click(function () {
-		changeImplementationType(parseInt($impl.val()) - 1);
-	});
-	
-	jQuery('#btnNextType',containerEdit).click(function () {
-		changeImplementationType(parseInt($impl.val()) + 1);
-	});
+//	jQuery('#btnPreviousType',containerEdit ).click(function () {
+//		changeImplementationType(parseInt($impl.val()) - 1);
+//	});
+//	
+//	jQuery('#btnNextType',containerEdit).click(function () {
+//		changeImplementationType(parseInt($impl.val()) + 1);
+//	});
 }
 function getImplementationType(ord) {
-	var str = '#implementationType'+ord;
-	return jQuery(str).val();
+	var str = '#rbType'+ord;
+	return jQuery(str, $typeWindow).val();
 }
 
 function getImplementationTypeLength() {
 	return parseInt(jQuery("#implementationTypeLength").val());
 }
 function changeImplementationType(ord) {
-	var length = getImplementationTypeLength();
-	if (ord == -1) {
-		ord = length-1;
-	} else if (ord == length) {
-		ord = 0;
-	}
-	
 	jQuery("#tbType",containerEdit).val(getImplementationType(ord));
 	jQuery('#implementationTypeOrdinal').val(ord);
 }
@@ -232,6 +229,29 @@ function RemovePlaceHolderClass(div) {
 	  if (input.val() != input.attr('placeholder')) {
 	    input.removeClass('placeholder');
 	  }
+	});
+}
+
+function BindEventsChangeTypeModalWindow() {
+	$typeWindow.dialog({ autoOpen: false, title : "Change Type"});
+	
+	jQuery('#changeTypeLink').click(function(e) {
+		var rbId = "#rbType"+jQuery('#implementationTypeOrdinal').val();
+		jQuery(rbId,$typeWindow).attr('checked', true);
+		$typeWindow.dialog('open');
+		return false;
+	});
+	
+	jQuery('#btnTypeSave').click(function(e) {
+		var typeOrd = jQuery('input[type=radio]:checked',$typeWindow).attr('id').substring(6); //6 = length("rbType") 
+		changeImplementationType(typeOrd);
+		$typeWindow.dialog('close');
+		return false;
+	});
+	
+	jQuery('#btnTypeCancel').click(function(e) {
+		$typeWindow.dialog('close');
+		return false;
 	});
 }
 /*
