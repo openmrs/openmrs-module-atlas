@@ -29,6 +29,8 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.scheduler.SchedulerService;
+import org.openmrs.util.DatabaseUpdater.OpenMRSChangeSet;
+import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
 
@@ -97,8 +99,10 @@ public class AtlasDataProcessor {
 	        sb.append("\"contact_name\" : \"" + data.getContactName() + "\" }");
 	        
 	        if (data.getIncludeModules()) {
+	        	sb.append(", \"data\" : {");
+	        	sb.append("\"version\" : "+ OpenmrsConstants.OPENMRS_VERSION + ",");
 	        	Collection<Module> modules = ModuleFactory.getLoadedModules();
-	        	sb.append(", \"data\" : [");
+	        	sb.append(", \"modules\" : [");
 	   		    for (Module mod : modules) {
 	   		    	sb.append("{\"id\": \"" + mod.getModuleId() + "\",");
 	   			    sb.append("\"name\": \"" + mod.getName() + "\",");
@@ -107,7 +111,8 @@ public class AtlasDataProcessor {
 	   		    }
 	   		    //delete last "," 
 	   		    sb.deleteCharAt(sb.length() - 1);
-  			    sb.append("]");
+  			    sb.append("]}");
+  			    
 	        }
 	        sb.append("}");
 	        return sb.toString();
@@ -119,6 +124,7 @@ public class AtlasDataProcessor {
 			try {
 				svc = Context.getAdministrationService();
 					String globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
+					globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
 					atlasData.setId(UUID.fromString(globalProperty));
 					if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE)) != null) {
 						atlasData.setWebsite(globalProperty);
@@ -292,7 +298,6 @@ public class AtlasDataProcessor {
 	    
 	    public void setStatistics(Long numberOfPatients, Long numberOfEncounters, Long numberOfObservations) {
 	    	AdministrationService svc = null;
-			SchedulerService x;
 			try {
 				System.out.println(numberOfEncounters+"XXXXXXXXXXXXXXXXX");
 				svc = Context.getAdministrationService();

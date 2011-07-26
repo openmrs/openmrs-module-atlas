@@ -86,10 +86,11 @@ public class AtlasServiceImpl implements AtlasService {
     @Override
     public String[] updateAndGetStatistics() throws APIException {
     	AtlasData data = processor.getAtlasData();
-    	if (data.getNumberOfPatients().trim() == "?"
-    		|| data.getNumberOfEncounters().trim() == "?"
-    		|| data.getNumberOfObservations().trim() == "?") {
+    	if (data.getNumberOfPatients().trim().equals("?")
+    		|| data.getNumberOfEncounters().trim().equals("?")
+    		|| data.getNumberOfObservations().trim().equals("?")) {
     		updateStatistics();
+    		data = processor.getAtlasData();
     	}
     	String[] statsList = new String[3];
     	statsList[0] = data.getNumberOfPatients();
