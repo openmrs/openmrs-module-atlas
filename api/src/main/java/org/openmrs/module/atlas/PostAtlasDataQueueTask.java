@@ -51,8 +51,7 @@ public class PostAtlasDataQueueTask extends AbstractTask {
 		try {
 			Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;    
-			service.updateStatistics();
-			processor.postAtlasData(processor.getAtlasData());
+			service.postAtlasData();
 		} catch (Exception e) {
 			log.error("Error running PostAtlasDataQueueTask", e);
 		}

@@ -33,6 +33,6 @@ public interface AtlasService {
 	void setZoom(Integer zoom) throws APIException;
 	void setIncludeModules(Boolean includeModules) throws APIException;
 	void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException;
-    void updateStatistics() throws APIException;
+    void postAtlasData() throws APIException;
     String[] updateAndGetStatistics() throws APIException;
 }
