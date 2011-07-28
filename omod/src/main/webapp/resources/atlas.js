@@ -1,4 +1,5 @@
 var marker;
+var infowindow;
 var map;
 var containerEdit;
 var containerView;
@@ -66,9 +67,9 @@ function getStatisticsFromServer() {
 }
 
 function getStatisticsFromServerCallback(stats) {
-	console.log(stats[0]);
-	console.log(stats[1]);
-	console.log(stats[2]);
+	//console.log(stats[0]);
+	//console.log(stats[1]);
+	//console.log(stats[2]);
 	jQuery('#lblEncountersNr', containerView).text(stats[1]);
 	jQuery('#lblPatientsNr', containerView).text(stats[0]);
 	jQuery('#lblObservationsNr', containerView).text(stats[2]);
@@ -264,7 +265,7 @@ function BindEventsChangeTypeModalWindow() {
 function BindEvents(infowindow) {
 	jQuery('#editLink').click(function(e) {
 		View2Edit();
-		RemovePlaceHolderClass(containerEdit);
+		BindPlaceHolder(containerEdit);
 		validateInput(containerEdit);
 		jQuery(containerEdit).show();
 		infowindow.setContent(containerEdit);
@@ -285,9 +286,14 @@ function BindEvents(infowindow) {
 	});
 	
 	jQuery('#cancelLink').click(function(e) {
-		jQuery(containerView).show();
-		infowindow.setContent(containerView);
-		return false;
+		if (!ViewIsEmpty()) {
+			jQuery(containerView).show();
+			infowindow.setContent(containerView);
+			return false;
+		} else {
+			infowindow.close();
+			return false;
+		}
 	});
 }
 
@@ -369,14 +375,19 @@ function SetElementsInView(isAfterEdit) {
 	if (isAfterEdit) {
 		email = jQuery('#tbEmail', containerEdit).val();
 	} else {
-		email = "";
+		email = jQuery('#lblEmail', containerView).text();
 	}
 	if (!StringIsEmpty(email)) {
 		jQuery('#lblEmail', containerView).text(email);
 		jQuery('#aEmail',containerView).attr('href','mailto:'+email+mailtoSubject);
 		jQuery('#imgEmail',containerView).show();
+		jQuery('#aEmail',containerView).show();
 	} else {
-		jQuery('#imgEmail',containerView).hide();
+		//if (isAfterEdit) {
+			jQuery('#imgEmail',containerView).hide();
+			jQuery('#lblEmail', containerView).text(email);
+			jQuery('#aEmail',containerView).hide();
+	//	}
 	}
 	
 }
@@ -414,15 +425,15 @@ function Edit2View() {
 }
 
 function ViewIsEmpty() {
-	return (   (jQuery('#lblName', containerView).text() == '')
-			&& (jQuery('#lblWebsite', containerView).text() == '')
-			&& (jQuery('#lblEmail', containerView).text() == '')
-			&& (jQuery('#lblContactName', containerView).text() == ''));
+	return  (jQuery('#lblName', containerView).text() == '');
+			//&& (jQuery('#lblWebsite', containerView).text() == '')
+			//&& (jQuery('#lblEmail', containerView).text() == '')
+			//&& (jQuery('#lblContactName', containerView).text() == ''));
 }
 
 function StyleContainers() {
-    containerView.style.width="350px";
-	containerEdit.style.width="350px";
+    containerView.style.width="370px";
+	containerEdit.style.width="370px";
 	
 	
 }
@@ -523,12 +534,12 @@ function GetCurrentLatLng() {
 	};
 
 	map = new google.maps.Map(document.getElementById("mapCanvas"), myOptions);
-	var infowindow = new google.maps.InfoWindow();
+	infowindow = new google.maps.InfoWindow();
 	BindEvents(infowindow);
 	
 	
 	google.maps.event.addListener(map, 'zoom_changed', function() {
-		console.log("in zoom changed");
+		//console.log("in zoom changed");
 		updateZoomOnServer();
 	});
 	
@@ -682,6 +693,7 @@ function bindSearchBox() {
                      }
             	 };
                  handle_geolocation_query(position);
+                 jQuery('.ui-autocomplete').hide();
              }
          }
       });

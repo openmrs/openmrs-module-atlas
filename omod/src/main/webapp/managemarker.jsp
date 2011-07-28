@@ -99,7 +99,7 @@ function x() {
             </tr> 
             <tr>
                 <td colspan="2">
-                	<img alt="mail" id="imgEmail" src="/openmrs/moduleResources/atlas/envelope.jpeg" height="20px" width="30px">
+                	<img alt="mail" id="imgEmail" src="../../moduleResources/atlas/envelope.jpeg" height="20px" width="30px">
                 	<a href="" id="aEmail">
                 	 <span class="contact spanViewParent" id="lblEmail"><c:out value="${atlasData.contactEmailAddress}"/></span>
                 	</a>
@@ -138,7 +138,7 @@ function x() {
                          <tr>
                             <td>
                              <span id="lblImplementationTypeLabel" class="spanView"><spring:message code="atlas.implementationTypeLabel" /></span>
-                             <input type="text" id="tbType" style="width: 137px" readonly="readonly">
+                             <input type="text" id="tbType" style="width: 100px" readonly="readonly">
                              <a id="changeTypeLink" href=""><spring:message code="atlas.changeTypeLink"/></a> 
                             </td>
                         </tr>
