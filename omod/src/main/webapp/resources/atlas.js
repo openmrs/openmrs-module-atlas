@@ -100,8 +100,9 @@ function updateZoomOnServer() {
 function initializeGutter() {
 	$btnEnabled = jQuery('#btnEnable');
 	$btnDisabled = jQuery('#btnDisable');
+	$cbIncludeModules = jQuery('#cbIncludeModules');
 	
-	jQuery('#cbIncludeModules').click(function() {
+	$cbIncludeModules.click(function() {
 		setIncludeModulesOnServer(jQuery(this).is(':checked'));
 	});
 	
@@ -109,6 +110,7 @@ function initializeGutter() {
 		  $btnDisabled.addClass('btnDisabledDisabled');
           $btnDisabled.removeClass('btnDisabled');
           $btnDisabled.attr("disabled", true);
+          $cbIncludeModules.attr("disabled", true);
 	}
 	
 	jQuery('#cbDisclaimer').click(function() {
@@ -117,6 +119,7 @@ function initializeGutter() {
 	    		$btnDisabled.attr("disabled", false);
 	    		$btnDisabled.removeClass('btnDisabledDisabled');
 	    		$btnDisabled.addClass('btnDisabled');
+	    		$cbIncludeModules.attr("disabled", false);
 	    	}
 	    } else {
 	       if ($btnEnabled.is(':visible')) {
@@ -125,6 +128,7 @@ function initializeGutter() {
 	       $btnDisabled.addClass('btnDisabledDisabled');
            $btnDisabled.removeClass('btnDisabled');
            $btnDisabled.attr("disabled", true);
+           $cbIncludeModules.attr("disabled", true);
 	    } 
 	});
 	

@@ -267,13 +267,13 @@ function x() {
   		 </div>
   		 
   		</td></tr>
-  		</table> 
-  		</div>    
+<!--   		</table>  -->
+<!--   		</div>     -->
   		 
-		<br/><br/>
-  		<b class="boxHeader"><spring:message code="atlas.helpOpenMRS"/></b>
-  		<div class="box">
-  		<table>
+<!-- 		<br/><br/> -->
+<!--   		<b class="boxHeader"><spring:message code="atlas.helpOpenMRS"/></b> -->
+<!--   		<div class="box"> -->
+<!--   		<table> -->
   			<tr>
   				<td>
   		<input type="checkbox" id="cbIncludeModules"
