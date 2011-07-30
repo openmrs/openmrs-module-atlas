@@ -78,6 +78,8 @@
 				<include method="setPosition"/>
 				<include method="updateAndGetStatistics"/>
 				<include method="setZoom"/>
+				<include method="getJsonData"/>
+				<include method="setUsageDisclaimer"/>
 			</create>
 		</allow>
 
@@ -100,6 +102,10 @@
 			DWRAtlasService.updateAndGetStatistics();
 			
 			DWRAtlasService.setZoom(String zoomStr);
+			
+			DWRAtlasService.setUsageDisclaimer(String acceptedStr)
+			
+			DWRAtlasService.getJsonData();
 			]]>
 		</signatures>	
 	</dwr>

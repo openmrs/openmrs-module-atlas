@@ -35,4 +35,5 @@ public interface AtlasService {
 	void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException;
     void postAtlasData() throws APIException;
     String[] updateAndGetStatistics() throws APIException;
+    String getJson() throws APIException;
 }

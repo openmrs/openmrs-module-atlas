@@ -97,6 +97,10 @@ function updateZoomOnServer() {
 		DWRAtlasService.setZoom(zoom.toString());
 	}
 
+function setUsageDiscailmerOnServer(value) {
+	DWRAtlasService.setUsageDisclaimer(value);
+} 
+
 function initializeGutter() {
 	$btnEnabled = jQuery('#btnEnable');
 	$btnDisabled = jQuery('#btnDisable');
@@ -130,6 +134,7 @@ function initializeGutter() {
            $btnDisabled.attr("disabled", true);
            $cbIncludeModules.attr("disabled", true);
 	    } 
+	    setUsageDiscailmerOnServer(jQuery(this).is(':checked'));
 	});
 	
 	$btnEnabled.click(function() {

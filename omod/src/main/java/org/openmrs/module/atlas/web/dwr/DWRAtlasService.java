@@ -90,6 +90,18 @@ public class DWRAtlasService {
 			service.setZoom(Integer.parseInt(zoomStr));
       }
       
+      public void setUsageDisclaimer(String acceptedStr) {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			service.setUsageDisclaimerAccepted(Boolean.parseBoolean(acceptedStr));
+      }
+      
+      public String getJsonData() {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			return service.getJson();
+      }
+      
       public String[] updateAndGetStatistics() {
     	  Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;   

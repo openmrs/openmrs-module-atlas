@@ -70,7 +70,7 @@ import org.openmrs.util.OpenmrsConstants;
 public class AtlasServiceImpl implements AtlasService {
 	
 	private Log log = LogFactory.getLog(this.getClass());	
-	private AtlasDataProcessor processor = null;
+	//private AtlasDataProcessor processor = null;
 	private StatisticsDAO dao;
 	
 	
@@ -86,7 +86,7 @@ public class AtlasServiceImpl implements AtlasService {
      * 
      */
     public AtlasServiceImpl() {
-	   processor = new AtlasDataProcessor();
+	  // processor = new AtlasDataProcessor();
 	   
     }
 	/**
@@ -166,7 +166,6 @@ public class AtlasServiceImpl implements AtlasService {
 				log.error("Could not get atlas data. Exception:"+apiEx.getMessage());
 		}
 		
-		System.out.println("GetAtlasData: " + getJson(atlasData));
 		System.out.println("GetAtlasData: " + atlasData.toString());
 		return atlasData;
     }
@@ -271,6 +270,7 @@ public class AtlasServiceImpl implements AtlasService {
     	unregisterTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME);
     	setModuleEnabled(false);
     	setUsageDisclaimerAccepted(usageDisclaimerAccepted);
+    	sendDeleteMessageToServer();
     }
 
     @Override
@@ -373,7 +373,7 @@ public class AtlasServiceImpl implements AtlasService {
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS, String.valueOf(nrOfPatients)));
 		
 			//get data
-    	String jsonData = getJson(getAtlasData());
+    	String jsonData = getJson();
     		String x = "{\"id\":\"050b2506-b0a3-4414-9ac0-de8b9fbb563a\",\"geolocation\":{\"latitude\": 47.170151,\"longitude\":27.583548999999948},\"name\":\"Another Implementation\",\"notes\":\"Lorem ipsum\"}";
     	    
 	    	URL u = new URL(AtlasConstants.SERVER_URL);
@@ -406,6 +406,49 @@ public class AtlasServiceImpl implements AtlasService {
 				log.error("Could not post atlas data. Exception:"+e.getMessage());
 		}
     }
+    
+    @Override
+    public String getJson() throws APIException {
+		AtlasData data = getAtlasData();
+	    	StringBuilder sb = new StringBuilder();
+	    	sb.append("{\"id\" : \"" + data.getId()+ "\", ");
+	    	sb.append("\"geolocation\" :  {\"latitude\" : "+ data.getLatitude()+", \"longitude\" : "+ data.getLongitude()+"}, ");
+	    	sb.append("\"name\" : \""+data.getName()+"\",");
+	    	sb.append("\"type\" : \""+ ImplementationType.values()[data.getImplementationType()]+"\",");
+	        sb.append("\"website\" : \""+ data.getWebsite() +"\",");
+	        sb.append("\"notes\" : \""+ data.getNotes() +"\",");
+	        sb.append("\"imageURL\" : \""+ data.getImageURL() +"\",");
+	        if (data.getIncludeNumberOfPatients()) {
+	        	sb.append("\"patients\" : "+ data.getNumberOfPatients() + ",");
+	        }
+	        if (data.getIncludeNumberOfObservations()) {
+	        	sb.append("\"observations\" : "+ data.getNumberOfObservations() + ",");
+	        }
+	        if (data.getIncludeNumberOfEncounters()) {
+	        	sb.append("\"encounters\" : "+ data.getNumberOfEncounters() + ",");
+	        }
+	        sb.append("\"contact_details\" :  {\"email\" : \"" + data.getContactEmailAddress() + "\",");
+	        sb.append("\"contact_name\" : \"" + data.getContactName() + "\" }");
+	        
+	        if (data.getIncludeModules()) {
+	        	sb.append(", \"data\" : {");
+	        	sb.append("\"version\" : \""+ OpenmrsConstants.OPENMRS_VERSION + "\",");
+	        	Collection<Module> modules = ModuleFactory.getLoadedModules();
+	        	sb.append("\"modules\" : [");
+	   		    for (Module mod : modules) {
+	   		    	sb.append("{\"id\": \"" + mod.getModuleId() + "\",");
+	   			    sb.append("\"name\": \"" + mod.getName() + "\",");
+	   			    sb.append("\"version\": \"" + mod.getVersion() + "\",");
+	   			    sb.append("\"active\" : \"" + mod.isStarted() + "\"},");
+	   		    }
+	   		    //delete last "," 
+	   		    sb.deleteCharAt(sb.length() - 1);
+			    sb.append("]}");
+			    
+	        }
+	        sb.append("}");
+	        return sb.toString();
+	    }
     
     private boolean registerPostAtlasDataTask(long interval) {
     	return registerTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME
@@ -463,46 +506,40 @@ public class AtlasServiceImpl implements AtlasService {
 		}
 	}
 	
-	private String getJson(AtlasData data) {
-	    	StringBuilder sb = new StringBuilder();
-	    	sb.append("{\"id\" : \"" + data.getId()+ "\", ");
-	    	sb.append("\"geolocation\" :  {\"latitude\" : "+ data.getLatitude()+", \"longitude\" : "+ data.getLongitude()+"}, ");
-	    	sb.append("\"name\" : \""+data.getName()+"\",");
-	    	sb.append("\"type\" : \""+ ImplementationType.values()[data.getImplementationType()]+"\",");
-	        sb.append("\"website\" : \""+ data.getWebsite() +"\",");
-	        sb.append("\"notes\" : \""+ data.getNotes() +"\",");
-	        sb.append("\"imageURL\" : \""+ data.getImageURL() +"\",");
-	        if (data.getIncludeNumberOfPatients()) {
-	        	sb.append("\"patients\" : "+ data.getNumberOfPatients() + ",");
-	        }
-	        if (data.getIncludeNumberOfObservations()) {
-	        	sb.append("\"observations\" : "+ data.getNumberOfObservations() + ",");
-	        }
-	        if (data.getIncludeNumberOfEncounters()) {
-	        	sb.append("\"encounters\" : "+ data.getNumberOfEncounters() + ",");
-	        }
-	        sb.append("\"contact_details\" :  {\"email\" : \"" + data.getContactEmailAddress() + "\",");
-	        sb.append("\"contact_name\" : \"" + data.getContactName() + "\" }");
+	
+	
+	private void sendDeleteMessageToServer() {
+		AdministrationService svc = null;
+    	try {
+			svc = Context.getAdministrationService();
+			String id = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
+			
+			URL u = new URL(AtlasConstants.SERVER_URL+"?id="+ id + "&secret=victor");
+	        HttpURLConnection connection = (HttpURLConnection)u.openConnection();
+	        connection.setConnectTimeout(30000);
+	        connection.setReadTimeout(30000);
+	        connection.setDoOutput(true);
+	        connection.setRequestMethod("DELETE");
+	       // connection.setRequestProperty("Content-Type", "application/json");
 	        
-	        if (data.getIncludeModules()) {
-	        	sb.append(", \"data\" : {");
-	        	sb.append("\"version\" : \""+ OpenmrsConstants.OPENMRS_VERSION + "\",");
-	        	Collection<Module> modules = ModuleFactory.getLoadedModules();
-	        	sb.append("\"modules\" : [");
-	   		    for (Module mod : modules) {
-	   		    	sb.append("{\"id\": \"" + mod.getModuleId() + "\",");
-	   			    sb.append("\"name\": \"" + mod.getName() + "\",");
-	   			    sb.append("\"version\": \"" + mod.getVersion() + "\",");
-	   			    sb.append("\"active\" : \"" + mod.isStarted() + "\"},");
-	   		    }
-	   		    //delete last "," 
-	   		    sb.deleteCharAt(sb.length() - 1);
-			    sb.append("]}");
-			    
+//	        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+//	        writer.write(jsonData);
+//	        writer.close(); 
+
+	        int status = connection.getResponseCode();
+	        if(status == 200){
+	               System.out.println("delete ok");
+	        } else {
+	        	System.out.println("delete FAILED");
 	        }
-	        sb.append("}");
-	        return sb.toString();
-	    }
+			
+    	}
+    	catch (Exception apiEx) {
+			if (log.isErrorEnabled())
+				log.error("Could not delete atlas data. Exception:"+apiEx.getMessage());
+		}
+	}
+	
 	private static Date getPreviousMidnight(Date date) {
 	    	// Initialize with date if it was specified
 	    	Calendar cal = new GregorianCalendar();
