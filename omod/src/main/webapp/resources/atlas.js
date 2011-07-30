@@ -27,12 +27,29 @@ jQuery(document).ready (function() {
  	$typeWindow = jQuery("#changeTypeDialog");
  	BindEventsChangeTypeModalWindow();
  	initializeImplementationType();
- 	
+ 	initializeWhatWillBeSentModalWindow();
  	getStatisticsFromServer();
+});
+
+function initializeWhatWillBeSentModalWindow() {
+	var titleText = jQuery("#atlas-gutter-sentInfoTitle").text();
+	var $whatWillBeSendWindow = jQuery("#atlas-gutter-sentInfo");
+	$whatWillBeSendWindow.dialog({ autoOpen: false
+        , modal: true
+        , width: 500
+        , title : titleText
+       });
+ 	
  	jQuery("#includeModulesTip").click(function() {
+ 		if (jQuery('#btnEnable').is(":visible")) {
+ 			getJsonDataFromServer();
+ 		} else {
+ 			jQuery('#atlas-gutter-jsonData', jQuery("#atlas-gutter-sentInfo")).val("");
+ 		}
+ 		$whatWillBeSendWindow.dialog('open');
  		return false;
  	});
-});
+}
 
 function saveAtlasBubbleDataOnServer() {
 	var position = marker.getPosition();
@@ -60,6 +77,14 @@ function saveAtlasBubbleDataOnServer() {
 			name, implementationType ,website, imgSrc
 			,notes, contactName, contactEmailAddress
 			,includeNumberOfPatients, includeNumberOfObservations, includeNumberOfEncounters);
+}
+
+function getJsonDataFromServer() {
+	DWRAtlasService.getJsonData(getJsonDataFromServerCallback);
+}
+
+function getJsonDataFromServerCallback(jsonData) {
+	jQuery('#atlas-gutter-jsonData', jQuery("#atlas-gutter-sentInfo")).val(jsonData);
 }
 
 function getStatisticsFromServer() {

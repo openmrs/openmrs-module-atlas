@@ -11,19 +11,7 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"> </script>
 <script src="<openmrs:contextPath/>/dwr/interface/DWRAtlasService.js"></script>
-<script>
- 
-function x() {
-	CopyValuesFromViewToHiddenFields();
-    DWRAtlasService.saveAtlasData(jQuery("#atlasID").val(), jQuery("#atlasLatitude").val(), jQuery("#atlasLongitude").val()
-		, jQuery("#atlasName").val(), jQuery("#atlasWebsite").val(), jQuery("#atlasImageURL").val()
-		, jQuery("#atlasContactName").val(), jQuery("#atlasContactEmailAddress").val()
-		, jQuery("#atlasIncludeNumberOfObservations").val()
-		, jQuery("#atlasIncludeNumberOfPatients").val()
-		, jQuery("#atlasIncludeNumberOfEncounters").val());
-}
- 
-</script>
+
 
 <h2><spring:message code="atlas.manageMarkerLink" /></h2>
 
@@ -313,6 +301,17 @@ function x() {
     <input id="btnTypeSave" type="submit" value="<spring:message code="atlas.save" />"  /> 
     <input id="btnTypeCancel" type="submit" value="<spring:message code="atlas.cancel" />"  /> 
     </form>  
+  </div>
+  
+  <div id="atlas-gutter-sentInfo">
+  	<span>
+  		<span id="atlas-gutter-sentInfoTitle" style="display: none"><spring:message code="atlas.whatWillBeSentInfoTitle"/></span>
+  		<spring:message code="atlas.whatWillBeSentInfo" />
+  		<br><br>
+  		<textarea id="atlas-gutter-jsonData" cols="50" rows="10" readonly="readonly"></textarea>
+  	</span>
+  </div>
+  
   </div>
 
 <%@ include file="/WEB-INF/template/footer.jsp"%>
