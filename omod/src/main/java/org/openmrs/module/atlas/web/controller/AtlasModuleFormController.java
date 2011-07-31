@@ -81,35 +81,10 @@ public class AtlasModuleFormController{
 	 */
 	@ModelAttribute("atlasData")
 	protected AtlasData formBackingObject(HttpServletRequest request) throws Exception {
-	/*
-		if ("POST".equalsIgnoreCase(request.getMethod())) {
-			UUID id = UUID.fromString(request.getParameter("atlasID"));
-			Double lat = Double.valueOf(request.getParameter("atlasLatitude"));
-			Double lng = Double.valueOf(request.getParameter("atlasLongitude"));
-			String name = request.getParameter("atlasName");
-			String website = request.getParameter("atlasWebsite");
-			String imageURL = request.getParameter("atlasImageURL");
-			String phone = request.getParameter("atlasContactPhoneNumber");
-			String email = request.getParameter("atlasContactEmailAddress");
-			Boolean includeNumberOfObservations = Boolean.parseBoolean(request.getParameter("atlasIncludeNumberOfObservations"));
-			Boolean includeNumberOfPatients = Boolean.parseBoolean(request.getParameter("atlasIncludeNumberOfPatients"));
-			Boolean includeNumberOfVisits = Boolean.parseBoolean(request.getParameter("atlasIncludeNumberOfVisits"));
-			
-			AtlasData data = new AtlasData(id, name, website, imageURL, lat, lng, phone, email, includeNumberOfPatients, includeNumberOfObservations, includeNumberOfVisits);
-			System.out.println(data.toString());
-			Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//
-			service.setAtlasData(data);
-	        
-		} else {
-			
-		}
-		
-		*/
+	
 		Object o = Context.getService(AtlasService.class);
-		AtlasService service =  (AtlasService)o;    //new AtlasServiceImpl();//
+		AtlasService service =  (AtlasService)o;    
 		AtlasData data = service.getAtlasData();
-        System.out.println(data.toString()); 
 		
 		// this object will be made available to the jsp page under the variable name
 		// that is defined in the @ModuleAttribute tag

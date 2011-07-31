@@ -86,7 +86,7 @@
 		<signatures>
 			<![CDATA[
 			import @MODULE_PACKAGE@.web.dwr.DWRAtlasService;
-			DWRAtlasService.saveAtlasBubbleData(String idStr, String latStr,	String lngStr,
+			DWRAtlasService.saveAtlasBubbleData(String latStr,	String lngStr,
 			String name, String implementationTypeStr, String website, String imageURL, 
 			String notes, String contactName, String contactEmail,
 			String includeNumberOfPatientsStr, String includeNumberOfObservationsStr, String includeNumberOfEncountersStr);

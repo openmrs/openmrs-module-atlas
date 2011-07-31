@@ -24,13 +24,12 @@ import org.openmrs.module.atlas.AtlasService;
  *
  */
 public class DWRAtlasService {
-	public void saveAtlasBubbleData(String idStr, String latStr,	String lngStr,
+	public void saveAtlasBubbleData(String latStr,	String lngStr,
 			String name, String implementationTypeStr, String website, String imageURL, 
 			String notes, String contactName, String contactEmail,
 			String includeNumberOfPatientsStr, String includeNumberOfObservationsStr, String includeNumberOfEncountersStr)
 	{
 		
-		UUID id = UUID.fromString(idStr);
 		Double lat = Double.valueOf(latStr);
 		Double lng = Double.valueOf(lngStr);
 		Integer implementationType = Integer.parseInt(implementationTypeStr);
@@ -39,7 +38,6 @@ public class DWRAtlasService {
 		Boolean includeNumberOfEncounters = Boolean.parseBoolean(includeNumberOfEncountersStr);
 		
 			AtlasData data = new AtlasData();
-			data.setId(id);
 			data.setName(name);
 			data.setImplementationType(implementationType);
 			data.setWebsite(website);

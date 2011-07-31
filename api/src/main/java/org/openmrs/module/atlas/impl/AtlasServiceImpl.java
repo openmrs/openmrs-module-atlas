@@ -280,9 +280,6 @@ public class AtlasServiceImpl implements AtlasService {
 			svc = Context.getAdministrationService();
 			String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
 
-			if (idString == null || idString.trim().equals(""))	{
-				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
-			} 
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite()));
@@ -520,11 +517,6 @@ public class AtlasServiceImpl implements AtlasService {
 	        connection.setReadTimeout(30000);
 	        connection.setDoOutput(true);
 	        connection.setRequestMethod("DELETE");
-	       // connection.setRequestProperty("Content-Type", "application/json");
-	        
-//	        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
-//	        writer.write(jsonData);
-//	        writer.close(); 
 
 	        int status = connection.getResponseCode();
 	        if(status == 200){

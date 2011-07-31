@@ -1,98 +1,69 @@
-  #infoDiv, #infoDiv-edit {
-	float: left;
-	display: inline;
-	background: 
-  }
-  #imgDiv, #imgDiv-edit  {
+  #atlas-edit-imgDiv  {
 	display: inline;
 	float: left;
   }
-  #contactDiv, #contactDiv-edit {
-	clear: both;
-  }
   
-  .floatLeft {
-  	float: left;
-  }
-  
-  .clearBoth {
-  	clear: both;
-  }
-  #lblName
-  {
+  #atlas-view-lblName {
   	font-weight: bold;
   	font-size: 1.1em;
 	width:200px;
 	min-width: 200px;
   }
   
-  #lblContactName
-  {
+  #atlas-view-lblContactName {
   	font-weight: bold;
   	font-size: 1em;
   }
   
-  #lblNotes
-  {
+  #atlas-view-lblNotes {
   	font-size: 0.9em;
   }
   
-  
-  .placeholder
-  {
+   .placeholder,  .labelPlaceHolder {
   	color: #aaa;
   }
   
-  .labelPlaceHolder
-  {
-  	color: #aaa;
-  }
-  
-  
-  .fail 
-  {
+  .fail {
   	color: red;
   }
    
-   #rightColumnDiv {
+   #atlas-map-rightColumnDiv {
    	width:800px; 
    	height:500px;
    	float: left;
    	margin-left: 10px;
    }
    
-   #leftColumnDiv {
+   #atlas-gutter-leftColumnDiv {
    	width:25%;
    	float: left;
    }
    
-   #mapCanvas {
+   #atlas-map-canvas {
    	height: 100%;
    }
    
-   .btnEnabled, .btnDisabled, .btnDisabledDisabled {
+   .atlas-gutter-btnEnabled, .atlas-gutter-btnDisabled, .atlas-gutter-btnDisabledDisabled {
    	  width: 150px;
    	  font-size: 1.5em;
       height: 60px;
    	  padding-right: 10px;
       text-align: right;
-   	  
-   	  
    }
    
-   .divCenter {
+   .atlas-gutter-divCenter {
    	    margin: auto;
     	width: 130px;
    }
    
-   .btnEnabled{
+   .atlas-gutter-btnEnabled{
    	   background: url("blue.png") no-repeat center left;
    }
-   .btnDisabled {
+   .atlas-gutter-btnDisabled {
    	   background: url("red.png") no-repeat center left;
    }
    
-    .btnDisabledDisabled {
+    .atlas-gutter-btnDisabledDisabled {
    	  background: url("black.png") no-repeat center left;
    }
    

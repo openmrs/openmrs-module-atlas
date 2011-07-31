@@ -430,9 +430,4 @@ public class AtlasData {
     	}
     	return impTypes;
     }
-    
-    public Integer getImplementationTypesLength() {
-    	return ImplementationType.values().length;
-    }
-
 }
