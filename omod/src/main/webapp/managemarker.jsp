@@ -14,10 +14,9 @@
 
 
 <h2><spring:message code="atlas.manageMarkerLink" /></h2>
-
-
 <br/>
 
+<openmrs:require privilege="Manage Atlas Data" otherwise="/login.htm" redirect="/index.htm" />
 <table id="atlas-view-containerDiv" style="display:hidden" >
             <tr>
                 <td>

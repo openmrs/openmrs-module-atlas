@@ -16,6 +16,7 @@ package org.openmrs.module.atlas;
 
 import java.util.List;
 
+import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,16 +25,28 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public interface AtlasService {
+	@Authorized({"Manage Atlas Data"})
 	AtlasData getAtlasData() throws APIException;
-	void setAtlasData(AtlasData data) throws APIException;	
+	@Authorized({"Manage Atlas Data"})
+	void setAtlasData(AtlasData data) throws APIException;
+	@Authorized({"Manage Atlas Data"})
 	void enableAtlasModule() throws APIException;
+	@Authorized({"Manage Atlas Data"})
 	void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException;
+	@Authorized({"Manage Atlas Data"})
 	void setAtlasBubbleData(AtlasData data) throws APIException;
+	@Authorized({"Manage Atlas Data"})
 	void setPosition(Double lat, Double lng) throws APIException;
+	@Authorized({"Manage Atlas Data"})
 	void setZoom(Integer zoom) throws APIException;
+	@Authorized({"Manage Atlas Data"})
 	void setIncludeModules(Boolean includeModules) throws APIException;
+	@Authorized({"Manage Atlas Data"})
 	void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException;
+	@Authorized({"Manage Atlas Data"})
     void postAtlasData() throws APIException;
+	@Authorized({"Manage Atlas Data"})
     String[] updateAndGetStatistics() throws APIException;
+	@Authorized({"Manage Atlas Data"})
     String getJson() throws APIException;
 }
