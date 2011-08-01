@@ -1,16 +1,21 @@
 <%@page import="org.openmrs.module.atlas.ImplementationType"%>
+<%! Integer DO_NOT_INCLUDE_JQUERY = 12; %>
+
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"> </script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"> </script>
+<script src="<openmrs:contextPath/>/dwr/interface/DWRAtlasService.js"></script>
+
 
 <openmrs:htmlInclude file="/scripts/jQuery/dataTables/dataTables.css" />
+<openmrs:htmlInclude file="/moduleResources/atlas/jquery-ui.atlas.css" />
 <openmrs:htmlInclude file="/moduleResources/atlas/atlas.css" />
 <openmrs:htmlInclude file="/moduleResources/atlas/atlas.js" />
 <openmrs:htmlInclude file="/moduleResources/atlas/yqlgeo.js" />
 <openmrs:htmlInclude file="/moduleResources/atlas/yqlgeo.js" />
-
-<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"> </script>
-<script src="<openmrs:contextPath/>/dwr/interface/DWRAtlasService.js"></script>
 
 
 <h2><spring:message code="atlas.manageMarkerLink" /></h2>
@@ -297,7 +302,11 @@
   		<spring:message code="atlas.whatWillBeSentInfo" />
   		<br><br>
   		<textarea id="atlas-gutter-jsonData" cols="50" rows="10" readonly="readonly"></textarea>
+  		<br><br>
   	</span>
+  		<div style="margin: auto; width: 50px;">
+			<input id="atlas-gutter-sentInfo-close" type="submit" value="<spring:message code="atlas.ok" />"  /> 
+		</div>
   </div>
   
   </div>

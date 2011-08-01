@@ -1,3 +1,4 @@
+var $j = jQuery.noConflict();
 var marker;
 var infowindow;
 var map;
@@ -7,21 +8,21 @@ var $typeWindow;
 var imgPlaceholder = 'http://a0.twimg.com/profile_images/672560906/OpenMRS-twitter-icon_bigger.png';
 var mailtoSubject = "?Subject=OpenMRS%20contact";
 
-jQuery(document).ready (function() {
+$j(document).ready (function() {
 	containerEdit = document.getElementById('atlas-edit-containerDiv');
 	containerView = document.getElementById('atlas-view-containerDiv'); 
 	BindPlaceHolder(containerEdit);
 	StyleContainers();
 
-	jQuery(containerEdit).hide();
-	jQuery(containerView).hide();
+	$j(containerEdit).hide();
+	$j(containerView).hide();
  	InitializeMap();
  	bindSearchBox();
- 	BindPlaceHolder(jQuery('#atlas-map-rightColumnDiv'));
+ 	BindPlaceHolder($j('#atlas-map-rightColumnDiv'));
  	
  	initializeGutter();
  	
- 	$typeWindow = jQuery("#changeTypeDialog");
+ 	$typeWindow = $j("#changeTypeDialog");
  	BindEventsChangeTypeModalWindow();
  	initializeImplementationType();
  	initializeWhatWillBeSentModalWindow();
@@ -29,41 +30,45 @@ jQuery(document).ready (function() {
 });
 
 function initializeWhatWillBeSentModalWindow() {
-	var titleText = jQuery("#atlas-gutter-sentInfoTitle").text();
-	var $whatWillBeSendWindow = jQuery("#atlas-gutter-sentInfo");
+	var titleText = $j("#atlas-gutter-sentInfoTitle").text();
+	var $whatWillBeSendWindow = $j("#atlas-gutter-sentInfo");
 	$whatWillBeSendWindow.dialog({ autoOpen: false
         , modal: true
         , width: 500
         , title : titleText
        });
  	
- 	jQuery("#atlas-gutter-includeModulesTip").click(function() {
- 		if (jQuery('#atlas-gutter-btnEnable').is(":visible")) {
+ 	$j("#atlas-gutter-includeModulesTip").click(function() {
+ 		if ($j('#atlas-gutter-btnEnable').is(":visible")) {
  			getJsonDataFromServer();
  		} else {
- 			jQuery('#atlas-gutter-jsonData', jQuery("#atlas-gutter-sentInfo")).val("");
+ 			$j('#atlas-gutter-jsonData', $j("#atlas-gutter-sentInfo")).val("");
  		}
  		$whatWillBeSendWindow.dialog('open');
  		return false;
+ 	});
+ 	
+ 	$j("#atlas-gutter-sentInfo-close", $whatWillBeSendWindow).click(function() {
+ 		$whatWillBeSendWindow.dialog('close');
  	});
 }
 
 function saveAtlasBubbleDataOnServer() {
 	var position = marker.getPosition();
-	var name = jQuery('#atlas-view-lblName', containerView).text();
-	var website = jQuery('#atlas-view-lblWebsite', containerView).text();
-	var contactName = jQuery('#atlas-view-lblContactName', containerView).text();
-	var contactEmailAddress = jQuery('#atlas-view-lblEmail', containerView).text();
-	var notes = jQuery('#atlas-view-lblNotes', containerView).text();
-	var implementationType = jQuery('#atlas-hidden-implementationTypeOrdinal').val();
+	var name = $j('#atlas-view-lblName', containerView).text();
+	var website = $j('#atlas-view-lblWebsite', containerView).text();
+	var contactName = $j('#atlas-view-lblContactName', containerView).text();
+	var contactEmailAddress = $j('#atlas-view-lblEmail', containerView).text();
+	var notes = $j('#atlas-view-lblNotes', containerView).text();
+	var implementationType = $j('#atlas-hidden-implementationTypeOrdinal').val();
 	var latitude = position.lat();
 	var longitude = position.lng();
-	var includeNumberOfPatients = jQuery('#atlas-edit-cbPatients', containerEdit).attr('checked');
-	var includeNumberOfObservations = jQuery('#atlas-edit-cbObservations', containerEdit).attr('checked');
-	var includeNumberOfEncounters = jQuery('#atlas-edit-cbEncounters', containerEdit).attr('checked');
-	var imgSrc = jQuery('#atlas-view-imgImplementation', containerView).attr('src');
+	var includeNumberOfPatients = $j('#atlas-edit-cbPatients', containerEdit).attr('checked');
+	var includeNumberOfObservations = $j('#atlas-edit-cbObservations', containerEdit).attr('checked');
+	var includeNumberOfEncounters = $j('#atlas-edit-cbEncounters', containerEdit).attr('checked');
+	var imgSrc = $j('#atlas-view-imgImplementation', containerView).attr('src');
 	if (imgSrc != imgPlaceholder) {
-		//jQuery('#atlasImageURL', div).val(imgSrc);
+		//$j('#atlasImageURL', div).val(imgSrc);
 	} else {
 		imgSrc = '';
 	}
@@ -79,7 +84,7 @@ function getJsonDataFromServer() {
 }
 
 function getJsonDataFromServerCallback(jsonData) {
-	jQuery('#atlas-gutter-jsonData', jQuery("#atlas-gutter-sentInfo")).val(jsonData);
+	$j('#atlas-gutter-jsonData', $j("#atlas-gutter-sentInfo")).val(jsonData);
 }
 
 function getStatisticsFromServer() {
@@ -87,9 +92,9 @@ function getStatisticsFromServer() {
 }
 
 function getStatisticsFromServerCallback(stats) {
-	jQuery('#atlas-view-lblEncountersNr', containerView).text(stats[1]);
-	jQuery('#atlas-view-lblPatientsNr', containerView).text(stats[0]);
-	jQuery('#atlas-view-lblObservationsNr', containerView).text(stats[2]);
+	$j('#atlas-view-lblEncountersNr', containerView).text(stats[1]);
+	$j('#atlas-view-lblPatientsNr', containerView).text(stats[0]);
+	$j('#atlas-view-lblObservationsNr', containerView).text(stats[2]);
 }
 
 function enableAtlasModuleOnServer() {
@@ -119,24 +124,24 @@ function setUsageDiscailmerOnServer(value) {
 } 
 
 function initializeGutter() {
-	$btnEnabled = jQuery('#atlas-gutter-btnEnable');
-	$btnDisabled = jQuery('#atlas-gutter-btnDisable');
-	$cbIncludeModules = jQuery('#atlas-gutter-cbIncludeModules');
+	$btnEnabled = $j('#atlas-gutter-btnEnable');
+	$btnDisabled = $j('#atlas-gutter-btnDisable');
+	$cbIncludeModules = $j('#atlas-gutter-cbIncludeModules');
 	
 	$cbIncludeModules.click(function() {
-		setIncludeModulesOnServer(jQuery(this).is(':checked'));
+		setIncludeModulesOnServer($j(this).is(':checked'));
 	});
 	
-	if (!jQuery('#atlas-gutter-cbDisclaimer').is(':checked')) {
+	if (!$j('#atlas-gutter-cbDisclaimer').is(':checked')) {
 		  $btnDisabled.addClass('atlas-gutter-btnDisabledDisabled');
           $btnDisabled.removeClass('atlas-gutter-btnDisabled');
           $btnDisabled.attr("disabled", true);
           $cbIncludeModules.attr("disabled", true);
 	}
 	
-	jQuery('#atlas-gutter-cbDisclaimer').click(function() {
-	    if (jQuery(this).is(':checked')) {
-	    	if ($btnDisabled.attr("disabled") == true) {
+	$j('#atlas-gutter-cbDisclaimer').click(function() {
+	    if ($j(this).is(':checked')) {
+	    	if ($btnDisabled.attr("disabled") == true || $btnDisabled.attr("disabled") == 'disabled') {
 	    		$btnDisabled.attr("disabled", false);
 	    		$btnDisabled.removeClass('atlas-gutter-btnDisabledDisabled');
 	    		$btnDisabled.addClass('atlas-gutter-btnDisabled');
@@ -151,13 +156,13 @@ function initializeGutter() {
            $btnDisabled.attr("disabled", true);
            $cbIncludeModules.attr("disabled", true);
 	    } 
-	    setUsageDiscailmerOnServer(jQuery(this).is(':checked'));
+	    setUsageDiscailmerOnServer($j(this).is(':checked'));
 	});
 	
 	$btnEnabled.click(function() {
 		$btnDisabled.show();
 		$btnEnabled.hide();
-		disableAtlasModuleOnServer(jQuery('#atlas-gutter-cbDisclaimer').is(':checked'));
+		disableAtlasModuleOnServer($j('#atlas-gutter-cbDisclaimer').is(':checked'));
 		return false;
 	});
 	
@@ -169,19 +174,19 @@ function initializeGutter() {
 	});
 }
 function initializeImplementationType() {
- 	var $impl = jQuery('#atlas-hidden-implementationTypeOrdinal');
+ 	var $impl = $j('#atlas-hidden-implementationTypeOrdinal');
  	
-	jQuery("#atlas-edit-tbType", containerEdit).val(getImplementationType($impl.val()));
-	jQuery('#atlas-view-lblImplementationType', containerView).text(getImplementationType($impl.val()));
+	$j("#atlas-edit-tbType", containerEdit).val(getImplementationType($impl.val()));
+	$j('#atlas-view-lblImplementationType', containerView).text(getImplementationType($impl.val()));
 }
 function getImplementationType(ord) {
 	var str = '#rbType'+ord;
-	return jQuery(str, $typeWindow).val();
+	return $j(str, $typeWindow).val();
 }
 
 function changeImplementationType(ord) {
-	jQuery("#atlas-edit-tbType",containerEdit).val(getImplementationType(ord));
-	jQuery('#atlas-hidden-implementationTypeOrdinal').val(ord);
+	$j("#atlas-edit-tbType",containerEdit).val(getImplementationType(ord));
+	$j('#atlas-hidden-implementationTypeOrdinal').val(ord);
 }
 
 /*
@@ -189,14 +194,14 @@ function changeImplementationType(ord) {
  * This is done in case the clients browser does not support the placeholder attr
  */
 function BindPlaceHolder(div) {
-jQuery('[placeholder]', div).focus(function() {
-  var input = jQuery(this);
+$j('[placeholder]', div).focus(function() {
+  var input = $j(this);
   if (input.val() == input.attr('placeholder')) {
     input.val('');
     input.removeClass('placeholder');
   }
 }).blur(function() {
-  var input = jQuery(this);
+  var input = $j(this);
   if (input.val() == '' || input.val() == input.attr('placeholder')) {
     input.addClass('placeholder');
     input.val(input.attr('placeholder'));
@@ -205,13 +210,13 @@ jQuery('[placeholder]', div).focus(function() {
   }
 }).blur().parents('form').submit(function() {
 	//remove the values from the input elements, so they do not get submitted
-   RemovePlaceHolderText(jQuery(this));
+   RemovePlaceHolderText($j(this));
 });
 }
 
 function RemovePlaceHolderText(div) {
-	jQuery('[placeholder]' , div).each(function() {
-		var input = jQuery(this);
+	$j('[placeholder]' , div).each(function() {
+		var input = $j(this);
 		if (input.val() == input.attr('placeholder')) {
 			input.val('');
 		}
@@ -219,8 +224,8 @@ function RemovePlaceHolderText(div) {
 }
 
 function RemovePlaceHolderClass(div) {
-	jQuery('[placeholder]', div).each(function() {
-	  var input = jQuery(this);
+	$j('[placeholder]', div).each(function() {
+	  var input = $j(this);
 	  if (input.val() != input.attr('placeholder')) {
 	    input.removeClass('placeholder');
 	  }
@@ -228,27 +233,27 @@ function RemovePlaceHolderClass(div) {
 }
 
 function BindEventsChangeTypeModalWindow() {
-	var titleText = jQuery('#selectTypeText', $typeWindow).text();
+	var titleText = $j('#selectTypeText', $typeWindow).text();
 	$typeWindow.dialog({ autoOpen: false
 		               , modal: true
 		               , title : titleText
 		              });
 	
-	jQuery('#atlas-edit-changeTypeLink').click(function(e) {
-		var rbId = "#rbType"+jQuery('#atlas-hidden-implementationTypeOrdinal').val();
-		jQuery(rbId,$typeWindow).attr('checked', true);
+	$j('#atlas-edit-changeTypeLink').click(function(e) {
+		var rbId = "#rbType"+$j('#atlas-hidden-implementationTypeOrdinal').val();
+		$j(rbId,$typeWindow).attr('checked', true);
 		$typeWindow.dialog('open');
 		return false;
 	});
 	
-	jQuery('#btnTypeSave').click(function(e) {
-		var typeOrd = jQuery('input[type=radio]:checked',$typeWindow).attr('id').substring(6); //6 = length("rbType") 
+	$j('#btnTypeSave').click(function(e) {
+		var typeOrd = $j('input[type=radio]:checked',$typeWindow).attr('id').substring(6); //6 = length("rbType") 
 		changeImplementationType(typeOrd);
 		$typeWindow.dialog('close');
 		return false;
 	});
 	
-	jQuery('#btnTypeCancel').click(function(e) {
+	$j('#btnTypeCancel').click(function(e) {
 		$typeWindow.dialog('close');
 		return false;
 	});
@@ -257,20 +262,20 @@ function BindEventsChangeTypeModalWindow() {
  * Bind events to edit, save, cancel buttons in the google info window
  */
 function BindEvents(infowindow) {
-	jQuery('#atlas-view-editLink').click(function(e) {
+	$j('#atlas-view-editLink').click(function(e) {
 		View2Edit();
 		BindPlaceHolder(containerEdit);
 		validateInput(containerEdit);
-		jQuery(containerEdit).show();
+		$j(containerEdit).show();
 		infowindow.setContent(containerEdit);
 		return false;
 	});
 	
-	jQuery('#atlas-edit-saveLink').click(function(e) {
+	$j('#atlas-edit-saveLink').click(function(e) {
 		containerEdit = infowindow.getContent();
 		if (validateInput(containerEdit)) {
 			Edit2View();
-			jQuery(containerView).show();
+			$j(containerView).show();
 			infowindow.setContent(containerView);
 			saveAtlasBubbleDataOnServer();
 		} else {
@@ -279,9 +284,9 @@ function BindEvents(infowindow) {
 		return false;
 	});
 	
-	jQuery('#atlas-edit-cancelLink').click(function(e) {
+	$j('#atlas-edit-cancelLink').click(function(e) {
 		if (!ViewIsEmpty()) {
-			jQuery(containerView).show();
+			$j(containerView).show();
 			infowindow.setContent(containerView);
 			return false;
 		} else {
@@ -292,13 +297,13 @@ function BindEvents(infowindow) {
 }
 
 function validateInput(div) {
-	var input = jQuery('#atlas-edit-tbName', div);
+	var input = $j('#atlas-edit-tbName', div);
 	if (StringIsEmpty(input.val())
 			||  (input.val() == input.attr('placeholder'))) {
-		jQuery('#atlas-edit-nameError', div).show();
+		$j('#atlas-edit-nameError', div).show();
 		return false;
 	} else {
-		jQuery('#atlas-edit-nameError', div).hide();
+		$j('#atlas-edit-nameError', div).hide();
 		return true;
 	}
 }
@@ -308,8 +313,8 @@ function validateInput(div) {
  */
 
 function SetViewPlaceholders() {
-//	jQuery('.spanView', containerView).each(function() {
-//		$this = jQuery(this);
+//	$j('.spanView', containerView).each(function() {
+//		$this = $j(this);
 //		if (StringIsEmpty($this.text())) {
 //			$this.siblings('.labelPlaceHolder').show();
 //		} else {
@@ -317,8 +322,8 @@ function SetViewPlaceholders() {
 //		}
 //	});
 //	
-//	jQuery('.spanViewParent', containerView).each(function() {
-//		$this = jQuery(this);
+//	$j('.spanViewParent', containerView).each(function() {
+//		$this = $j(this);
 //		if (StringIsEmpty($this.text())) {
 //			$this.parent().siblings('.labelPlaceHolder').show();
 //		} else {
@@ -326,7 +331,7 @@ function SetViewPlaceholders() {
 //		}
 //	});
 	
-	var img = jQuery('#atlas-view-imgImplementation', containerView);
+	var img = $j('#atlas-view-imgImplementation', containerView);
 	if (StringIsEmpty(img.attr('src'))) {
 		img.attr('src', imgPlaceholder);
 	} 
@@ -334,23 +339,23 @@ function SetViewPlaceholders() {
 
 
 function StringIsEmpty(str) {
-	return jQuery.trim(str).length == 0;
+	return $j.trim(str).length == 0;
 }
 
 /*
  * Copy values from the view container to the edit container 
  */
 function View2Edit() {
-	jQuery('#atlas-edit-tbName', containerEdit).val(jQuery('#atlas-view-lblName', containerView).text());
-	jQuery('#atlas-edit-tbWebsite', containerEdit).val(jQuery('#atlas-view-lblWebsite', containerView).text());
-	jQuery('#atlas-edit-tbEmail', containerEdit).val(jQuery('#atlas-view-lblEmail', containerView).text());
-	jQuery('#atlas-edit-tbContactName', containerEdit).val(jQuery('#atlas-view-lblContactName', containerView).text());
-	jQuery('#atlas-edit-tbNotes', containerEdit).val(jQuery('#atlas-view-lblNotes', containerView).text());
-	jQuery("#atlas-edit-tbType", containerEdit).val(jQuery('#atlas-view-lblImplementationType', containerView).text());
-	if (jQuery('#atlas-view-imgImplementation', containerView).attr('src') != imgPlaceholder) {
-		jQuery('#atlas-edit-tbImage', containerEdit).val(jQuery('#atlas-view-imgImplementation', containerView).attr('src'));
+	$j('#atlas-edit-tbName', containerEdit).val($j('#atlas-view-lblName', containerView).text());
+	$j('#atlas-edit-tbWebsite', containerEdit).val($j('#atlas-view-lblWebsite', containerView).text());
+	$j('#atlas-edit-tbEmail', containerEdit).val($j('#atlas-view-lblEmail', containerView).text());
+	$j('#atlas-edit-tbContactName', containerEdit).val($j('#atlas-view-lblContactName', containerView).text());
+	$j('#atlas-edit-tbNotes', containerEdit).val($j('#atlas-view-lblNotes', containerView).text());
+	$j("#atlas-edit-tbType", containerEdit).val($j('#atlas-view-lblImplementationType', containerView).text());
+	if ($j('#atlas-view-imgImplementation', containerView).attr('src') != imgPlaceholder) {
+		$j('#atlas-edit-tbImage', containerEdit).val($j('#atlas-view-imgImplementation', containerView).attr('src'));
 	} else {
-		jQuery('#atlas-edit-tbImage', containerEdit).val("");
+		$j('#atlas-edit-tbImage', containerEdit).val("");
 	}
 }
 
@@ -358,29 +363,29 @@ function View2Edit() {
 function SetElementsInView(isAfterEdit) {
 	
 	SetViewPlaceholders();
-	if (jQuery('#atlas-hidden-implementationTypeOrdinal').val() == '0') {
-		jQuery('#atlas-view-lblImplementationType', containerView).parent().hide();
+	if ($j('#atlas-hidden-implementationTypeOrdinal').val() == '0') {
+		$j('#atlas-view-lblImplementationType', containerView).parent().hide();
 	} else {
-		jQuery('#atlas-view-lblImplementationType', containerView).parent().show();
+		$j('#atlas-view-lblImplementationType', containerView).parent().show();
 	}
 	
 	
 	var email;
 	if (isAfterEdit) {
-		email = jQuery('#atlas-edit-tbEmail', containerEdit).val();
+		email = $j('#atlas-edit-tbEmail', containerEdit).val();
 	} else {
-		email = jQuery('#atlas-view-lblEmail', containerView).text();
+		email = $j('#atlas-view-lblEmail', containerView).text();
 	}
 	if (!StringIsEmpty(email)) {
-		jQuery('#atlas-view-lblEmail', containerView).text(email);
-		jQuery('#atlas-view-aEmail',containerView).attr('href','mailto:'+email+mailtoSubject);
-		jQuery('#atlas-view-imgEmail',containerView).show();
-		jQuery('#atlas-view-aEmail',containerView).show();
+		$j('#atlas-view-lblEmail', containerView).text(email);
+		$j('#atlas-view-aEmail',containerView).attr('href','mailto:'+email+mailtoSubject);
+		$j('#atlas-view-imgEmail',containerView).show();
+		$j('#atlas-view-aEmail',containerView).show();
 	} else {
 		//if (isAfterEdit) {
-			jQuery('#atlas-view-imgEmail',containerView).hide();
-			jQuery('#atlas-view-lblEmail', containerView).text(email);
-			jQuery('#atlas-view-aEmail',containerView).hide();
+			$j('#atlas-view-imgEmail',containerView).hide();
+			$j('#atlas-view-lblEmail', containerView).text(email);
+			$j('#atlas-view-aEmail',containerView).hide();
 	//	}
 	}
 	
@@ -391,35 +396,35 @@ function SetElementsInView(isAfterEdit) {
 function Edit2View() {
 	RemovePlaceHolderText(containerEdit);
 	
-	jQuery('#atlas-view-imgImplementation', containerView).attr('src', jQuery("#atlas-edit-tbImage", containerEdit).val());
-	jQuery('#atlas-view-lblName', containerView).text(jQuery('#atlas-edit-tbName', containerEdit).val());
-	jQuery('#atlas-view-lblWebsite', containerView).text(jQuery('#atlas-edit-tbWebsite', containerEdit).val());
-	jQuery('#atlas-view-aWebsite', containerView).attr('href', jQuery('#atlas-edit-tbWebsite', containerEdit).val());
-	jQuery('#atlas-view-lblContactName', containerView).text(jQuery('#atlas-edit-tbContactName', containerEdit).val());
-	jQuery('#atlas-view-lblNotes', containerView).text(jQuery('#atlas-edit-tbNotes', containerEdit).val());
-	jQuery('#atlas-view-lblImplementationType', containerView).text(jQuery("#atlas-edit-tbType", containerEdit).val());
+	$j('#atlas-view-imgImplementation', containerView).attr('src', $j("#atlas-edit-tbImage", containerEdit).val());
+	$j('#atlas-view-lblName', containerView).text($j('#atlas-edit-tbName', containerEdit).val());
+	$j('#atlas-view-lblWebsite', containerView).text($j('#atlas-edit-tbWebsite', containerEdit).val());
+	$j('#atlas-view-aWebsite', containerView).attr('href', $j('#atlas-edit-tbWebsite', containerEdit).val());
+	$j('#atlas-view-lblContactName', containerView).text($j('#atlas-edit-tbContactName', containerEdit).val());
+	$j('#atlas-view-lblNotes', containerView).text($j('#atlas-edit-tbNotes', containerEdit).val());
+	$j('#atlas-view-lblImplementationType', containerView).text($j("#atlas-edit-tbType", containerEdit).val());
 	
-	if (jQuery('#atlas-edit-cbEncounters', containerEdit).attr('checked')) {
-		jQuery('#atlas-view-lblEncounters', containerView).show();
+	if ($j('#atlas-edit-cbEncounters', containerEdit).attr('checked')) {
+		$j('#atlas-view-lblEncounters', containerView).show();
 	} else {
-		jQuery('#atlas-view-lblEncounters', containerView).hide();
+		$j('#atlas-view-lblEncounters', containerView).hide();
 	}
-	if (jQuery('#atlas-edit-cbPatients', containerEdit).attr('checked')) {
-		jQuery('#atlas-view-lblPatients', containerView).show();
+	if ($j('#atlas-edit-cbPatients', containerEdit).attr('checked')) {
+		$j('#atlas-view-lblPatients', containerView).show();
 	} else {
-		jQuery('#atlas-view-lblPatients', containerView).hide();
+		$j('#atlas-view-lblPatients', containerView).hide();
 	}
-	if (jQuery('#atlas-edit-cbObservations', containerEdit).attr('checked')) {
-		jQuery('#atlas-view-lblObservations', containerView).show();
+	if ($j('#atlas-edit-cbObservations', containerEdit).attr('checked')) {
+		$j('#atlas-view-lblObservations', containerView).show();
 	} else {
-		jQuery('#atlas-view-lblObservations', containerView).hide();
+		$j('#atlas-view-lblObservations', containerView).hide();
 	}
 	
 	SetElementsInView(true);
 }
 
 function ViewIsEmpty() {
-	return  (jQuery('#atlas-view-lblName', containerView).text() == '');
+	return  ($j('#atlas-view-lblName', containerView).text() == '');
 }
 
 function StyleContainers() {
@@ -430,8 +435,8 @@ function StyleContainers() {
 }
 
 function GetCurrentLatLng() {
-	var lng = jQuery('#atlas-hidden-longitude').val();
-	var lat = jQuery('#atlas-hidden-latitude').val();
+	var lng = $j('#atlas-hidden-longitude').val();
+	var lat = $j('#atlas-hidden-latitude').val();
 	if ( lng != '0.0' && lat != '0.0' ){
 		return new google.maps.LatLng(lat, lng);
 	} else { 
@@ -508,7 +513,7 @@ function GetCurrentLatLng() {
  
  function InitializeMap() {
 	var myLatlng = GetCurrentLatLng();
-	var zoom = parseInt(jQuery('#atlas-hidden-zoom').val());
+	var zoom = parseInt($j('#atlas-hidden-zoom').val());
 	if (myLatlng == null) {
 		myLatlng = new google.maps.LatLng(-0.351560293992, 23.642578125);
 	}
@@ -536,7 +541,7 @@ function GetCurrentLatLng() {
 	
 	google.maps.event.addListener(infowindow, 'closeclick', function() {
 		var container = infowindow.getContent();
-		if (jQuery(container).attr('id') == 'atlas-view-containerDiv') {
+		if ($j(container).attr('id') == 'atlas-view-containerDiv') {
 			containerView = container;
 		} else {
 			containerEdit = container;
@@ -555,11 +560,11 @@ function GetCurrentLatLng() {
 	
 	google.maps.event.addListener(marker, 'click', function() {
 		 if (ViewIsEmpty()) {
-			jQuery(containerEdit).show();
+			$j(containerEdit).show();
 			infowindow.setContent(containerEdit);
 		} else { 
 			SetElementsInView(false);
-			jQuery(containerView).show();
+			$j(containerView).show();
 			infowindow.setContent(containerView);
 		}
 		infowindow.open(map,marker);
@@ -642,7 +647,7 @@ function handle_geolocation_query(position) {
   
 function bindSearchBox() {
 	var geocoder = new google.maps.Geocoder();
-	jQuery("#atlas-map-searchbox").autocomplete({
+	$j("#atlas-map-searchbox").autocomplete({
 			source: function(request, response) {
 				if (geocoder == null){
 					geocoder = new google.maps.Geocoder();
@@ -656,7 +661,7 @@ function bindSearchBox() {
                         geocoder.geocode({'latLng': latlng}, function(results1, status1) {
                         	if (status1 == google.maps.GeocoderStatus.OK) {
                         		if (results1[1]) {
-                        			response(jQuery.map(results1, function(loc) {
+                        			response($j.map(results1, function(loc) {
                         				return {
                         					label  : loc.formatted_address,
                         					value  : loc.formatted_address,
@@ -679,7 +684,7 @@ function bindSearchBox() {
                      }
             	 };
                  handle_geolocation_query(position);
-                 jQuery('.ui-autocomplete').hide();
+                 $j('.ui-autocomplete').hide();
              }
          }
       });
