@@ -1,7 +1,6 @@
 <%@page import="org.openmrs.module.atlas.ImplementationType"%>
-<%! Integer DO_NOT_INCLUDE_JQUERY = 12; %>
-
 <%@ include file="/WEB-INF/template/include.jsp"%>
+<c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"> </script>
