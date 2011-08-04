@@ -51,7 +51,6 @@ public class DWRAtlasService {
 			data.setIncludeNumberOfObservations(includeNumberOfObservations);
 			data.setIncludeNumberOfEncounters(includeNumberOfEncounters);
 			 
-			System.out.println("DWR" + data.toString());
 			Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;  
 			service.setAtlasBubbleData(data);

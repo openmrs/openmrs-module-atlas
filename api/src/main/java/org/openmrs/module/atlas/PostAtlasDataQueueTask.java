@@ -28,16 +28,11 @@ import org.openmrs.scheduler.tasks.AbstractTask;
 public class PostAtlasDataQueueTask extends AbstractTask {
 	// Logger
 	private Log log = LogFactory.getLog(this.getClass());
-	private AtlasDataProcessor processor = null;
-	
 	/**
 	 * Default Constructor 
 	 * 
 	 */
 	public PostAtlasDataQueueTask() {
-		if (processor == null)
-			processor = new AtlasDataProcessor();
-		
 	}
 
 
@@ -63,6 +58,5 @@ public class PostAtlasDataQueueTask extends AbstractTask {
 	 */
 	public void shutdown() {
 		log.debug("Shutting down PostAtlasDataQueueTask task ...");
-		processor = null;
 	}
 }

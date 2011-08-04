@@ -70,7 +70,6 @@ import org.openmrs.util.OpenmrsConstants;
 public class AtlasServiceImpl implements AtlasService {
 	
 	private Log log = LogFactory.getLog(this.getClass());	
-	//private AtlasDataProcessor processor = null;
 	private StatisticsDAO dao;
 	
 	
@@ -86,8 +85,6 @@ public class AtlasServiceImpl implements AtlasService {
      * 
      */
     public AtlasServiceImpl() {
-	  // processor = new AtlasDataProcessor();
-	   
     }
 	/**
      * @see org.openmrs.module.atlas.AtlasService#getAtlasData()
@@ -166,7 +163,7 @@ public class AtlasServiceImpl implements AtlasService {
 				log.error("Could not get atlas data. Exception:"+apiEx.getMessage());
 		}
 		
-		System.out.println("GetAtlasData: " + atlasData.toString());
+		//System.out.println("GetAtlasData: " + atlasData.toString());
 		return atlasData;
     }
   	
@@ -179,12 +176,6 @@ public class AtlasServiceImpl implements AtlasService {
     	AdministrationService svc = null;
 		try {
 			svc = Context.getAdministrationService();
-		/*	String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
-
-			if (idString == null || idString.trim().equals(""))	{
-				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
-			} 
-			*/
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite()));
@@ -206,7 +197,7 @@ public class AtlasServiceImpl implements AtlasService {
 			if (log.isErrorEnabled())
 				log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
 		}
-		System.out.println("SetAtlasData: " + data.toString());
+		//System.out.println("SetAtlasData: " + data.toString());
     }
 
     @Override
@@ -297,7 +288,7 @@ public class AtlasServiceImpl implements AtlasService {
 			if (log.isErrorEnabled())
 				log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
 		}
-		System.out.println("SetAtlasData: " + data.toString());
+		//System.out.println("SetAtlasData: " + data.toString());
     }
 
     @Override
@@ -371,7 +362,7 @@ public class AtlasServiceImpl implements AtlasService {
 		
 			//get data
     	String jsonData = getJson();
-    		String x = "{\"id\":\"050b2506-b0a3-4414-9ac0-de8b9fbb563a\",\"geolocation\":{\"latitude\": 47.170151,\"longitude\":27.583548999999948},\"name\":\"Another Implementation\",\"notes\":\"Lorem ipsum\"}";
+    		//String x = "{\"id\":\"050b2506-b0a3-4414-9ac0-de8b9fbb563a\",\"geolocation\":{\"latitude\": 47.170151,\"longitude\":27.583548999999948},\"name\":\"Another Implementation\",\"notes\":\"Lorem ipsum\"}";
     	    
 	    	URL u = new URL(AtlasConstants.SERVER_URL);
 	        HttpURLConnection connection = (HttpURLConnection)u.openConnection();
@@ -520,9 +511,9 @@ public class AtlasServiceImpl implements AtlasService {
 
 	        int status = connection.getResponseCode();
 	        if(status == 200){
-	               System.out.println("delete ok");
+	             //  System.out.println("delete ok");
 	        } else {
-	        	System.out.println("delete FAILED");
+	        	//System.out.println("delete FAILED");
 	        }
 			
     	}
