@@ -15,7 +15,10 @@ package org.openmrs.module.atlas;
 
 
 /**
- *
+ * In this class we keep the module constants :
+ *  - global property names
+ *  - server url to post data to
+ *  - task name (for scheduler)
  */
 public class AtlasConstants {
 		

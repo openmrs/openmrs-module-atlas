@@ -23,7 +23,7 @@ import org.openmrs.scheduler.tasks.AbstractTask;
 
 
 /**
- *
+ * Task that posts the atlas data to the OpenMRS server
  */
 public class PostAtlasDataQueueTask extends AbstractTask {
 	// Logger

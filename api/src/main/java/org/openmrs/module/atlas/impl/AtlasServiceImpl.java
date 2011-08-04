@@ -16,7 +16,6 @@ package org.openmrs.module.atlas.impl;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.atlas.AtlasData;
-import org.openmrs.module.atlas.AtlasDataProcessor;
 import org.openmrs.module.atlas.AtlasService;
 import org.openmrs.module.atlas.AtlasConstants;
 import org.openmrs.module.atlas.ImplementationType;
@@ -65,7 +64,7 @@ import org.openmrs.util.OpenmrsConstants;
 
 
 /**
- *
+ * AtlasService Implementation
  */
 public class AtlasServiceImpl implements AtlasService {
 	
@@ -361,7 +360,7 @@ public class AtlasServiceImpl implements AtlasService {
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS, String.valueOf(nrOfPatients)));
 		
 			//get data
-    	String jsonData = getJson();
+    	String jsonData = getJson(false);
     		//String x = "{\"id\":\"050b2506-b0a3-4414-9ac0-de8b9fbb563a\",\"geolocation\":{\"latitude\": 47.170151,\"longitude\":27.583548999999948},\"name\":\"Another Implementation\",\"notes\":\"Lorem ipsum\"}";
     	    
 	    	URL u = new URL(AtlasConstants.SERVER_URL);
@@ -396,12 +395,16 @@ public class AtlasServiceImpl implements AtlasService {
     }
     
     @Override
-    public String getJson() throws APIException {
+    public String getJson(Boolean isPreview) throws APIException {
 		AtlasData data = getAtlasData();
 	    	StringBuilder sb = new StringBuilder();
+	    	String name = data.getName();
+	    	if (name == "" && isPreview) {
+	    		name = "Preview Name";
+	    	}
 	    	sb.append("{\"id\" : \"" + data.getId()+ "\", ");
 	    	sb.append("\"geolocation\" :  {\"latitude\" : "+ data.getLatitude()+", \"longitude\" : "+ data.getLongitude()+"}, ");
-	    	sb.append("\"name\" : \""+data.getName()+"\",");
+	    	sb.append("\"name\" : \""+name+"\",");
 	    	sb.append("\"type\" : \""+ ImplementationType.values()[data.getImplementationType()]+"\",");
 	        sb.append("\"website\" : \""+ data.getWebsite() +"\",");
 	        sb.append("\"notes\" : \""+ data.getNotes() +"\",");

@@ -96,7 +96,7 @@ public class DWRAtlasService {
       public String getJsonData() {
     	  Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;   
-			return service.getJson();
+			return service.getJson(true);
       }
       
       public String[] updateAndGetStatistics() {

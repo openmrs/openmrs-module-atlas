@@ -300,7 +300,7 @@
   		<span id="atlas-gutter-sentInfoTitle" style="display: none"><spring:message code="atlas.whatWillBeSentInfoTitle"/></span>
   		<spring:message code="atlas.whatWillBeSentInfo" />
   		<br><br>
-  		<textarea id="atlas-gutter-jsonData" cols="50" rows="10" readonly="readonly"></textarea>
+  		<textarea id="atlas-gutter-jsonData" cols="50" rows="10" readonly="readonly" style="resize: none;"></textarea>
   		<br><br>
   	</span>
   		<div style="margin: auto; width: 50px;">

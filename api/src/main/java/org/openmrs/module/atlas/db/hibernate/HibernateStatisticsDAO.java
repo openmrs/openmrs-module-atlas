@@ -28,7 +28,7 @@ import org.hibernate.SessionFactory;
 
 
 /**
- *
+ * Hibernate implementation of the Statistics DAO
  */
 public class HibernateStatisticsDAO implements StatisticsDAO {
 

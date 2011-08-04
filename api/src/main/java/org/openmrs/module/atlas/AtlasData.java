@@ -17,7 +17,8 @@ import java.util.UUID;
 
 
 /**
- *
+ * The AtlasData class is the form backing object for the atlas page.
+ * It contains all the data from the atlas bubble and from the gutter.
  */
 public class AtlasData {
 	 private UUID id;
@@ -44,10 +45,9 @@ public class AtlasData {
 	 private Boolean includeModules;
 	 private Integer implementationType;
 
-
 	 
     /**
-     * 
+     * constructor
      */
     public AtlasData() {
     	this.contactEmailAddress = "";

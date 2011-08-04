@@ -39,11 +39,11 @@ function initializeWhatWillBeSentModalWindow() {
        });
  	
  	$j("#atlas-gutter-includeModulesTip").click(function() {
- 		if ($j('#atlas-gutter-btnEnable').is(":visible")) {
+ 		//if ($j('#atlas-gutter-btnEnable').is(":visible")) {
  			getJsonDataFromServer();
- 		} else {
- 			$j('#atlas-gutter-jsonData', $j("#atlas-gutter-sentInfo")).val("");
- 		}
+ 		//} else {
+ 		//	$j('#atlas-gutter-jsonData', $j("#atlas-gutter-sentInfo")).val("");
+ 		//}
  		$whatWillBeSendWindow.dialog('open');
  		return false;
  	});
@@ -152,7 +152,7 @@ function initializeGutter() {
 	           $btnEnabled.click();
 	       }  
 	       $btnDisabled.addClass('atlas-gutter-btnDisabledDisabled');
-           $btnDisabled.removeClass('atlas-gutter-btnDisabled');
+           $btnDisabled.removeClass('atlas-gutter-btnDisableatlas-gutter-jsonDatad');
            $btnDisabled.attr("disabled", true);
            $cbIncludeModules.attr("disabled", true);
 	    } 
@@ -167,9 +167,11 @@ function initializeGutter() {
 	});
 	
 	$btnDisabled.click(function() {
-		$btnDisabled.hide();
-		$btnEnabled.show();
-		enableAtlasModuleOnServer();
+		if (!ViewIsEmpty()) {
+			$btnDisabled.hide();
+			$btnEnabled.show();
+			enableAtlasModuleOnServer();
+		}
 		return false;
 	});
 }
@@ -244,6 +246,10 @@ function BindEventsChangeTypeModalWindow() {
 		$j(rbId,$typeWindow).attr('checked', true);
 		$typeWindow.dialog('open');
 		return false;
+	});
+	
+	$j('#atlas-edit-tbType').click(function() {
+		$j('#atlas-edit-changeTypeLink').click();
 	});
 	
 	$j('#btnTypeSave').click(function(e) {

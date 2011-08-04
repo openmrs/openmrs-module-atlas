@@ -17,7 +17,7 @@ import org.openmrs.api.db.DAOException;
 
 
 /**
- *
+ * Statistics DAO
  */
 public interface StatisticsDAO {
 	

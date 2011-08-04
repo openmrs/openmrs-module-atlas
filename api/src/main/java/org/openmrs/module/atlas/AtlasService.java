@@ -21,7 +21,7 @@ import org.openmrs.api.APIException;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * The Atlas Service contains all the methods needed to manipulate the atlas data
  */
 @Transactional
 public interface AtlasService {
@@ -48,5 +48,5 @@ public interface AtlasService {
 	@Authorized({"Manage Atlas Data"})
     String[] updateAndGetStatistics() throws APIException;
 	@Authorized({"Manage Atlas Data"})
-    String getJson() throws APIException;
+    String getJson(Boolean isPreview) throws APIException;
 }
