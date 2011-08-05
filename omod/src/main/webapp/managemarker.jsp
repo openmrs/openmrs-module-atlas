@@ -251,6 +251,14 @@
 					</c:if>
   		value="<spring:message code="atlas.buttonDisabled" />"
   		 /> 
+  		 <br>
+  		 <div id="atlas-gutter-updateAtlasNowDiv" style="display: block; min-height:20px;">
+	  		<a id="atlas-gutter-updateAtlasNowLink" href="" 
+	        <c:if test="${atlasData.moduleEnabled == false ||  atlasData.isDirty == false}">
+											style="display: none"
+			</c:if>
+	        title="<spring:message code="atlas.updateAtlasNowLink" />"><spring:message code="atlas.updateAtlasNowLink" /></a>
+	        </div>
   		 </div>
   		 
   		</td></tr>
@@ -272,6 +280,7 @@
   			</tr>
   		</table>       
         </div>
+       
 	</form>
   </div>
   <div id="atlas-map-rightColumnDiv">

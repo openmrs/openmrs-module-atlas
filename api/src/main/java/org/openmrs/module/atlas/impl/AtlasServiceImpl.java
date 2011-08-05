@@ -156,6 +156,11 @@ public class AtlasServiceImpl implements AtlasService {
 				if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED)) != null) {
 					atlasData.setUsageDisclamerAccepted(Boolean.parseBoolean(globalProperty));
 				}
+				if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY)) != null) {
+					atlasData.setIsDirty(Boolean.parseBoolean(globalProperty));
+				}
+				
+				
 			}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
@@ -166,6 +171,26 @@ public class AtlasServiceImpl implements AtlasService {
 		return atlasData;
     }
   	
+    @Override
+    public Boolean getIsDirty() throws APIException {
+    	AdministrationService svc = null;
+    	AtlasData atlasData = new AtlasData();
+		try {
+			svc = Context.getAdministrationService();
+				String globalProperty;
+				
+				if ( (globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY)) != null) {
+					return Boolean.parseBoolean(globalProperty);
+				} else {
+					return false;
+				}
+			}
+		catch (APIException apiEx) {
+			if (log.isErrorEnabled())
+				log.error("Could get atlasData.isDirty. Exception:"+apiEx.getMessage());
+			return false;
+		}
+    }
     
 	/**
      * @see org.openmrs.module.atlas.AtlasService#setAtlasData(org.openmrs.module.atlas.AtlasData)
@@ -191,6 +216,8 @@ public class AtlasServiceImpl implements AtlasService {
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, data.getUsageDisclamerAccepted().toString()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_MODULES, data.getIncludeModules().toString()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled().toString()));
+			
+			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
@@ -282,12 +309,13 @@ public class AtlasServiceImpl implements AtlasService {
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data.getIncludeNumberOfPatients().toString()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data.getIncludeNumberOfEncounters().toString()));
+			
+			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
 				log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
 		}
-		//System.out.println("SetAtlasData: " + data.toString());
     }
 
     @Override
@@ -296,6 +324,8 @@ public class AtlasServiceImpl implements AtlasService {
 		try {
 			svc = Context.getAdministrationService();
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_MODULES, includeModules.toString()));
+			
+			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
@@ -324,6 +354,7 @@ public class AtlasServiceImpl implements AtlasService {
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, lat.toString()));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, lng.toString()));
 			
+			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
@@ -351,7 +382,8 @@ public class AtlasServiceImpl implements AtlasService {
     	Long nrOfObservations = getStatisticsDAO().getNumberOfObservations();
 		Long nrOfEncounters = getStatisticsDAO().getNumberOfEncounters();
 		Long nrOfPatients = getStatisticsDAO().getNumberOfPatients();
-		
+		//set the isDirty flag to false;
+		setIsDirty(false);
 		AdministrationService svc = null;
 		try {
 			svc = Context.getAdministrationService();
@@ -360,7 +392,7 @@ public class AtlasServiceImpl implements AtlasService {
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS, String.valueOf(nrOfPatients)));
 		
 			//get data
-    	String jsonData = getJson(false);
+			String jsonData = getJson(false);
     		//String x = "{\"id\":\"050b2506-b0a3-4414-9ac0-de8b9fbb563a\",\"geolocation\":{\"latitude\": 47.170151,\"longitude\":27.583548999999948},\"name\":\"Another Implementation\",\"notes\":\"Lorem ipsum\"}";
     	    
 	    	URL u = new URL(AtlasConstants.SERVER_URL);
@@ -378,9 +410,9 @@ public class AtlasServiceImpl implements AtlasService {
 	        System.out.println(jsonData);
 	        int status = connection.getResponseCode();
 	        if(status == 200){
-	               System.out.println("sent ok");
+	        	log.debug("sent ok");
 	        } else {
-	        	System.out.println("sent FAILED");
+	        	log.debug("sent FAILED");
 	        }
 	        
 	        	}
@@ -497,6 +529,17 @@ public class AtlasServiceImpl implements AtlasService {
 		}
 	}
 	
+	private void setIsDirty(Boolean isDirty) {
+		AdministrationService svc = null;
+		try {
+			svc = Context.getAdministrationService();
+			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY, isDirty.toString()));
+		}
+		catch (APIException apiEx) {
+			if (log.isErrorEnabled())
+				log.error("Could not set atlas data. Exception:"+apiEx.getMessage());
+		}
+	}
 	
 	
 	private void sendDeleteMessageToServer() {

@@ -77,6 +77,22 @@ function saveAtlasBubbleDataOnServer() {
 			name, implementationType ,website, imgSrc
 			,notes, contactName, contactEmailAddress
 			,includeNumberOfPatients, includeNumberOfObservations, includeNumberOfEncounters);
+	
+	getIsDirtyFromServer();
+}
+
+function getIsDirtyFromServer() {
+	//if you want to update the dirty state from the server, uncomment the setTimeout call and comment the getIsDirtyFromServerCallback call 
+	//setTimeout("DWRAtlasService.getIsDirty(getIsDirtyFromServerCallback)",500);
+	getIsDirtyFromServerCallback(true);
+}
+
+function getIsDirtyFromServerCallback(isDirty) {
+	if (isDirty &&  $j('#atlas-gutter-btnEnable').is(':visible')) {
+		$j('#atlas-gutter-updateAtlasNowLink').show();
+	} else {
+		$j('#atlas-gutter-updateAtlasNowLink').hide();
+	}
 }
 
 function getJsonDataFromServer() {
@@ -101,21 +117,28 @@ function enableAtlasModuleOnServer() {
 	DWRAtlasService.enableAtlasModule();
 }
 
+function sendPostCommandToServer() {
+	DWRAtlasService.postAtlasData();
+	getIsDirtyFromServer();
+}
+
 function disableAtlasModuleOnServer(cbDisclamerIsChecked) {
 	DWRAtlasService.disableAtlasModule(cbDisclamerIsChecked);
 }
 
 function setIncludeModulesOnServer(value) {
 	DWRAtlasService.setIncludeModules(value);
+	getIsDirtyFromServer();
 }
 
 function updatePositionOnServer() {
-var position = marker.getPosition();
+	var position = marker.getPosition();
 	DWRAtlasService.setPosition(position.lat(), position.lng());
+	getIsDirtyFromServer();
 }
 
 function updateZoomOnServer() {
-	var zoom = map.getZoom();
+		var zoom = map.getZoom();
 		DWRAtlasService.setZoom(zoom.toString());
 	}
 
@@ -127,6 +150,7 @@ function initializeGutter() {
 	$btnEnabled = $j('#atlas-gutter-btnEnable');
 	$btnDisabled = $j('#atlas-gutter-btnDisable');
 	$cbIncludeModules = $j('#atlas-gutter-cbIncludeModules');
+	$updateAtlasNowLink = $j('#atlas-gutter-updateAtlasNowLink');
 	
 	$cbIncludeModules.click(function() {
 		setIncludeModulesOnServer($j(this).is(':checked'));
@@ -159,20 +183,28 @@ function initializeGutter() {
 	    setUsageDiscailmerOnServer($j(this).is(':checked'));
 	});
 	
-	$btnEnabled.click(function() {
+	$btnEnabled.click(function(event) {
 		$btnDisabled.show();
 		$btnEnabled.hide();
+		$updateAtlasNowLink.hide();
 		disableAtlasModuleOnServer($j('#atlas-gutter-cbDisclaimer').is(':checked'));
-		return false;
+		event.preventDefault();
 	});
 	
-	$btnDisabled.click(function() {
+	$btnDisabled.click(function(event) {
 		if (!ViewIsEmpty()) {
 			$btnDisabled.hide();
 			$btnEnabled.show();
 			enableAtlasModuleOnServer();
 		}
-		return false;
+		event.preventDefault();
+	});
+	
+	$updateAtlasNowLink.click(function (event) {
+		sendPostCommandToServer();
+		//comment the next line if you use the DWR service to get isDirty value
+		$updateAtlasNowLink.hide();
+		event.preventDefault();
 	});
 }
 function initializeImplementationType() {

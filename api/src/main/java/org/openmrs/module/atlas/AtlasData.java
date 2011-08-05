@@ -44,6 +44,8 @@ public class AtlasData {
 	 private Boolean moduleEnabled;
 	 private Boolean includeModules;
 	 private Integer implementationType;
+	 
+	 private Boolean isDirty;
 
 	 
     /**
@@ -70,6 +72,7 @@ public class AtlasData {
   	    this.moduleEnabled = false;
   	    this.implementationType = 0;
   	    this.zoom = 3;
+  	    this.isDirty = true;
     }
     /**
      * 
@@ -388,6 +391,22 @@ public class AtlasData {
      */
     public void setUsageDisclamerAccepted(Boolean usageDisclamerAccepted) {
 	    this.usageDisclamerAccepted = usageDisclamerAccepted;
+    }
+    
+    
+    /**
+     * @return the isDirty
+     */
+    public Boolean getIsDirty() {
+	    return isDirty;
+    }
+    
+    
+    /**
+     * @param isDirty the isDirty to set
+     */
+    public void setIsDirty(Boolean isDirty) {
+	    this.isDirty = isDirty;
     }
     
     /**

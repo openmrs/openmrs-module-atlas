@@ -78,6 +78,9 @@
 				<include method="setZoom"/>
 				<include method="getJsonData"/>
 				<include method="setUsageDisclaimer"/>
+				<include method="postAtlasData"/>
+				<include method="getIsDirty"/>
+				
 			</create>
 		</allow>
 
@@ -104,6 +107,10 @@
 			DWRAtlasService.setUsageDisclaimer(String acceptedStr)
 			
 			DWRAtlasService.getJsonData();
+			
+			DWRAtlasService.postAtlasData();
+			
+			DWRAtlasService.getIsDirty();
 			]]>
 		</signatures>	
 	</dwr>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="/home/victor/workspace/openMRS/Openmrs-trunk/api/target/openmrs-api-1.9.0-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/victor/workspace/openMRS/Openmrs-trunk/web/target/openmrs-web-1.9.0-SNAPSHOT.jar"/>
 	<classpathentry kind="src" path="api/src/main/java"/>
 	<classpathentry kind="src" path="omod/src/main/java"/>
 	<classpathentry kind="src" path="omod/src/test/java"/>

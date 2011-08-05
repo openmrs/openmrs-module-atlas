@@ -48,5 +48,7 @@ public interface AtlasService {
 	@Authorized({"Manage Atlas Data"})
     String[] updateAndGetStatistics() throws APIException;
 	@Authorized({"Manage Atlas Data"})
+    Boolean getIsDirty() throws APIException;
+	@Authorized({"Manage Atlas Data"})
     String getJson(Boolean isPreview) throws APIException;
 }

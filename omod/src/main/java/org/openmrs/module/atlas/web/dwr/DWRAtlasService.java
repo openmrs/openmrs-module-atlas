@@ -99,6 +99,18 @@ public class DWRAtlasService {
 			return service.getJson(true);
       }
       
+      public void postAtlasData() {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			service.postAtlasData();
+      }
+      
+      public Boolean getIsDirty() {
+    	  Object o = Context.getService(AtlasService.class);
+			AtlasService service =  (AtlasService)o;   
+			return service.getIsDirty();
+      }
+      
       public String[] updateAndGetStatistics() {
     	  Object o = Context.getService(AtlasService.class);
 			AtlasService service =  (AtlasService)o;   
