@@ -13,15 +13,9 @@
  */
 package org.openmrs.module.atlas;
 
-
 /**
  * Enum containing the types of implementation
  */
 public enum ImplementationType {
-	Blank,
-    Clinical,
-    Research,
-    Development,
-    Evaluation,
-    Other
+	Undefined, Clinical, Research, Development, Evaluation, Other
 }

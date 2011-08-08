@@ -9,12 +9,11 @@
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Victor Chircu</author>
 	<description>
-			Atlas Module.
+			The Atlas Module provides a simple mechanism for OpenMRS implementations to join the OpenMRS Atlas (http://go.openmrs.org/atlas), sharing awareness of their site with the community.
 	</description>
 
 	<activator>@MODULE_PACKAGE@.AtlasModuleActivator</activator>
 	
-	<!-- <updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL> -->
 	<!-- /Base Module Properties -->
 	
 	<require_version>1.6.0</require_version>
@@ -24,15 +23,6 @@
 		<point>org.openmrs.admin.list</point>
 		<class>@MODULE_PACKAGE@.extension.html.AdminList</class>
 	</extension>
-	
-	
-	<!-- AOP
-	<advice>
-		<point>org.openmrs.api.FormService</point>
-		<class>@MODULE_PACKAGE@.advice.DuplicateFormAdvisor</class>
-	</advice>
-	 /AOP -->
-	
 	
 	<privilege>
 		<name>Manage Atlas Data</name>
@@ -45,21 +35,21 @@
 		<property>@MODULE_ID@.numberOfPatients</property>
 		<defaultValue>?</defaultValue>
 		<description>
-		    TEMPORARY -	Shows ? instead of the actual number of Patients, until it gets updated
+		    Stores the last calculated count of non-voided patients in the system ("?" if never calculated).
 		</description>
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.numberOfObservations</property>
 		<defaultValue>?</defaultValue>
 		<description>
-		    TEMPORARY -	Shows ? instead of the actual number of Observations, until it gets updated
+		    Stores the last calculated count of non-voided observations in the system ("?" if never calculated).
 		</description>
 	</globalProperty>
 	<globalProperty>
 		<property>@MODULE_ID@.numberOfEncounters</property>
 		<defaultValue>?</defaultValue>
 		<description>
-		    TEMPORARY -	Shows ? instead of the actual number of Encounters, until it gets updated
+		    Stores the last calculated count of non-voided encounters in the system ("?" if never calculated).
 		</description>
 	</globalProperty>
 	
@@ -72,7 +62,7 @@
 				<include method="saveAtlasBubbleData"/>
 				<include method="enableAtlasModule"/>
 				<include method="disableAtlasModule"/>
-				<include method="setIncludeModules"/>
+				<include method="setIncludeSystemConfiguration"/>
 				<include method="setPosition"/>
 				<include method="updateAndGetStatistics"/>
 				<include method="setZoom"/>
@@ -96,7 +86,7 @@
 			
 			DWRAtlasService.disableAtlasModule(String disclaimerAcceptedStr);
 			
-			DWRAtlasService.setIncludeModules(String includeModulesStr);
+			DWRAtlasService.setIncludeSystemConfiguration(String includeSystemConfigurationStr);
 			
 			DWRAtlasService.setPosition(String latStr, String lngStr);
 			
@@ -114,16 +104,6 @@
 			]]>
 		</signatures>	
 	</dwr>
-	
-	
-	<!-- Servlets -->
-	<!-- Accessed through the url /pageContext()/moduleServlet/<moduleId>/<servlet-name> 
-	<servlet>
-		<servlet-name>formDownload</servlet-name>
-		<servlet-class>@MODULE_PACKAGE@.web.FormDownloadServlet</servlet-class>
-	</servlet>
-	-->
-	<!-- /Servlets -->
 	
 	
 	<!-- Internationalization -->

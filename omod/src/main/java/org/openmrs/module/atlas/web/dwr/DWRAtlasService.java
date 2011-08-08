@@ -19,16 +19,15 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.atlas.AtlasData;
 import org.openmrs.module.atlas.AtlasService;
 
-
 /**
  *
  */
 public class DWRAtlasService {
-	public void saveAtlasBubbleData(String latStr,	String lngStr,
-			String name, String implementationTypeStr, String website, String imageURL, 
-			String notes, String contactName, String contactEmail,
-			String includeNumberOfPatientsStr, String includeNumberOfObservationsStr, String includeNumberOfEncountersStr)
-	{
+	
+	public void saveAtlasBubbleData(String latStr, String lngStr, String name, String implementationTypeStr, String website,
+	                                String imageURL, String notes, String contactName, String contactEmail,
+	                                String includeNumberOfPatientsStr, String includeNumberOfObservationsStr,
+	                                String includeNumberOfEncountersStr) {
 		
 		Double lat = Double.valueOf(latStr);
 		Double lng = Double.valueOf(lngStr);
@@ -37,83 +36,66 @@ public class DWRAtlasService {
 		Boolean includeNumberOfPatients = Boolean.parseBoolean(includeNumberOfPatientsStr);
 		Boolean includeNumberOfEncounters = Boolean.parseBoolean(includeNumberOfEncountersStr);
 		
-			AtlasData data = new AtlasData();
-			data.setName(name);
-			data.setImplementationType(implementationType);
-			data.setWebsite(website);
-			data.setImageURL(imageURL);
-			data.setLatitude(lat);
-			data.setLongitude(lng);
-			data.setNotes(notes);
-			data.setContactName(contactName);
-			data.setContactEmailAddress(contactEmail);
-			data.setIncludeNumberOfPatients(includeNumberOfPatients);
-			data.setIncludeNumberOfObservations(includeNumberOfObservations);
-			data.setIncludeNumberOfEncounters(includeNumberOfEncounters);
-			 
-			Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;  
-			service.setAtlasBubbleData(data);
+		AtlasData data = new AtlasData();
+		data.setName(name);
+		data.setImplementationType(implementationType);
+		data.setWebsite(website);
+		data.setImageURL(imageURL);
+		data.setLatitude(lat);
+		data.setLongitude(lng);
+		data.setNotes(notes);
+		data.setContactName(contactName);
+		data.setContactEmailAddress(contactEmail);
+		data.setIncludeNumberOfPatients(includeNumberOfPatients);
+		data.setIncludeNumberOfObservations(includeNumberOfObservations);
+		data.setIncludeNumberOfEncounters(includeNumberOfEncounters);
+		
+		Object o = Context.getService(AtlasService.class);
+		AtlasService service = (AtlasService) o;
+		getAtlasService().setAtlasBubbleData(data);
 	}
 	
-     public void enableAtlasModule() {
-    	 Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			service.enableAtlasModule();
-     }
-
-
-      public void disableAtlasModule(String disclaimerAcceptedStr) {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			service.disableAtlasModule(Boolean.parseBoolean(disclaimerAcceptedStr));
-      }
-      
-      public void setIncludeModules(String includeModulesStr) {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			service.setIncludeModules(Boolean.parseBoolean(includeModulesStr));
-      }
-      
-      public void setPosition(String latStr, String lngStr) {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			service.setPosition(Double.parseDouble(latStr), Double.parseDouble(lngStr));
-      }
-      
-      public void setZoom(String zoomStr) {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			service.setZoom(Integer.parseInt(zoomStr));
-      }
-      
-      public void setUsageDisclaimer(String acceptedStr) {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			service.setUsageDisclaimerAccepted(Boolean.parseBoolean(acceptedStr));
-      }
-      
-      public String getJsonData() {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			return service.getJson(true);
-      }
-      
-      public void postAtlasData() {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			service.postAtlasData();
-      }
-      
-      public Boolean getIsDirty() {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			return service.getIsDirty();
-      }
-      
-      public String[] updateAndGetStatistics() {
-    	  Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			return service.updateAndGetStatistics();
-      }
+	public void enableAtlasModule() {
+		getAtlasService().enableAtlasModule();
+	}
+	
+	public void disableAtlasModule(String disclaimerAcceptedStr) {
+		getAtlasService().disableAtlasModule(Boolean.parseBoolean(disclaimerAcceptedStr));
+	}
+	
+	public void setIncludeSystemConfiguration(String includeSystemConfigurationStr) {
+		getAtlasService().setIncludeSystemConfiguration(Boolean.parseBoolean(includeSystemConfigurationStr));
+	}
+	
+	public void setPosition(String latStr, String lngStr) {
+		getAtlasService().setPosition(Double.parseDouble(latStr), Double.parseDouble(lngStr));
+	}
+	
+	public void setZoom(String zoomStr) {
+		getAtlasService().setZoom(Integer.parseInt(zoomStr));
+	}
+	
+	public void setUsageDisclaimer(String acceptedStr) {
+		getAtlasService().setUsageDisclaimerAccepted(Boolean.parseBoolean(acceptedStr));
+	}
+	
+	public String getJsonData() {
+		return getAtlasService().getJson(true);
+	}
+	
+	public void postAtlasData() {
+		getAtlasService().postAtlasData();
+	}
+	
+	public Boolean getIsDirty() {
+		return getAtlasService().getIsDirty();
+	}
+	
+	public String[] updateAndGetStatistics() {
+		return getAtlasService().updateAndGetStatistics();
+	}
+	
+	private AtlasService getAtlasService() {
+		return (AtlasService) Context.getService(AtlasService.class);
+	}
 }

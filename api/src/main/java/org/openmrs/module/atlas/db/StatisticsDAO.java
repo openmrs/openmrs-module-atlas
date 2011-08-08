@@ -15,16 +15,34 @@ package org.openmrs.module.atlas.db;
 
 import org.openmrs.api.db.DAOException;
 
-
 /**
- * Statistics DAO
+ * Provides database access to statistics (counts of patients, encounters, and observations) for the
+ * Atlas Module.
  */
 public interface StatisticsDAO {
 	
+	/**
+	 * Method that returns the number of unvoided patients
+	 * 
+	 * @return the number of unvoided patients
+	 * @throws DAOException
+	 */
 	public Long getNumberOfPatients() throws DAOException;
 	
+	/**
+	 * Method that returns the number of unvoided encounters
+	 * 
+	 * @return the number of unvoided encounters
+	 * @throws DAOException
+	 */
 	public Long getNumberOfEncounters() throws DAOException;
 	
+	/**
+	 * Method that returns the number of unvoided observations
+	 * 
+	 * @return the number of unvoided observations
+	 * @throws DAOException
+	 */
 	public Long getNumberOfObservations() throws DAOException;
-
+	
 }

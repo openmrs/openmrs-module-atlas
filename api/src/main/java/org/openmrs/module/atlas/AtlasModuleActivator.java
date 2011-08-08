@@ -38,14 +38,15 @@ public class AtlasModuleActivator implements Activator {
 		try {
 			AdministrationService svc = Context.getAdministrationService();
 			String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
-
-			if (idString == null || idString.trim().equals(""))	{
+			
+			//if not found, generate UUID for Atlas ID
+			if (idString == null || idString.trim().equals("")) {
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, UUID.randomUUID().toString()));
-			} 
+			}
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
-				log.error("Could not set atlas id. Exception:"+apiEx.getMessage());
+				log.error("Could not set atlas id. Exception:" + apiEx.getMessage());
 		}
 		
 	}
@@ -56,8 +57,8 @@ public class AtlasModuleActivator implements Activator {
 	public void shutdown() {
 		log.info("Shutting down Atlas Module");
 		Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;   
-			service.disableAtlasModule(false);
+		AtlasService service = (AtlasService) o;
+		service.disableAtlasModule(false);
 	}
 	
 }

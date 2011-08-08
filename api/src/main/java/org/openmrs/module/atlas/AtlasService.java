@@ -13,7 +13,6 @@
  */
 package org.openmrs.module.atlas;
 
-
 import java.util.List;
 
 import org.openmrs.annotation.Authorized;
@@ -23,32 +22,133 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * The Atlas Service contains all the methods needed to manipulate the atlas data
  */
+/**
+ *
+ */
 @Transactional
 public interface AtlasService {
-	@Authorized({"Manage Atlas Data"})
+	
+	/**
+	 * Method returning the atlas data
+	 * 
+	 * @return The Atlas Data
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
 	AtlasData getAtlasData() throws APIException;
-	@Authorized({"Manage Atlas Data"})
+	
+	/**
+	 * Method setting the atlas data
+	 * 
+	 * @param data The atlas data
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
 	void setAtlasData(AtlasData data) throws APIException;
-	@Authorized({"Manage Atlas Data"})
+	
+	/**
+	 * Enable the Atlas Module
+	 * 
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
 	void enableAtlasModule() throws APIException;
-	@Authorized({"Manage Atlas Data"})
+	
+	/**
+	 * Disable the atlas module and set the atlas.usageDisclaimerAccepted global property
+	 * 
+	 * @param usageDisclaimerAccepted The value of the atlas.usageDisclaimerAccepted global property
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
 	void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException;
-	@Authorized({"Manage Atlas Data"})
+	
+	/**
+	 * Method that sets only the bubble related Atlas Data NOTE: Even if this method receives all
+	 * the atlas data, only those properties that appear in the bubble are set
+	 * 
+	 * @param data The Atlas Data
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
 	void setAtlasBubbleData(AtlasData data) throws APIException;
-	@Authorized({"Manage Atlas Data"})
+	
+	/**
+	 * Method that sets the position (latitude and longitude) of the implementation
+	 * 
+	 * @param lat The latitude coordinate
+	 * @param lng The longitude coordinate
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
 	void setPosition(Double lat, Double lng) throws APIException;
-	@Authorized({"Manage Atlas Data"})
+	
+	/**
+	 * Method that sets the zoom level of the map
+	 * 
+	 * @param zoom The zoom level
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
 	void setZoom(Integer zoom) throws APIException;
-	@Authorized({"Manage Atlas Data"})
-	void setIncludeModules(Boolean includeModules) throws APIException;
-	@Authorized({"Manage Atlas Data"})
+	
+	/**
+	 * Method that sets the atlas.includeSystemConfiguration global property
+	 * 
+	 * @param includeSystemConfiguration
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
+	void setIncludeSystemConfiguration(Boolean includeSystemConfiguration) throws APIException;
+	
+	/**
+	 * Method that sets the atlas.usageDisclaimerAccepted global property
+	 * 
+	 * @param usageDisclaimerAccepted
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
 	void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException;
-	@Authorized({"Manage Atlas Data"})
-    void postAtlasData() throws APIException;
-	@Authorized({"Manage Atlas Data"})
-    String[] updateAndGetStatistics() throws APIException;
-	@Authorized({"Manage Atlas Data"})
-    Boolean getIsDirty() throws APIException;
-	@Authorized({"Manage Atlas Data"})
-    String getJson(Boolean isPreview) throws APIException;
+	
+	/**
+	 * Method that gets the atlas data from global property and posts it to the OpenMRS server
+	 * 
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
+	void postAtlasData() throws APIException;
+	
+	/**
+	 * Method that gets the statistics (number of unvoided patients, encounters, observations) from
+	 * global properties. If one of these has the default value ("?"), then it gets the updated
+	 * statistics, save them to global properties, and returns them as an array of Strings, in the
+	 * following order: patients, encounters, observations
+	 * 
+	 * @return An array of 3 Strings representing the number of unvoided patients, encounters,
+	 *         observations, in this order
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
+	String[] updateAndGetStatistics() throws APIException;
+	
+	/**
+	 * Method that returns false if the atlas data has not changed since the last post, true
+	 * otherwise
+	 * 
+	 * @return False if the atlas data has not changed since the last post, true otherwise
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
+	Boolean getIsDirty() throws APIException;
+	
+	/**
+	 * Method that returns the String containing the json data that will be sent to the OpenMRS
+	 * server. If it is a preview and no name is specified, fill the name with a default value
+	 * 
+	 * @param isPreview
+	 * @return The String containing the json data that will be sent to the OpenMRS server.
+	 * @throws APIException
+	 */
+	@Authorized({ "Manage Atlas Data" })
+	String getJson(Boolean isPreview) throws APIException;
 }

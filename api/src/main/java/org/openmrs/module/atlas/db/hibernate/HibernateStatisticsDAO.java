@@ -26,12 +26,11 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-
 /**
  * Hibernate implementation of the Statistics DAO
  */
 public class HibernateStatisticsDAO implements StatisticsDAO {
-
+	
 	protected static final Log log = LogFactory.getLog(HibernateStatisticsDAO.class);
 	
 	/**
@@ -42,46 +41,43 @@ public class HibernateStatisticsDAO implements StatisticsDAO {
 	/**
 	 * Default public constructor
 	 */
-	public HibernateStatisticsDAO() { }
+	public HibernateStatisticsDAO() {
+	}
 	
 	/**
 	 * Set session factory
 	 * 
 	 * @param sessionFactory
 	 */
-	public void setSessionFactory(SessionFactory sessionFactory) { 
+	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-
 	
 	/**
-     * @see org.openmrs.module.atlas.db.StatisticsDAO#getNumberOfPatients()
-     */
-    @Override
-    public Long getNumberOfPatients() throws DAOException {
-    	return (Long) sessionFactory.getCurrentSession().createQuery(
-		"SELECT COUNT(*) FROM Patient where voided='false'").uniqueResult();
-    }
-
+	 * @see org.openmrs.module.atlas.db.StatisticsDAO#getNumberOfPatients()
+	 */
+	@Override
+	public Long getNumberOfPatients() throws DAOException {
+		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Patient where voided='false'")
+		        .uniqueResult();
+	}
+	
 	/**
-     * @see org.openmrs.module.atlas.db.StatisticsDAO#getNumberOfEncounters()
-     */
-    @Override
-    public Long getNumberOfEncounters() throws DAOException {
-    	return (Long) sessionFactory.getCurrentSession().createQuery(
-    		"SELECT COUNT(*) FROM Encounter where voided='false'").uniqueResult();
-    }
-    
+	 * @see org.openmrs.module.atlas.db.StatisticsDAO#getNumberOfEncounters()
+	 */
+	@Override
+	public Long getNumberOfEncounters() throws DAOException {
+		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Encounter where voided='false'")
+		        .uniqueResult();
+	}
+	
 	/**
-     * @see org.openmrs.module.atlas.db.StatisticsDAO#getNumberOfObservations()
-     */
-    @Override
-    public Long getNumberOfObservations() throws DAOException {
-    	return (Long) sessionFactory.getCurrentSession().createQuery(
-		"SELECT COUNT(*) FROM Obs where voided='false'").uniqueResult();
-    }
- 
-
-
-
+	 * @see org.openmrs.module.atlas.db.StatisticsDAO#getNumberOfObservations()
+	 */
+	@Override
+	public Long getNumberOfObservations() throws DAOException {
+		return (Long) sessionFactory.getCurrentSession().createQuery("SELECT COUNT(*) FROM Obs where voided='false'")
+		        .uniqueResult();
+	}
+	
 }

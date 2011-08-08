@@ -38,12 +38,8 @@ function initializeWhatWillBeSentModalWindow() {
         , title : titleText
        });
  	
- 	$j("#atlas-gutter-includeModulesTip").click(function() {
- 		//if ($j('#atlas-gutter-btnEnable').is(":visible")) {
- 			getJsonDataFromServer();
- 		//} else {
- 		//	$j('#atlas-gutter-jsonData', $j("#atlas-gutter-sentInfo")).val("");
- 		//}
+ 	$j("#atlas-gutter-includeSystemConfigurationTip").click(function() {
+ 		getJsonDataFromServer();
  		$whatWillBeSendWindow.dialog('open');
  		return false;
  	});
@@ -68,7 +64,7 @@ function saveAtlasBubbleDataOnServer() {
 	var includeNumberOfEncounters = $j('#atlas-edit-cbEncounters', containerEdit).attr('checked');
 	var imgSrc = $j('#atlas-view-imgImplementation', containerView).attr('src');
 	if (imgSrc != imgPlaceholder) {
-		//$j('#atlasImageURL', div).val(imgSrc);
+		// $j('#atlasImageURL', div).val(imgSrc);
 	} else {
 		imgSrc = '';
 	}
@@ -82,8 +78,9 @@ function saveAtlasBubbleDataOnServer() {
 }
 
 function getIsDirtyFromServer() {
-	//if you want to update the dirty state from the server, uncomment the setTimeout call and comment the getIsDirtyFromServerCallback call 
-	//setTimeout("DWRAtlasService.getIsDirty(getIsDirtyFromServerCallback)",500);
+	// if you want to update the dirty state from the server, uncomment the
+	// setTimeout call and comment the getIsDirtyFromServerCallback call
+	// setTimeout("DWRAtlasService.getIsDirty(getIsDirtyFromServerCallback)",500);
 	getIsDirtyFromServerCallback(true);
 }
 
@@ -126,8 +123,8 @@ function disableAtlasModuleOnServer(cbDisclamerIsChecked) {
 	DWRAtlasService.disableAtlasModule(cbDisclamerIsChecked);
 }
 
-function setIncludeModulesOnServer(value) {
-	DWRAtlasService.setIncludeModules(value);
+function setIncludeSystemConfigurationOnServer(value) {
+	DWRAtlasService.setIncludeSystemConfiguration(value);
 	getIsDirtyFromServer();
 }
 
@@ -149,18 +146,18 @@ function setUsageDiscailmerOnServer(value) {
 function initializeGutter() {
 	$btnEnabled = $j('#atlas-gutter-btnEnable');
 	$btnDisabled = $j('#atlas-gutter-btnDisable');
-	$cbIncludeModules = $j('#atlas-gutter-cbIncludeModules');
+	$cbIncludeSystemConfiguration = $j('#atlas-gutter-cbIncludeSystemConfiguration');
 	$updateAtlasNowLink = $j('#atlas-gutter-updateAtlasNowLink');
 	
-	$cbIncludeModules.click(function() {
-		setIncludeModulesOnServer($j(this).is(':checked'));
+	$cbIncludeSystemConfiguration.click(function() {
+		setIncludeSystemConfigurationOnServer($j(this).is(':checked'));
 	});
 	
 	if (!$j('#atlas-gutter-cbDisclaimer').is(':checked')) {
 		  $btnDisabled.addClass('atlas-gutter-btnDisabledDisabled');
           $btnDisabled.removeClass('atlas-gutter-btnDisabled');
           $btnDisabled.attr("disabled", true);
-          $cbIncludeModules.attr("disabled", true);
+          $cbIncludeSystemConfiguration.attr("disabled", true);
 	}
 	
 	$j('#atlas-gutter-cbDisclaimer').click(function() {
@@ -169,7 +166,7 @@ function initializeGutter() {
 	    		$btnDisabled.attr("disabled", false);
 	    		$btnDisabled.removeClass('atlas-gutter-btnDisabledDisabled');
 	    		$btnDisabled.addClass('atlas-gutter-btnDisabled');
-	    		$cbIncludeModules.attr("disabled", false);
+	    		$cbIncludeSystemConfiguration.attr("disabled", false);
 	    	}
 	    } else {
 	       if ($btnEnabled.is(':visible')) {
@@ -178,7 +175,7 @@ function initializeGutter() {
 	       $btnDisabled.addClass('atlas-gutter-btnDisabledDisabled');
            $btnDisabled.removeClass('atlas-gutter-btnDisableatlas-gutter-jsonDatad');
            $btnDisabled.attr("disabled", true);
-           $cbIncludeModules.attr("disabled", true);
+           $cbIncludeSystemConfiguration.attr("disabled", true);
 	    } 
 	    setUsageDiscailmerOnServer($j(this).is(':checked'));
 	});
@@ -202,7 +199,7 @@ function initializeGutter() {
 	
 	$updateAtlasNowLink.click(function (event) {
 		sendPostCommandToServer();
-		//comment the next line if you use the DWR service to get isDirty value
+		// comment the next line if you use the DWR service to get isDirty value
 		$updateAtlasNowLink.hide();
 		event.preventDefault();
 	});
@@ -224,8 +221,8 @@ function changeImplementationType(ord) {
 }
 
 /*
- * Bind events to input elements that have the placeholder attribute
- * This is done in case the clients browser does not support the placeholder attr
+ * Bind events to input elements that have the placeholder attribute This is
+ * done in case the clients browser does not support the placeholder attr
  */
 function BindPlaceHolder(div) {
 $j('[placeholder]', div).focus(function() {
@@ -243,7 +240,7 @@ $j('[placeholder]', div).focus(function() {
 	  input.removeClass('placeholder');
   }
 }).blur().parents('form').submit(function() {
-	//remove the values from the input elements, so they do not get submitted
+	// remove the values from the input elements, so they do not get submitted
    RemovePlaceHolderText($j(this));
 });
 }
@@ -285,7 +282,8 @@ function BindEventsChangeTypeModalWindow() {
 	});
 	
 	$j('#btnTypeSave').click(function(e) {
-		var typeOrd = $j('input[type=radio]:checked',$typeWindow).attr('id').substring(6); //6 = length("rbType") 
+		var typeOrd = $j('input[type=radio]:checked',$typeWindow).attr('id').substring(6); // 6 =
+																							// length("rbType")
 		changeImplementationType(typeOrd);
 		$typeWindow.dialog('close');
 		return false;
@@ -346,29 +344,11 @@ function validateInput(div) {
 	}
 }
 /*
- * This is used to provide some sort of placeholders to labels in the view info window,
- * when they do not contain text
+ * This is used to provide some sort of placeholders to labels in the view info
+ * window, when they do not contain text
  */
 
 function SetViewPlaceholders() {
-//	$j('.spanView', containerView).each(function() {
-//		$this = $j(this);
-//		if (StringIsEmpty($this.text())) {
-//			$this.siblings('.labelPlaceHolder').show();
-//		} else {
-//			$this.siblings('.labelPlaceHolder').hide();
-//		}
-//	});
-//	
-//	$j('.spanViewParent', containerView).each(function() {
-//		$this = $j(this);
-//		if (StringIsEmpty($this.text())) {
-//			$this.parent().siblings('.labelPlaceHolder').show();
-//		} else {
-//			$this.parent().siblings('.labelPlaceHolder').hide();
-//		}
-//	});
-	
 	var img = $j('#atlas-view-imgImplementation', containerView);
 	if (StringIsEmpty(img.attr('src'))) {
 		img.attr('src', imgPlaceholder);
@@ -381,7 +361,7 @@ function StringIsEmpty(str) {
 }
 
 /*
- * Copy values from the view container to the edit container 
+ * Copy values from the view container to the edit container
  */
 function View2Edit() {
 	$j('#atlas-edit-tbName', containerEdit).val($j('#atlas-view-lblName', containerView).text());
@@ -420,16 +400,14 @@ function SetElementsInView(isAfterEdit) {
 		$j('#atlas-view-imgEmail',containerView).show();
 		$j('#atlas-view-aEmail',containerView).show();
 	} else {
-		//if (isAfterEdit) {
 			$j('#atlas-view-imgEmail',containerView).hide();
 			$j('#atlas-view-lblEmail', containerView).text(email);
 			$j('#atlas-view-aEmail',containerView).hide();
-	//	}
 	}
 	
 }
 /*
- * Copy values from the edit container to the view container 
+ * Copy values from the edit container to the view container
  */
 function Edit2View() {
 	RemovePlaceHolderText(containerEdit);
@@ -468,8 +446,6 @@ function ViewIsEmpty() {
 function StyleContainers() {
     containerView.style.width="370px";
 	containerEdit.style.width="370px";
-	
-	
 }
 
 function GetCurrentLatLng() {
@@ -517,6 +493,9 @@ function GetCurrentLatLng() {
             });
  }
 
+ /*
+  * build the Marker to Center control, so we can embed it in the google map
+  */
  function MarkerToCenterControl(controlDiv) {
 
      // Set CSS styles for the DIV containing the control
@@ -573,7 +552,7 @@ function GetCurrentLatLng() {
 	
 	
 	google.maps.event.addListener(map, 'zoom_changed', function() {
-		//console.log("in zoom changed");
+		// console.log("in zoom changed");
 		updateZoomOnServer();
 	});
 	
@@ -593,9 +572,6 @@ function GetCurrentLatLng() {
 		title:"OpenMRS"
 	});
 
-	
-	// containerView = document.getElementById('atlas-view-containerDiv')
-	
 	google.maps.event.addListener(marker, 'click', function() {
 		 if (ViewIsEmpty()) {
 			$j(containerEdit).show();
@@ -624,7 +600,6 @@ function GetCurrentLatLng() {
 	
   }
 
-
  function initiate_geolocation() {
 	 if (navigator.geolocation) {
 		 navigator.geolocation.getCurrentPosition(handle_geolocation_query, handle_errors);
@@ -638,7 +613,7 @@ function GetCurrentLatLng() {
 	 updatePositionOnServer();
  }
  
- //todo localized strings
+ // todo localized strings
  function handle_errors(error) {
 	 switch (error.code) {
 	 	case error.PERMISSION_DENIED: 
@@ -666,11 +641,6 @@ function GetCurrentLatLng() {
 				 latitude: response.place.centroid.latitude,
                  longitude: response.place.centroid.longitude
              }
-			/*
-			 * , address: { city: response.place.locality2.content, region:
-			 * response.place.admin1.content, country:
-			 * response.place.country.content }
-			 */
     };
     handle_geolocation_query(position);
 }

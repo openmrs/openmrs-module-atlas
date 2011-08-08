@@ -21,40 +21,38 @@ import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.scheduler.tasks.AbstractTask;
 
-
 /**
  * Task that posts the atlas data to the OpenMRS server
  */
 public class PostAtlasDataQueueTask extends AbstractTask {
+	
 	// Logger
 	private Log log = LogFactory.getLog(this.getClass());
+	
 	/**
-	 * Default Constructor 
-	 * 
+	 * Default Constructor
 	 */
 	public PostAtlasDataQueueTask() {
 	}
-
-
+	
 	/**
-     * @see org.openmrs.scheduler.tasks.AbstractTask#execute()
-     */
-    @Override
-    public void execute() {
+	 * @see org.openmrs.scheduler.tasks.AbstractTask#execute()
+	 */
+	@Override
+	public void execute() {
 		log.debug("Posting atlas data ... ");
 		
 		try {
-			Object o = Context.getService(AtlasService.class);
-			AtlasService service =  (AtlasService)o;    
+			AtlasService service = (AtlasService) Context.getService(AtlasService.class);
 			service.postAtlasData();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("Error running PostAtlasDataQueueTask", e);
 		}
 	}
 	
 	/**
 	 * Clean up any resources here
-	 *
 	 */
 	public void shutdown() {
 		log.debug("Shutting down PostAtlasDataQueueTask task ...");
