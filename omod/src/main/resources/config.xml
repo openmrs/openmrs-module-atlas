@@ -2,7 +2,7 @@
 
 <module configVersion="1.2">
 	
-	<!-- Base Module Properties -->
+	<!-- Atlas Module Properties -->
 	<id>atlas</id>
 	<name>Atlas Module</name>
 	<version>1.0</version>
@@ -14,7 +14,7 @@
 
 	<activator>@MODULE_PACKAGE@.AtlasModuleActivator</activator>
 	
-	<!-- /Base Module Properties -->
+	<!-- /Atlas Module Properties -->
 	
 	<require_version>1.6.0</require_version>
 	

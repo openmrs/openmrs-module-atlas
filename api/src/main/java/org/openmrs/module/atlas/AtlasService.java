@@ -33,8 +33,12 @@ public interface AtlasService {
 	 * 
 	 * @return The Atlas Data
 	 * @throws APIException
+	 * 
+	 * @should throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty does not exist
+	 * @should throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty is not a valid UUID
+	 * @should initialize with default values (see constructor in AtlasData.java) all AtlasData fields, except id, that do not have corresponding GlobalProperties
+	 * @Authorized({ "Manage Atlas Data" })
 	 */
-	@Authorized({ "Manage Atlas Data" })
 	AtlasData getAtlasData() throws APIException;
 	
 	/**
@@ -42,6 +46,8 @@ public interface AtlasService {
 	 * 
 	 * @param data The atlas data
 	 * @throws APIException
+	 * 
+	 * @should set atlas.isDirty GlobalProperty to true
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void setAtlasData(AtlasData data) throws APIException;
@@ -50,6 +56,10 @@ public interface AtlasService {
 	 * Enable the Atlas Module
 	 * 
 	 * @throws APIException
+	 * 
+	 * @should register a PostAtlasDataQueueTask
+	 * @should set the atlas.usageDisclaimerAccepted to true
+	 * @should send the atlas data to the server through an Http Post
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void enableAtlasModule() throws APIException;
@@ -59,6 +69,10 @@ public interface AtlasService {
 	 * 
 	 * @param usageDisclaimerAccepted The value of the atlas.usageDisclaimerAccepted global property
 	 * @throws APIException
+	 * 
+	 * @should unregister the PostAtlasDataQueueTask
+	 * @should set the atlas.usageDisclaimerAccepted to the usageDisclaimerAccepted parameter value
+	 * @should send a delete message to the server
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException;
@@ -69,6 +83,9 @@ public interface AtlasService {
 	 * 
 	 * @param data The Atlas Data
 	 * @throws APIException
+	 * 
+	 * @should only set the AtlasData GlobalProperties that are related to the Atlas Bubble (see AtlasData.java)
+	 * @should set atlas.isDirty GlobalProperty to true
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void setAtlasBubbleData(AtlasData data) throws APIException;
@@ -79,6 +96,8 @@ public interface AtlasService {
 	 * @param lat The latitude coordinate
 	 * @param lng The longitude coordinate
 	 * @throws APIException
+	 * 
+	 * @should set atlas.isDirty GlobalProperty to true
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void setPosition(Double lat, Double lng) throws APIException;
@@ -97,6 +116,8 @@ public interface AtlasService {
 	 * 
 	 * @param includeSystemConfiguration
 	 * @throws APIException
+	 * 
+	 * @should set atlas.isDirty GlobalProperty to true
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void setIncludeSystemConfiguration(Boolean includeSystemConfiguration) throws APIException;
@@ -114,19 +135,26 @@ public interface AtlasService {
 	 * Method that gets the atlas data from global property and posts it to the OpenMRS server
 	 * 
 	 * @throws APIException
+	 * 
+	 * @should set atlas.isDirty GlobalProperty to false
+	 * @should update the atlas.numberOfPatients GlobalProperty with the number of non-voided patients
+	 * @should update the atlas.numberOfEncounters GlobalProperty with the number of non-voided encounters
+	 * @should update the atlas.numberOfObservations GlobalProperty with the number of non-voided observations
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void postAtlasData() throws APIException;
 	
 	/**
-	 * Method that gets the statistics (number of unvoided patients, encounters, observations) from
+	 * Method that gets the statistics (number of non-voided patients, encounters, observations) from
 	 * global properties. If one of these has the default value ("?"), then it gets the updated
 	 * statistics, save them to global properties, and returns them as an array of Strings, in the
 	 * following order: patients, encounters, observations
 	 * 
-	 * @return An array of 3 Strings representing the number of unvoided patients, encounters,
+	 * @return An array of 3 Strings representing the number of non-voided patients, encounters,
 	 *         observations, in this order
 	 * @throws APIException
+	 * 
+	 * @should update statistics when one of them has the default value ("?") in GlobalProperties
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	String[] updateAndGetStatistics() throws APIException;

@@ -22,25 +22,25 @@ import org.openmrs.api.db.DAOException;
 public interface StatisticsDAO {
 	
 	/**
-	 * Method that returns the number of unvoided patients
+	 * Method that returns the number of non-voided patients
 	 * 
-	 * @return the number of unvoided patients
+	 * @return the number of non-voided patients
 	 * @throws DAOException
 	 */
 	public Long getNumberOfPatients() throws DAOException;
 	
 	/**
-	 * Method that returns the number of unvoided encounters
+	 * Method that returns the number of non-voided encounters
 	 * 
-	 * @return the number of unvoided encounters
+	 * @return the number of non-voided encounters
 	 * @throws DAOException
 	 */
 	public Long getNumberOfEncounters() throws DAOException;
 	
 	/**
-	 * Method that returns the number of unvoided observations
+	 * Method that returns the number of non-voided observations
 	 * 
-	 * @return the number of unvoided observations
+	 * @return the number of non-voided observations
 	 * @throws DAOException
 	 */
 	public Long getNumberOfObservations() throws DAOException;

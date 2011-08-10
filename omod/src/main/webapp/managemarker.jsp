@@ -40,76 +40,72 @@
 			alt="thumbnail" />
 		</td>
 		<td>
-			<table>
-				<tr>
-					<td><span id="atlas-view-lblName" class="spanView"><c:out
-								value="${atlasData.name}" /> </span>
-					</td>
-				</tr>
-				<tr>
-					<td><span> <span
+			<div class="atlas-view-div">
+			<span id="atlas-view-lblName" class="spanView"><c:out
+								value="${atlasData.name}" />
+			</span>
+			</div>
+			<div class="atlas-view-div">
+		    <span> <span
 							id="atlas-view-lblImplementationTypeLabel" class="spanView"><spring:message
-									code="atlas.implementationTypeLabel" /> </span> <span
-							id="atlas-view-lblImplementationType" class="spanView"></span> </span>
-					</td>
-				</tr>
-				<tr>
-					<td><a id="atlas-view-aWebsite" target='_blank'
+									code="atlas.implementationTypeLabel" /></span> <span
+							id="atlas-view-lblImplementationType" class="spanView"></span> 
+			</span>
+			</div>
+			<div class="atlas-view-div">
+			<a id="atlas-view-aWebsite" target='_blank'
 						href="${atlasData.website}" class="spanView"><span
 							id="atlas-view-lblWebsite"><c:out
-									value="${atlasData.website}" /> </span> </a>
-					</td>
-				</tr>
-				<tr>
-					<td><span class="stats" id="atlas-view-lblPatients"
+									value="${atlasData.website}" /></span> 
+			</a>
+			</div>
+			<div class="atlas-view-div">
+					<span class="stats" id="atlas-view-lblPatients"
 						<c:if test="${atlasData.includeNumberOfPatients == false}">
 										style="display: none"
 							    </c:if>>
-							<span id="atlas-view-lblPatientsNr"><c:out
-									value="${atlasData.numberOfPatients}" /> </span> <spring:message
-								code="atlas.patients" /><br /> </span> <span class="stats"
-						id="atlas-view-lblEncounters"
+							<span id="atlas-view-lblPatientsNr"><c:out value="${atlasData.numberOfPatients}" /></span> <spring:message	code="atlas.patients" />
+							<br />
+					</span> 
+					<span class="stats" id="atlas-view-lblEncounters"
 						<c:if test="${atlasData.includeNumberOfEncounters == false}">
 										style="display: none"
 							   </c:if>>
-							<span id="atlas-view-lblEncountersNr"><c:out
-									value="${atlasData.numberOfEncounters}" /> </span> <spring:message
-								code="atlas.encounters" /><br /> </span> <span class="stats"
-						id="atlas-view-lblObservations"
+							<span id="atlas-view-lblEncountersNr"><c:out value="${atlasData.numberOfEncounters}" /> </span> <spring:message code="atlas.encounters" />
+							<br />
+					</span> 
+					<span class="stats" id="atlas-view-lblObservations"
 						<c:if test="${atlasData.includeNumberOfObservations == false}">
 										style="display: none"
 							   </c:if>>
-							<span id="atlas-view-lblObservationsNr"><c:out
-									value="${atlasData.numberOfObservations}" /> </span> <spring:message
-								code="atlas.observations" /> </span>
-					</td>
-				</tr>
-			</table>
+							<span id="atlas-view-lblObservationsNr"><c:out value="${atlasData.numberOfObservations}" /></span> <spring:message code="atlas.observations" />
+					</span>
+			</div>		
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2"><span class="spanView" id="atlas-view-lblNotes"><c:out
-					value="${atlasData.notes}" /> </span>
+					value="${atlasData.notes}" /></span>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2"><span class="contact spanView"
 			id="atlas-view-lblContactName"><c:out
-					value="${atlasData.contactName}" /> </span>
+					value="${atlasData.contactName}" /></span>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2"><img alt="mail" id="atlas-view-imgEmail"
 			src="../../moduleResources/atlas/envelope.jpeg" height="20px"
-			width="30px"> <a href="" id="atlas-view-aEmail"> <span
+			width="30px"><a href="" id="atlas-view-aEmail"> <span
 				class="contact spanViewParent" id="atlas-view-lblEmail"><c:out
-						value="${atlasData.contactEmailAddress}" /> </span> </a>
+						value="${atlasData.contactEmailAddress}" /></span></a>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2"><span style="float: right"> <a
 				id="atlas-view-editLink" href=""><spring:message
-						code="atlas.edit" /> </a> </span>
+						code="atlas.edit" /></a></span>
 		</td>
 	</tr>
 	<tr>
@@ -127,56 +123,48 @@
 			</div>
 		</td>
 		<td>
-			<table>
-				<tr>
-					<td><input type="text" id="atlas-edit-tbName"
+			<div class="atlas-edit-div">
+			<input type="text" id="atlas-edit-tbName"
 						placeholder="<spring:message code="atlas.namePlaceHolder" />">
 						<span id="atlas-edit-nameError" class="fail"
 						style="display: none;">*</span>
-					</td>
-				</tr>
-				<tr>
-					<td><span id="atlas-edit-lblImplementationTypeLabel"
+			</div>
+			<div class="atlas-edit-div">			
+			<span id="atlas-edit-lblImplementationTypeLabel"
 						class="spanView"><spring:message
-								code="atlas.implementationTypeLabel" /> </span> <input type="text"
+								code="atlas.implementationTypeLabel" /></span> <input type="text"
 						id="atlas-edit-tbType" style="width: 100px" readonly="readonly">
 						<a id="atlas-edit-changeTypeLink" href=""><spring:message
-								code="atlas.changeTypeLink" /> </a>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="text" id="atlas-edit-tbWebsite"
+								code="atlas.changeTypeLink" /></a>
+			</div>
+			<div class="atlas-edit-div">
+			<input type="text" id="atlas-edit-tbWebsite"
 						placeholder="<spring:message code="atlas.websitePlaceHolder" />">
-					</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" id="atlas-edit-cbPatients"
+			</div>
+			<div class="atlas-edit-div">
+			<input type="checkbox" id="atlas-edit-cbPatients"
 						<c:if test="${atlasData.includeNumberOfPatients == true}">
 										checked="checked"
 									</c:if>>
 						<label for="atlas-edit-cbPatients"> <spring:message
 								code="atlas.includeNrOfPatients" /> </label>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" id="atlas-edit-cbEncounters"
+			</div>
+			<div class="atlas-edit-div">	
+			<input type="checkbox" id="atlas-edit-cbEncounters"
 						<c:if test="${atlasData.includeNumberOfEncounters == true}">
 							    		checked="checked"
 							    	</c:if>>
 						<label for="atlas-edit-cbEncounters"> <spring:message
 								code="atlas.includeNrOfEncounters" /> </label>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" id="atlas-edit-cbObservations"
+		   </div>
+		   <div class="atlas-edit-div">	
+		   <input type="checkbox" id="atlas-edit-cbObservations"
 						<c:if test="${atlasData.includeNumberOfObservations == true}">
 							    		checked="checked"
 							    	</c:if>>
 						<label for="atlas-edit-cbObservations"> <spring:message
 								code="atlas.includeNrOfObservations" /> </label>
-					</td>
-				</tr>
-			</table>
+		  </div>
 		</td>
 	</tr>
 	<tr>

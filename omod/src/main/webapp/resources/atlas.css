@@ -3,6 +3,10 @@
 	float: left;
   }
   
+  .atlas-view-div, .atlas-edit-div {
+	padding-top: 4px;
+   }
+  
   #atlas-view-lblName {
   	font-weight: bold;
   	font-size: 1.1em;

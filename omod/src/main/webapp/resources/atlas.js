@@ -440,7 +440,7 @@ function Edit2View() {
 }
 
 function ViewIsEmpty() {
-	return  ($j('#atlas-view-lblName', containerView).text() == '');
+	return  StringIsEmpty($j('#atlas-view-lblName', containerView).text());
 }
 
 function StyleContainers() {

@@ -23,6 +23,7 @@ public class AtlasData {
 	
 	private UUID id;
 	
+	/* Bubble data */
 	private String name;
 	
 	private String imageURL;
@@ -40,6 +41,8 @@ public class AtlasData {
 	
 	private String contactEmailAddress;
 	
+	private String notes;
+	
 	//statistics
 	private Boolean includeNumberOfPatients;
 	
@@ -47,13 +50,13 @@ public class AtlasData {
 	
 	private Boolean includeNumberOfEncounters;
 	
+	/* /Bubble data */
 	private String numberOfPatients;
 	
 	private String numberOfObservations;
 	
 	private String numberOfEncounters;
 	
-	private String notes;
 	
 	private Boolean usageDisclamerAccepted;
 	
@@ -98,11 +101,11 @@ public class AtlasData {
 	 * @param longitude The longitude component of the implementation's position
 	 * @param contactName The contact name
 	 * @param contactEmailAddress The contact email address
-	 * @param includeNumberOfPatients True if you want to include the number of unvoided patients,
+	 * @param includeNumberOfPatients True if you want to include the number of non-voided patients,
 	 *            false otherwise
-	 * @param includeNumberOfObservations True if you want to include the number of unvoided
+	 * @param includeNumberOfObservations True if you want to include the number of non-voided
 	 *            observations, false otherwise
-	 * @param includeNumberOfEncounters True if you want to include the number of unvoided
+	 * @param includeNumberOfEncounters True if you want to include the number of non-voided
 	 *            encounters, false otherwise
 	 */
 	public AtlasData(UUID id, String name, String website, String imageURL, Double latitude, Double longitude,
