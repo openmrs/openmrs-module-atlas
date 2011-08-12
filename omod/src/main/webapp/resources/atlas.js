@@ -49,6 +49,16 @@ function initializeWhatWillBeSentModalWindow() {
  	});
 }
 
+function isChecked(id, container) {
+	 if ($j(id, container).attr('checked') == true)
+		 return "true";
+	 if ($j(id, container).attr('checked') == "true")
+		 return "true";
+	 if ($j(id, container).attr('checked') == 'checked')
+		 return "true";
+	 return "false";
+}
+
 function saveAtlasBubbleDataOnServer() {
 	var position = marker.getPosition();
 	var name = $j.trim($j('#atlas-view-lblName', containerView).text());
@@ -59,9 +69,9 @@ function saveAtlasBubbleDataOnServer() {
 	var implementationType = $j.trim($j('#atlas-hidden-implementationTypeOrdinal').val());
 	var latitude = position.lat();
 	var longitude = position.lng();
-	var includeNumberOfPatients = $j.trim($j('#atlas-edit-cbPatients', containerEdit).attr('checked'));
-	var includeNumberOfObservations = $j.trim($j('#atlas-edit-cbObservations', containerEdit).attr('checked'));
-	var includeNumberOfEncounters = $j.trim($j('#atlas-edit-cbEncounters', containerEdit).attr('checked'));
+	var includeNumberOfPatients = isChecked('#atlas-edit-cbPatients', containerEdit);
+	var includeNumberOfObservations = isChecked('#atlas-edit-cbObservations', containerEdit);
+	var includeNumberOfEncounters = isChecked('#atlas-edit-cbEncounters', containerEdit);
 	var imgSrc = $j.trim($j('#atlas-view-imgImplementation', containerView).attr('src'));
 	if (imgSrc != imgPlaceholder) {
 		// $j('#atlasImageURL', div).val(imgSrc);

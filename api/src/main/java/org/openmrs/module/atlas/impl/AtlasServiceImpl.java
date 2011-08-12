@@ -492,16 +492,18 @@ public class AtlasServiceImpl implements AtlasService {
 		sb.append("\"notes\" : \"" + data.getNotes() + "\",");
 		sb.append("\"imageURL\" : \"" + data.getImageURL() + "\",");
 		if (data.getIncludeNumberOfPatients()) {
-			sb.append("\"patients\" : " + data.getNumberOfPatients() + ",");
+			sb.append("\"patients\" : \"" + data.getNumberOfPatients() + "\",");
 		}
 		if (data.getIncludeNumberOfObservations()) {
-			sb.append("\"observations\" : " + data.getNumberOfObservations() + ",");
+			sb.append("\"observations\" : \"" + data.getNumberOfObservations() + "\",");
 		}
 		if (data.getIncludeNumberOfEncounters()) {
-			sb.append("\"encounters\" : " + data.getNumberOfEncounters() + ",");
+			sb.append("\"encounters\" : \"" + data.getNumberOfEncounters() + "\",");
 		}
-		sb.append("\"contact_details\" :  {\"email\" : \"" + data.getContactEmailAddress() + "\",");
-		sb.append("\"contact_name\" : \"" + data.getContactName() + "\" }");
+		//sb.append("\"contact_details\" :  {");
+		sb.append("\"email\" : \"" + data.getContactEmailAddress() + "\",");
+		sb.append("\"contact\" : \"" + data.getContactName() + "\"");
+		//sb.append("}");
 		
 		if (data.getIncludeSystemConfiguration()) {
 			sb.append(", \"data\" : {");
