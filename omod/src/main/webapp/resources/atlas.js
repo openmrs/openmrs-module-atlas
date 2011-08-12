@@ -51,18 +51,18 @@ function initializeWhatWillBeSentModalWindow() {
 
 function saveAtlasBubbleDataOnServer() {
 	var position = marker.getPosition();
-	var name = $j('#atlas-view-lblName', containerView).text();
-	var website = $j('#atlas-view-lblWebsite', containerView).text();
-	var contactName = $j('#atlas-view-lblContactName', containerView).text();
-	var contactEmailAddress = $j('#atlas-view-lblEmail', containerView).text();
-	var notes = $j('#atlas-view-lblNotes', containerView).text();
-	var implementationType = $j('#atlas-hidden-implementationTypeOrdinal').val();
+	var name = $j.trim($j('#atlas-view-lblName', containerView).text());
+	var website = $j.trim($j('#atlas-view-lblWebsite', containerView).text());
+	var contactName = $j.trim($j('#atlas-view-lblContactName', containerView).text());
+	var contactEmailAddress = $j.trim($j('#atlas-view-lblEmail', containerView).text());
+	var notes = $j.trim($j('#atlas-view-lblNotes', containerView).text());
+	var implementationType = $j.trim($j('#atlas-hidden-implementationTypeOrdinal').val());
 	var latitude = position.lat();
 	var longitude = position.lng();
-	var includeNumberOfPatients = $j('#atlas-edit-cbPatients', containerEdit).attr('checked');
-	var includeNumberOfObservations = $j('#atlas-edit-cbObservations', containerEdit).attr('checked');
-	var includeNumberOfEncounters = $j('#atlas-edit-cbEncounters', containerEdit).attr('checked');
-	var imgSrc = $j('#atlas-view-imgImplementation', containerView).attr('src');
+	var includeNumberOfPatients = $j.trim($j('#atlas-edit-cbPatients', containerEdit).attr('checked'));
+	var includeNumberOfObservations = $j.trim($j('#atlas-edit-cbObservations', containerEdit).attr('checked'));
+	var includeNumberOfEncounters = $j.trim($j('#atlas-edit-cbEncounters', containerEdit).attr('checked'));
+	var imgSrc = $j.trim($j('#atlas-view-imgImplementation', containerView).attr('src'));
 	if (imgSrc != imgPlaceholder) {
 		// $j('#atlasImageURL', div).val(imgSrc);
 	} else {

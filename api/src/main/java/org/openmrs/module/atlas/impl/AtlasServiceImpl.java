@@ -452,12 +452,12 @@ public class AtlasServiceImpl implements AtlasService {
 			writer.write(jsonData);
 			writer.close();
 			
-			System.out.println(jsonData);
+			log.info("Trying to post the following data:" + jsonData);
 			int status = connection.getResponseCode();
 			if (status == 200) {
-				log.debug("Atlas data sent to server at " + AtlasConstants.SERVER_URL + " successfully (status 200)");
+				log.info("Atlas data sent to server at " + AtlasConstants.SERVER_URL + " successfully (status 200)");
 			} else {
-				log.debug("The atlas data failed to reach the server at " + AtlasConstants.SERVER_URL + " (status " + status
+				log.info("The atlas data failed to reach the server at " + AtlasConstants.SERVER_URL + " (status " + status
 				        + ").");
 			}
 			
