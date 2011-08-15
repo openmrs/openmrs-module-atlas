@@ -313,8 +313,6 @@ public class AtlasServiceImpl implements AtlasService {
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data.getContactEmailAddress(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName(), svc);
-			//setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString(), svc);
-			//setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data.getIncludeNumberOfPatients().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data.getIncludeNumberOfEncounters().toString(), svc);
