@@ -34,7 +34,7 @@ public interface AtlasService {
 	 * @return The Atlas Data
 	 * @throws APIException
 	 * 
-	 * @should throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty does not exist
+	 * @should throw java.lang.NullPointerException when atlas.id GlobalProperty does not exist
 	 * @should throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty is not a valid UUID
 	 * @should initialize with default values (see constructor in AtlasData.java) all AtlasData fields, except id, that do not have corresponding GlobalProperties
 	 * @Authorized({ "Manage Atlas Data" })
@@ -59,7 +59,6 @@ public interface AtlasService {
 	 * 
 	 * @should register a PostAtlasDataQueueTask
 	 * @should set the atlas.usageDisclaimerAccepted to true
-	 * @should send the atlas data to the server through an Http Post
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void enableAtlasModule() throws APIException;
@@ -72,7 +71,6 @@ public interface AtlasService {
 	 * 
 	 * @should unregister the PostAtlasDataQueueTask
 	 * @should set the atlas.usageDisclaimerAccepted to the usageDisclaimerAccepted parameter value
-	 * @should send a delete message to the server
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException;
@@ -136,7 +134,7 @@ public interface AtlasService {
 	 * 
 	 * @throws APIException
 	 * 
-	 * @should set atlas.isDirty GlobalProperty to false
+	 * @should not modify atlas.isDirty GlobalProperty
 	 * @should update the atlas.numberOfPatients GlobalProperty with the number of non-voided patients
 	 * @should update the atlas.numberOfEncounters GlobalProperty with the number of non-voided encounters
 	 * @should update the atlas.numberOfObservations GlobalProperty with the number of non-voided observations

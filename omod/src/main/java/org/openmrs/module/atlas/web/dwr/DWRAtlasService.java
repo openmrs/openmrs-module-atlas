@@ -49,9 +49,6 @@ public class DWRAtlasService {
 		data.setIncludeNumberOfPatients(includeNumberOfPatients);
 		data.setIncludeNumberOfObservations(includeNumberOfObservations);
 		data.setIncludeNumberOfEncounters(includeNumberOfEncounters);
-		
-		Object o = Context.getService(AtlasService.class);
-		AtlasService service = (AtlasService) o;
 		getAtlasService().setAtlasBubbleData(data);
 	}
 	

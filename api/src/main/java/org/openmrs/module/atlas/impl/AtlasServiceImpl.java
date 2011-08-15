@@ -202,31 +202,21 @@ public class AtlasServiceImpl implements AtlasService {
 		AdministrationService svc = null;
 		try {
 			svc = Context.getAdministrationService();
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data
-			        .getImplementationType().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data
-			        .getContactEmailAddress()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES, data.getNotes()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude()
-			        .toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data
-			        .getIncludeNumberOfObservations().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data
-			        .getIncludeNumberOfPatients().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data
-			        .getIncludeNumberOfEncounters().toString()));
-			
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, data
-			        .getUsageDisclamerAccepted().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, data
-			        .getIncludeSystemConfiguration().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
-			        .toString()));
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data.getContactEmailAddress(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_ZOOM, data.getZoom().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data.getIncludeNumberOfPatients().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data.getIncludeNumberOfEncounters().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, data.getUsageDisclamerAccepted().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, data.getIncludeSystemConfiguration().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled().toString(), svc);
 			
 			setIsDirty(true);
 		}
@@ -317,24 +307,17 @@ public class AtlasServiceImpl implements AtlasService {
 			svc = Context.getAdministrationService();
 			String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
 			
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data
-			        .getImplementationType().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data
-			        .getContactEmailAddress()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES, data.getNotes()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude()
-			        .toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data
-			        .getIncludeNumberOfObservations().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data
-			        .getIncludeNumberOfPatients().toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data
-			        .getIncludeNumberOfEncounters().toString()));
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data.getContactEmailAddress(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName(), svc);
+			//setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString(), svc);
+			//setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data.getIncludeNumberOfPatients().toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data.getIncludeNumberOfEncounters().toString(), svc);
 			
 			setIsDirty(true);
 		}
@@ -349,18 +332,7 @@ public class AtlasServiceImpl implements AtlasService {
 	 */
 	@Override
 	public void setIncludeSystemConfiguration(Boolean includeSystemConfiguration) throws APIException {
-		AdministrationService svc = null;
-		try {
-			svc = Context.getAdministrationService();
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION,
-			        includeSystemConfiguration.toString()));
-			
-			setIsDirty(true);
-		}
-		catch (APIException apiEx) {
-			if (log.isErrorEnabled())
-				log.error("Could not set atlas data. Exception:" + apiEx.getMessage());
-		}
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, includeSystemConfiguration.toString());
 	}
 	
 	/**
@@ -368,16 +340,7 @@ public class AtlasServiceImpl implements AtlasService {
 	 */
 	@Override
 	public void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException {
-		AdministrationService svc = null;
-		try {
-			svc = Context.getAdministrationService();
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED,
-			        usageDisclaimerAccepted.toString()));
-		}
-		catch (APIException apiEx) {
-			if (log.isErrorEnabled())
-				log.error("Could not set atlas data. Exception:" + apiEx.getMessage());
-		}
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, usageDisclaimerAccepted.toString());
 	}
 	
 	/**
@@ -388,14 +351,19 @@ public class AtlasServiceImpl implements AtlasService {
 		AdministrationService svc = null;
 		try {
 			svc = Context.getAdministrationService();
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, lat.toString()));
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, lng.toString()));
+			GlobalProperty prop = svc.getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_LATITUDE);
+			prop.setPropertyValue(lat.toString().toString());
+			svc.saveGlobalProperty(prop);
+			
+			prop = svc.getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_LONGITUDE);
+			prop.setPropertyValue(lng.toString().toString());
+			svc.saveGlobalProperty(prop);
 			
 			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
-				log.error("Could not set atlas data. Exception:" + apiEx.getMessage());
+				log.error("Could not set position global properties. Exception:" + apiEx.getMessage());
 		}
 	}
 	
@@ -404,16 +372,7 @@ public class AtlasServiceImpl implements AtlasService {
 	 */
 	@Override
 	public void setZoom(Integer zoom) throws APIException {
-		
-		AdministrationService svc = null;
-		try {
-			svc = Context.getAdministrationService();
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ZOOM, zoom.toString()));
-		}
-		catch (APIException apiEx) {
-			if (log.isErrorEnabled())
-				log.error("Could not set atlas data. Exception:" + apiEx.getMessage());
-		}
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_ZOOM, zoom.toString());
 	}
 	
 	/**
@@ -593,15 +552,7 @@ public class AtlasServiceImpl implements AtlasService {
 	 * @param moduleEnabled
 	 */
 	private void setModuleEnabled(Boolean moduleEnabled) {
-		AdministrationService svc = null;
-		try {
-			svc = Context.getAdministrationService();
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, moduleEnabled.toString()));
-		}
-		catch (APIException apiEx) {
-			if (log.isErrorEnabled())
-				log.error("Could not set atlas data. Exception:" + apiEx.getMessage());
-		}
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, moduleEnabled.toString());
 	}
 	
 	/**
@@ -610,15 +561,7 @@ public class AtlasServiceImpl implements AtlasService {
 	 * @param isDirty
 	 */
 	private void setIsDirty(Boolean isDirty) {
-		AdministrationService svc = null;
-		try {
-			svc = Context.getAdministrationService();
-			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY, isDirty.toString()));
-		}
-		catch (APIException apiEx) {
-			if (log.isErrorEnabled())
-				log.error("Could not set atlas data. Exception:" + apiEx.getMessage());
-		}
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY, isDirty.toString());
 	}
 	
 	/**
@@ -653,6 +596,33 @@ public class AtlasServiceImpl implements AtlasService {
 		}
 	}
 	
+	private void setGlobalProperty(String name, String value) {
+			AdministrationService svc = null;
+			try {
+				svc = Context.getAdministrationService();
+				GlobalProperty prop = svc.getGlobalPropertyObject(name);
+				if (prop == null) {
+					svc.saveGlobalProperty(new GlobalProperty(name, value));
+				} else {
+					prop.setPropertyValue(value.toString());
+					svc.saveGlobalProperty(prop);
+				}
+			}
+			catch (APIException apiEx) {
+				if (log.isErrorEnabled())
+					log.error("Could not set global property: (" + name +" - "+value+"). Exception:" + apiEx.getMessage());
+			}
+		}
+	
+	private void setGlobalProperty(String name, String value, AdministrationService svc) {
+			GlobalProperty prop = svc.getGlobalPropertyObject(name);
+			if (prop == null) {
+				svc.saveGlobalProperty(new GlobalProperty(name, value));
+			} else {
+				prop.setPropertyValue(value.toString());
+				svc.saveGlobalProperty(prop);
+			}
+	}
 	/**
 	 * Method that returns the midnight before the date specified as a parameter
 	 * 

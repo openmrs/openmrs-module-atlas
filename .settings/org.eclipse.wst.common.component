@@ -5,6 +5,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/api/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/omod/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/omod/src/test/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/api/src/test/java"/>
         <property name="context-root" value="AtlasModule"/>
         <property name="java-output-path" value="/AtlasModule/bin"/>
     </wb-module>

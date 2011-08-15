@@ -374,12 +374,12 @@ function StringIsEmpty(str) {
  * Copy values from the view container to the edit container
  */
 function View2Edit() {
-	$j('#atlas-edit-tbName', containerEdit).val($j('#atlas-view-lblName', containerView).text());
-	$j('#atlas-edit-tbWebsite', containerEdit).val($j('#atlas-view-lblWebsite', containerView).text());
-	$j('#atlas-edit-tbEmail', containerEdit).val($j('#atlas-view-lblEmail', containerView).text());
-	$j('#atlas-edit-tbContactName', containerEdit).val($j('#atlas-view-lblContactName', containerView).text());
-	$j('#atlas-edit-tbNotes', containerEdit).val($j('#atlas-view-lblNotes', containerView).text());
-	$j("#atlas-edit-tbType", containerEdit).val($j('#atlas-view-lblImplementationType', containerView).text());
+	$j('#atlas-edit-tbName', containerEdit).val($j.trim($j('#atlas-view-lblName', containerView).text()));
+	$j('#atlas-edit-tbWebsite', containerEdit).val($j.trim($j('#atlas-view-lblWebsite', containerView).text()));
+	$j('#atlas-edit-tbEmail', containerEdit).val($j.trim($j('#atlas-view-lblEmail', containerView).text()));
+	$j('#atlas-edit-tbContactName', containerEdit).val($j.trim($j('#atlas-view-lblContactName', containerView).text()));
+	$j('#atlas-edit-tbNotes', containerEdit).val($j.trim($j('#atlas-view-lblNotes', containerView).text()));
+	$j("#atlas-edit-tbType", containerEdit).val($j.trim($j('#atlas-view-lblImplementationType', containerView).text()));
 	if ($j('#atlas-view-imgImplementation', containerView).attr('src') != imgPlaceholder) {
 		$j('#atlas-edit-tbImage', containerEdit).val($j('#atlas-view-imgImplementation', containerView).attr('src'));
 	} else {
