@@ -349,14 +349,8 @@ public class AtlasServiceImpl implements AtlasService {
 		AdministrationService svc = null;
 		try {
 			svc = Context.getAdministrationService();
-			GlobalProperty prop = svc.getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_LATITUDE);
-			prop.setPropertyValue(lat.toString().toString());
-			svc.saveGlobalProperty(prop);
-			
-			prop = svc.getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_LONGITUDE);
-			prop.setPropertyValue(lng.toString().toString());
-			svc.saveGlobalProperty(prop);
-			
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, lat.toString(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, lng.toString(), svc);
 			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
