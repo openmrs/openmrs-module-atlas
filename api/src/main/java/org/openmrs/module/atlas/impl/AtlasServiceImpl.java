@@ -310,6 +310,7 @@ public class AtlasServiceImpl implements AtlasService {
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite(), svc);
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES, data.getNotes(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data.getContactEmailAddress(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName(), svc);
@@ -439,9 +440,9 @@ public class AtlasServiceImpl implements AtlasService {
 		        + "}, ");
 		sb.append("\"name\" : \"" + name + "\",");
 		sb.append("\"type\" : \"" + ImplementationType.values()[data.getImplementationType()] + "\",");
-		sb.append("\"website\" : \"" + data.getWebsite() + "\",");
+		sb.append("\"url\" : \"" + data.getWebsite() + "\",");
 		sb.append("\"notes\" : \"" + data.getNotes() + "\",");
-		sb.append("\"imageURL\" : \"" + data.getImageURL() + "\",");
+		sb.append("\"image\" : \"" + data.getImageURL() + "\",");
 		if (data.getIncludeNumberOfPatients()) {
 			sb.append("\"patients\" : \"" + data.getNumberOfPatients() + "\",");
 		}

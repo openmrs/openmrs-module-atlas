@@ -1,25 +1,23 @@
 <%@page import="org.openmrs.module.atlas.ImplementationType"%>
 <%@ include file="/WEB-INF/template/include.jsp"%>
-<c:set var="DO_NOT_INCLUDE_JQUERY" value="true" />
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
 <script type="text/javascript"
 	src="http://maps.google.com/maps/api/js?sensor=true">
-	
 </script>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
-	
-</script>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js">
-	
+
+<script  type="text/javascript">
+//this script dinamically adds the jQuery and jQuery UI scripts to the page if they aren't loaded
+//NOTE: once open mrs 1.6 is not supported anymore you don't need this script
+if (typeof jQuery == 'undefined') {
+	document.write("<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'><\/script>");
+	document.write("<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js'><\/script>");
+}
 </script>
 <script src="<openmrs:contextPath/>/dwr/interface/DWRAtlasService.js"></script>
-
-
 <openmrs:htmlInclude file="/scripts/jQuery/dataTables/dataTables.css" />
 <openmrs:htmlInclude file="/moduleResources/atlas/jquery-ui.atlas.css" />
+
 <openmrs:htmlInclude file="/moduleResources/atlas/atlas.css" />
 <openmrs:htmlInclude file="/moduleResources/atlas/atlas.js" />
 <openmrs:htmlInclude file="/moduleResources/atlas/yqlgeo.js" />
