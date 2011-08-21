@@ -14,7 +14,7 @@
 	<scm>
 		<connection>scm:svn:http://svn.openmrs.org/openmrs-modules/atlas/trunk/</connection>
 		<developerConnection>scm:svn:http://svn.openmrs.org/openmrs-modules/atlas/trunk/</developerConnection>
-		<url>http://svn.openmrs.org/openmrs-modules/basicmodule/trunk/</url>
+		<url>http://svn.openmrs.org/openmrs-modules/atlas/trunk/</url>
 	</scm>
 
 	<modules>

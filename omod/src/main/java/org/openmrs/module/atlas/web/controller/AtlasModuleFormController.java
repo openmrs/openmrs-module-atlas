@@ -35,7 +35,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /**
  * This class configured as controller using annotation and mapped with the URL of
- * 'module/basicmodule/basicmoduleLink.form'.
+ * 'module/atlas/managemarker.form'.
  */
 @Controller
 @RequestMapping(value = "/module/atlas/managemarker.form")
