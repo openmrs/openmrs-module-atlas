@@ -7,6 +7,65 @@
 	padding-top: 4px;
    }
   
+  .site-bubble {
+    font-family: Arial,san-serif;
+    font-size: 1em;
+}
+.site-name {
+    font-size: 1em;
+    font-weight: bold;
+    padding-right: 12px;
+    padding-top: 2px;
+    padding-bottom: 10px;
+}
+.site-image {
+    float: left;
+    margin: 5px 10px 5px 0;
+}
+.site-label {
+    color: #AAAAAA;
+    font-weight: normal;
+}
+div.site-type {
+	clear: both;
+    margin-bottom: 5px;
+    margin-top: 8px;
+}
+span.site-type {
+    background-color: #FFFFCD;
+    border: 1px solid #E7E194;
+    border-radius: 8px 8px 8px 8px;
+    color: #777777;
+    
+    font-weight: normal;
+    padding: 1px 4px 1px 5px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.site-url {
+	margin-bottom: 6px;
+}
+.site-notes {
+    border: 1px solid #EEEEEE;
+    border-radius: 5px 5px 5px 5px;
+    clear: both;
+    margin: 2px 0;
+}
+.site-notes legend {
+    color: #CCCCCC;
+    font-size: 0.8em;
+    font-style: italic;
+}
+.site-contact {
+    display: inline;
+    font-weight: normal;
+    margin-top: 6px;
+}
+.site-email {
+    margin-left: 3px;
+    vertical-align: middle;
+}
+  
   #atlas-view-lblName {
   	font-weight: bold;
   	font-size: 1.1em;
@@ -14,9 +73,8 @@
 	min-width: 200px;
   }
   
-  #atlas-view-lblContactName {
-  	font-weight: bold;
-  	font-size: 1em;
+  #atlas-edit-tbName {
+	width:330px;
   }
   
   #atlas-view-lblNotes {

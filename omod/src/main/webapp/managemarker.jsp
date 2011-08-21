@@ -31,115 +31,91 @@ if (typeof jQuery == 'undefined') {
 
 <openmrs:require privilege="Manage Atlas Data" otherwise="/login.htm"
 	redirect="/index.htm" />
-<table id="atlas-view-containerDiv" style="display: hidden">
-	<tr>
-		<td><img id="atlas-view-imgImplementation"
+<div id="atlas-view-containerDiv" class='site-bubble' style="display: hidden">
+	<div class='site-name'>
+		<span id="atlas-view-lblName" class="spanView"><c:out
+									value="${atlasData.name}" />
+		</span>
+	</div>
+	<div class='site-panel'>
+		<img id="atlas-view-imgImplementation" class='site-image'
 			src="${atlasData.imageURL}" width="80px" height="80px"
 			alt="thumbnail" />
-		</td>
-		<td>
-			<div class="atlas-view-div">
-			<span id="atlas-view-lblName" class="spanView"><c:out
-								value="${atlasData.name}" />
-			</span>
-			</div>
-			<div class="atlas-view-div">
-		    <span> <span
-							id="atlas-view-lblImplementationTypeLabel" class="spanView"><spring:message
-									code="atlas.implementationTypeLabel" /></span> <span
-							id="atlas-view-lblImplementationType" class="spanView"></span> 
-			</span>
-			</div>
-			<div class="atlas-view-div">
+		<div class='site-url'>
 			<a id="atlas-view-aWebsite" target='_blank'
 						href="${atlasData.website}" class="spanView"><span
 							id="atlas-view-lblWebsite"><c:out
 									value="${atlasData.website}" /></span> 
 			</a>
-			</div>
-			<div class="atlas-view-div">
-					<span class="stats" id="atlas-view-lblPatients"
+	   </div>
+	   <div class='site-count'>
+	   		<span class="stats" id="atlas-view-lblPatients"
 						<c:if test="${atlasData.includeNumberOfPatients == false}">
 										style="display: none"
 							    </c:if>>
 							<span id="atlas-view-lblPatientsNr"><c:out value="${atlasData.numberOfPatients}" /></span> <spring:message	code="atlas.patients" />
 							<br />
-					</span> 
-					<span class="stats" id="atlas-view-lblEncounters"
+			</span> 
+	   </div>
+	    <div class='site-count'>
+	   		<span class="stats" id="atlas-view-lblEncounters"
 						<c:if test="${atlasData.includeNumberOfEncounters == false}">
 										style="display: none"
 							   </c:if>>
 							<span id="atlas-view-lblEncountersNr"><c:out value="${atlasData.numberOfEncounters}" /> </span> <spring:message code="atlas.encounters" />
 							<br />
-					</span> 
-					<span class="stats" id="atlas-view-lblObservations"
+			</span> 
+	   </div>
+	    <div class='site-count'>
+	   		<span class="stats" id="atlas-view-lblObservations"
 						<c:if test="${atlasData.includeNumberOfObservations == false}">
 										style="display: none"
 							   </c:if>>
 							<span id="atlas-view-lblObservationsNr"><c:out value="${atlasData.numberOfObservations}" /></span> <spring:message code="atlas.observations" />
-					</span>
-			</div>		
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><span class="spanView" id="atlas-view-lblNotes"><c:out
-					value="${atlasData.notes}" /></span>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><span class="contact spanView"
+			</span>
+	   </div>
+	   <div class='site-contact' id="atlas-view-divContact"><span class='site-label'><spring:message code="atlas.contactNameLabel" /></span><span class="site-contact spanView"
 			id="atlas-view-lblContactName"><c:out
 					value="${atlasData.contactName}" /></span>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><img alt="mail" id="atlas-view-imgEmail"
-			src="../../moduleResources/atlas/envelope.jpeg" height="20px"
-			width="30px"><a href="" id="atlas-view-aEmail"> <span
-				class="contact spanViewParent" id="atlas-view-lblEmail"><c:out
-						value="${atlasData.contactEmailAddress}" /></span></a>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><span style="float: right"> <a
+		
+		<a href="mailto:${atlasData.contactEmailAddress}" id="atlas-view-aEmail" class="site-email"><img  alt="mail" id="atlas-view-imgEmail"
+			src="../../moduleResources/atlas/mail.png" width='15px' height='15px'/></a>
+	  </div>
+	</div>
+  <fieldset id="atlas-view-fieldsetNotes" class='site-notes'><legend><spring:message code="atlas.notesLabel" /></legend><span class="spanView" id="atlas-view-lblNotes"><c:out
+					value="${atlasData.notes}" /></span>
+  </fieldset>
+  <div class='site-type'> 
+  	<span id="atlas-view-lblImplementationType" class="site-type"></span> 
+  </div>
+  <div>
+			<span style="float: right"> <a
 				id="atlas-view-editLink" href=""><spring:message
 						code="atlas.edit" /></a></span>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><br /> <br />
-		</td>
-	</tr>
-</table>
-
-<table id="atlas-edit-containerDiv" style="display: hidden">
-	<tr>
-		<td>
-			<div id="atlas-edit-imgDiv">
-				<input type="text" id="atlas-edit-tbImage" style="width: 90px;"
-					placeholder="<spring:message code="atlas.imagePlaceHolder" />">
-			</div>
-		</td>
-		<td>
-			<div class="atlas-edit-div">
+   </div>
+  <div>
+  	<br /><br /><br /><br />
+  </div>			
+  </div>
+  
+  <div id="atlas-edit-containerDiv" class='site-bubble' style="display: hidden">
+	<div class="atlas-edit-div site-name">
 			<input type="text" id="atlas-edit-tbName"
 						placeholder="<spring:message code="atlas.namePlaceHolder" />">
 						<span id="atlas-edit-nameError" class="fail"
 						style="display: none;">*</span>
-			</div>
-			<div class="atlas-edit-div">			
-			<span id="atlas-edit-lblImplementationTypeLabel"
-						class="spanView"><spring:message
-								code="atlas.implementationTypeLabel" /></span> <input type="text"
-						id="atlas-edit-tbType" style="width: 100px" readonly="readonly">
-						<a id="atlas-edit-changeTypeLink" href=""><spring:message
-								code="atlas.changeTypeLink" /></a>
-			</div>
-			<div class="atlas-edit-div">
+	</div>
+	<div class='site-panel'>
+		<div id="atlas-edit-imgDiv"  class='site-image' style="width: 100px; height: 150px">
+				<textarea rows="6" cols="9"
+				id="atlas-edit-tbImage" style="resize: none;"
+					placeholder="<spring:message code="atlas.imagePlaceHolder" />"></textarea>
+		</div>
+		<div class="atlas-edit-div site-url">
 			<input type="text" id="atlas-edit-tbWebsite"
 						placeholder="<spring:message code="atlas.websitePlaceHolder" />">
-			</div>
-			<div class="atlas-edit-div">
+		</div>
+		<div class="atlas-edit-div site-count">
 			<input type="checkbox" id="atlas-edit-cbPatients"
 						<c:if test="${atlasData.includeNumberOfPatients == true}">
 										checked="checked"
@@ -147,7 +123,7 @@ if (typeof jQuery == 'undefined') {
 						<label for="atlas-edit-cbPatients"> <spring:message
 								code="atlas.includeNrOfPatients" /> </label>
 			</div>
-			<div class="atlas-edit-div">	
+			<div class="atlas-edit-div site-count">	
 			<input type="checkbox" id="atlas-edit-cbEncounters"
 						<c:if test="${atlasData.includeNumberOfEncounters == true}">
 							    		checked="checked"
@@ -155,7 +131,7 @@ if (typeof jQuery == 'undefined') {
 						<label for="atlas-edit-cbEncounters"> <spring:message
 								code="atlas.includeNrOfEncounters" /> </label>
 		   </div>
-		   <div class="atlas-edit-div">	
+		   <div class="atlas-edit-div site-count">	
 		   <input type="checkbox" id="atlas-edit-cbObservations"
 						<c:if test="${atlasData.includeNumberOfObservations == true}">
 							    		checked="checked"
@@ -163,37 +139,44 @@ if (typeof jQuery == 'undefined') {
 						<label for="atlas-edit-cbObservations"> <spring:message
 								code="atlas.includeNrOfObservations" /> </label>
 		  </div>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><textarea rows="3" cols="40"
+	
+	   <div class='site-contact'>
+		   <span class='site-label'><spring:message code="atlas.contactNameLabel" /></span>
+		   <span style="display: table-cell">
+		   <input type="text" id="atlas-edit-tbContactName" class="site-contact"
+				placeholder="<spring:message code="atlas.contactNamePlaceHolder" />">
+				<br/>
+			<input type="text" id="atlas-edit-tbEmail" style="margin-top: 3px"
+				placeholder="<spring:message code="atlas.emailPlaceHolder" />">	
+			</span>	
+		</div>
+	</div>
+  <fieldset class='site-notes'><legend><spring:message code="atlas.notesLabel" /></legend>
+  	<textarea rows="3" cols="40"
 				id="atlas-edit-tbNotes" style="resize: none;"
 				placeholder="<spring:message code="atlas.notesPlaceHolder"/>"></textarea>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><input type="text" id="atlas-edit-tbContactName"
-			placeholder="<spring:message code="atlas.contactNamePlaceHolder" />">
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><input type="text" id="atlas-edit-tbEmail"
-			placeholder="<spring:message code="atlas.emailPlaceHolder" />">
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><span style="float: right"> <a
+  </fieldset>
+  <div class="atlas-edit-div">			
+			<span id="atlas-edit-lblImplementationTypeLabel"
+						class="spanView"><spring:message
+								code="atlas.implementationTypeLabel" /></span> <input type="text"
+						id="atlas-edit-tbType" style="width: 100px" readonly="readonly">
+						<a id="atlas-edit-changeTypeLink" href=""><spring:message
+								code="atlas.changeTypeLink" /></a>
+  </div>
+  <div>
+			<span style="float: right"> <a
 				id="atlas-edit-saveLink" href=""><spring:message
 						code="atlas.save" /> </a> | <a id="atlas-edit-cancelLink" href=""><spring:message
 						code="atlas.cancel" /> </a> </span>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><br />
-		</td>
-	</tr>
+   </div>
+  <div>
+  	<br /><br /><br />
+  </div>			
+  </div>
 
-</table>
+
+
 
 <div id="atlas-gutter-leftColumnDiv">
 	<form method="post">

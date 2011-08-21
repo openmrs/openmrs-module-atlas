@@ -5,8 +5,7 @@ var map;
 var containerEdit;
 var containerView;
 var $typeWindow;
-var imgPlaceholder = 'http://a0.twimg.com/profile_images/672560906/OpenMRS-twitter-icon_bigger.png';
-var mailtoSubject = "?Subject=OpenMRS%20contact";
+var imgPlaceholder = '../../moduleResources/atlas/OpenMrs-logo.png';
 
 $j(document).ready (function() {
 	containerEdit = document.getElementById('atlas-edit-containerDiv');
@@ -59,12 +58,23 @@ function isChecked(id, container) {
 	 return "false";
 }
 
+function getMailFromMailtoAnchor(id, container) {
+	var email = $j.trim($j(id, container).attr('href')).substring(7);
+	if ($j.trim(email) == 'mailto:') {
+		email = '';
+	}
+	return email;
+}
+
+function setMailFromMailtoAnchor(id, container, mail) {
+	$j(id, containerView).attr('href',  "mailto:"+mail);
+}
 function saveAtlasBubbleDataOnServer() {
 	var position = marker.getPosition();
 	var name = $j.trim($j('#atlas-view-lblName', containerView).text());
 	var website = $j.trim($j('#atlas-view-lblWebsite', containerView).text());
 	var contactName = $j.trim($j('#atlas-view-lblContactName', containerView).text());
-	var contactEmailAddress = $j.trim($j('#atlas-view-lblEmail', containerView).text());
+	var contactEmailAddress = getMailFromMailtoAnchor('#atlas-view-aEmail', containerView);
 	var notes = $j.trim($j('#atlas-view-lblNotes', containerView).text());
 	var implementationType = $j.trim($j('#atlas-hidden-implementationTypeOrdinal').val());
 	var latitude = position.lat();
@@ -376,7 +386,7 @@ function StringIsEmpty(str) {
 function View2Edit() {
 	$j('#atlas-edit-tbName', containerEdit).val($j.trim($j('#atlas-view-lblName', containerView).text()));
 	$j('#atlas-edit-tbWebsite', containerEdit).val($j.trim($j('#atlas-view-lblWebsite', containerView).text()));
-	$j('#atlas-edit-tbEmail', containerEdit).val($j.trim($j('#atlas-view-lblEmail', containerView).text()));
+	$j('#atlas-edit-tbEmail', containerEdit).val(getMailFromMailtoAnchor('#atlas-view-aEmail', containerView));
 	$j('#atlas-edit-tbContactName', containerEdit).val($j.trim($j('#atlas-view-lblContactName', containerView).text()));
 	$j('#atlas-edit-tbNotes', containerEdit).val($j.trim($j('#atlas-view-lblNotes', containerView).text()));
 	$j("#atlas-edit-tbType", containerEdit).val($j.trim($j('#atlas-view-lblImplementationType', containerView).text()));
@@ -384,6 +394,24 @@ function View2Edit() {
 		$j('#atlas-edit-tbImage', containerEdit).val($j('#atlas-view-imgImplementation', containerView).attr('src'));
 	} else {
 		$j('#atlas-edit-tbImage', containerEdit).val("");
+	}
+	
+	if ($j('#atlas-view-lblObservations', containerView).is(':visible')) {
+	    $j('#atlas-edit-cbObservations', containerEdit).attr('checked', true);
+	} else {
+		 $j('#atlas-edit-cbObservations', containerEdit).attr('false', true);
+	}
+	
+	if ($j('#atlas-view-lblEncounters', containerView).is(':visible')) {
+	    $j('#atlas-edit-cbEncounters', containerEdit).attr('checked', true);
+	} else {
+		 $j('#atlas-edit-cbEncounters', containerEdit).attr('false', true);
+	}
+	
+	if ($j('#atlas-view-lblPatients', containerView).is(':visible')) {
+	    $j('#atlas-edit-cbPatients', containerEdit).attr('checked', true);
+	} else {
+		 $j('#atlas-edit-cbPatients', containerEdit).attr('false', true);
 	}
 }
 
@@ -398,20 +426,50 @@ function SetElementsInView(isAfterEdit) {
 	}
 	
 	
+	
+	var contactEmpty;
+	if (isAfterEdit) {
+		contactEmpty = StringIsEmpty($j('#atlas-edit-tbContactName', containerEdit).val()) && StringIsEmpty($j('#atlas-edit-tbEmail', containerEdit).val());
+	} else {
+		contactEmpty = StringIsEmpty($j('#atlas-view-lblContactName', containerView).text()) &&  StringIsEmpty(getMailFromMailtoAnchor('#atlas-view-lblNotes', containerView));
+	}
+	
+	if (!contactEmpty) {
+		$j('#atlas-view-divContact',containerView).show();
+	} else {
+		$j('#atlas-view-divContact',containerView).hide();
+	}
+	
+	var notes;
+	if (isAfterEdit) {
+		notes = $j('#atlas-edit-tbNotes', containerEdit).val();
+	} else {
+		notes = $j('#atlas-view-lblNotes', containerView).text();
+	}
+	
+	if (!StringIsEmpty(notes)) {
+		$j('#atlas-view-fieldsetNotes',containerView).show();
+	} else {
+		$j('#atlas-view-fieldsetNotes',containerView).hide();
+	}
+	
+	
 	var email;
 	if (isAfterEdit) {
 		email = $j('#atlas-edit-tbEmail', containerEdit).val();
 	} else {
-		email = $j('#atlas-view-lblEmail', containerView).text();
+		email = getMailFromMailtoAnchor('#atlas-view-aEmail', containerView);
 	}
+	
 	if (!StringIsEmpty(email)) {
-		$j('#atlas-view-lblEmail', containerView).text(email);
-		$j('#atlas-view-aEmail',containerView).attr('href','mailto:'+email+mailtoSubject);
-		$j('#atlas-view-imgEmail',containerView).show();
+		//$j('#atlas-view-lblEmail', containerView).text(email);
+		$j('#atlas-view-aEmail',containerView).attr('href','mailto:'+email);
+		//$j('#atlas-view-imgEmail',containerView).show();
 		$j('#atlas-view-aEmail',containerView).show();
 	} else {
-			$j('#atlas-view-imgEmail',containerView).hide();
-			$j('#atlas-view-lblEmail', containerView).text(email);
+			$j('#atlas-view-aEmail',containerView).attr('href','');
+		//	$j('#atlas-view-imgEmail',containerView).hide();
+		//	$j('#atlas-view-lblEmail', containerView).text(email);
 			$j('#atlas-view-aEmail',containerView).hide();
 	}
 	
@@ -430,17 +488,17 @@ function Edit2View() {
 	$j('#atlas-view-lblNotes', containerView).text($j('#atlas-edit-tbNotes', containerEdit).val());
 	$j('#atlas-view-lblImplementationType', containerView).text($j("#atlas-edit-tbType", containerEdit).val());
 	
-	if ($j('#atlas-edit-cbEncounters', containerEdit).attr('checked')) {
+	if (isChecked('#atlas-edit-cbEncounters', containerEdit) != 'false') {
 		$j('#atlas-view-lblEncounters', containerView).show();
 	} else {
 		$j('#atlas-view-lblEncounters', containerView).hide();
 	}
-	if ($j('#atlas-edit-cbPatients', containerEdit).attr('checked')) {
+	if (isChecked('#atlas-edit-cbPatients', containerEdit) != 'false') {
 		$j('#atlas-view-lblPatients', containerView).show();
 	} else {
 		$j('#atlas-view-lblPatients', containerView).hide();
 	}
-	if ($j('#atlas-edit-cbObservations', containerEdit).attr('checked')) {
+	if (isChecked('#atlas-edit-cbObservations', containerEdit) != 'false') {
 		$j('#atlas-view-lblObservations', containerView).show();
 	} else {
 		$j('#atlas-view-lblObservations', containerView).hide();
