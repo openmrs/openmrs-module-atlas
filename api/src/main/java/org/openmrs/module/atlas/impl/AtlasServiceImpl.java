@@ -13,52 +13,23 @@
  */
 package org.openmrs.module.atlas.impl;
 
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openmrs.GlobalProperty;
+import org.openmrs.api.APIException;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
-import org.openmrs.module.atlas.AtlasData;
-import org.openmrs.module.atlas.AtlasService;
-import org.openmrs.module.atlas.AtlasConstants;
-import org.openmrs.module.atlas.ImplementationType;
-import org.openmrs.module.atlas.PostAtlasDataQueueTask;
+import org.openmrs.module.atlas.*;
+import org.openmrs.module.atlas.db.StatisticsDAO;
 import org.openmrs.scheduler.SchedulerException;
 import org.openmrs.scheduler.Task;
 import org.openmrs.scheduler.TaskDefinition;
-import org.openmrs.util.OpenmrsConstants;
-import org.openmrs.module.atlas.db.StatisticsDAO;
-
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.UUID;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openmrs.GlobalProperty;
-import org.openmrs.OpenmrsData;
-import org.openmrs.api.APIException;
-import org.openmrs.api.AdministrationService;
-import org.openmrs.api.context.Context;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import java.io.Console;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
-
-import org.openmrs.GlobalProperty;
-import org.openmrs.api.APIException;
-import org.openmrs.api.AdministrationService;
-import org.openmrs.api.context.Context;
-import org.openmrs.scheduler.SchedulerService;
-import org.openmrs.util.DatabaseUpdater.OpenMRSChangeSet;
 import org.openmrs.util.OpenmrsConstants;
 
 /**
@@ -535,8 +506,14 @@ public class AtlasServiceImpl implements AtlasService {
 	 */
 	private void unregisterTask(String name) {
 		TaskDefinition taskDef = Context.getSchedulerService().getTaskByName(name);
-		if (taskDef != null)
-			Context.getSchedulerService().deleteTask(taskDef.getId());
+		if (taskDef != null){
+                        try {
+                                Context.getSchedulerService().shutdownTask(taskDef);
+                        } catch (SchedulerException ex) {
+                                log.error("Uable to shutdown task", ex);
+                        }
+                        Context.getSchedulerService().deleteTask(taskDef.getId());
+                }
 	}
 	
 	/**
