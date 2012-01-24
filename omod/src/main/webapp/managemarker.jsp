@@ -1,4 +1,4 @@
-<%@page import="org.openmrs.module.atlas.ImplementationType"%>
+<%@page import="org.openmrs.module.atlas.*"%>
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
