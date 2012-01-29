@@ -297,8 +297,10 @@ function BindEventsChangeTypeModalWindow() {
 		return false;
 	});
 	
-	$j('#atlas-edit-tbType').click(function() {
-		$j('#atlas-edit-changeTypeLink').click();
+	$j('#atlas-edit-tbType').change(function() {
+		var typeOrd = $j('#atlas-edit-tbType option:selected').attr('id').substring(6);
+		typeOrd = $j(this).children(":selected").attr("id").substring(6);
+		changeImplementationType(typeOrd);
 	});
 	
 	$j('#btnTypeSave').click(function(e) {

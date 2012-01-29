@@ -159,11 +159,16 @@ if (typeof jQuery == 'undefined') {
   <div class="atlas-edit-div">			
 			<span id="atlas-edit-lblImplementationTypeLabel"
 						class="spanView"><spring:message
-								code="atlas.implementationTypeLabel" /></span> <input type="text"
-						id="atlas-edit-tbType" style="width: 100px" readonly="readonly">
-						<a id="atlas-edit-changeTypeLink" href=""><spring:message
-								code="atlas.changeTypeLink" /></a>
-  </div>
+								code="atlas.implementationTypeLabel" />
+						</span> 
+						<select id="atlas-edit-tbType" style="width: 150px">
+							<c:forEach items="${atlasData.implementationTypes}" var="impType" varStatus="loopStatus">
+								<option id="rbType${loopStatus.index}" class="rbTypes" value="<spring:message code="atlas.implementationType${impType}"/>">
+									<spring:message code="atlas.implementationType${impType}" />
+								</option>
+							</c:forEach>
+						</select>
+	</div>
   <div>
 			<span style="float: right"> <a
 				id="atlas-edit-saveLink" href=""><spring:message
