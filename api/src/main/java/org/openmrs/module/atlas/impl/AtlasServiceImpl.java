@@ -410,7 +410,9 @@ public class AtlasServiceImpl implements AtlasService {
 		sb.append("\"geolocation\" :  {\"latitude\" : " + data.getLatitude() + ", \"longitude\" : " + data.getLongitude()
 		        + "}, ");
 		sb.append("\"name\" : \"" + name + "\",");
-		sb.append("\"type\" : \"" + ImplementationType.values()[data.getImplementationType()] + "\",");
+		if (data.getImplementationType() != 0) {
+			sb.append("\"type\" : \"" + ImplementationType.values()[data.getImplementationType()] + "\",");
+		}
 		sb.append("\"url\" : \"" + data.getWebsite() + "\",");
 		sb.append("\"notes\" : \"" + data.getNotes() + "\",");
 		sb.append("\"image\" : \"" + data.getImageURL() + "\",");
