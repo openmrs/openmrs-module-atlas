@@ -208,15 +208,6 @@ function initializeGutter() {
 		event.preventDefault();
 	});
 	
-	$btnDisabled.click(function(event) {
-		if (!ViewIsEmpty()) {
-			$btnDisabled.hide();
-			$btnEnabled.show();
-			enableAtlasModuleOnServer();
-		}
-		event.preventDefault();
-	});
-	
 	$updateAtlasNowLink.click(function (event) {
 		sendPostCommandToServer();
 		// comment the next line if you use the DWR service to get isDirty value

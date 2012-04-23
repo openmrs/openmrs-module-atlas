@@ -13,6 +13,21 @@ if (typeof jQuery == 'undefined') {
 	document.write("<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'><\/script>");
 	document.write("<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js'><\/script>");
 }
+
+	$j(document).ready(function() {
+		
+		$j('#atlas-gutter-btnDisable').click(function(event) {
+			if (!ViewIsEmpty()) {
+				$j('#atlas-gutter-btnDisable').hide();
+				$j('#atlas-gutter-btnEnable').show();
+				enableAtlasModuleOnServer();
+			} else {
+				alert('<spring:message code="atlas.implementationNameIsEmpty" />');
+			}
+			event.preventDefault();
+		});
+		
+	 });
 </script>
 <script src="<openmrs:contextPath/>/dwr/interface/DWRAtlasService.js"></script>
 <openmrs:htmlInclude file="/scripts/jQuery/dataTables/dataTables.css" />
@@ -100,10 +115,9 @@ if (typeof jQuery == 'undefined') {
   
   <div id="atlas-edit-containerDiv" class='site-bubble' style="display: hidden">
 	<div class="atlas-edit-div site-name">
-			<input type="text" id="atlas-edit-tbName"
-						placeholder="<spring:message code="atlas.namePlaceHolder" />">
-						<span id="atlas-edit-nameError" class="fail"
-						style="display: none;">*</span>
+			<label for="atlas-edit-tbName"> <spring:message code="atlas.nameLabel" /> </label>
+			<span id="atlas-edit-nameError" class="fail" style="display: none;">*</span>
+			<input type="text" id="atlas-edit-tbName" required="true">
 	</div>
 	<div class='site-panel'>
 		<div id="atlas-edit-imgDiv"  class='site-image' style="width: 100px; height: 150px">
