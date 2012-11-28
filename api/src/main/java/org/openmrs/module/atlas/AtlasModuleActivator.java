@@ -21,20 +21,26 @@ import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.Activator;
+import org.openmrs.module.BaseModuleActivator;
 
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
-public class AtlasModuleActivator implements Activator {
+public class AtlasModuleActivator extends BaseModuleActivator {
 	
 	private Log log = LogFactory.getLog(this.getClass());
+	
+	@Override
+	public void willStart() {
+		log.info("Starting Atlas Module");
+	}
 	
 	/**
 	 * @see org.openmrs.module.Activator#startup()
 	 */
-	public void startup() {
-		log.info("Starting Atlas Module");
+	@Override
+	public void started() {
+		log.info("Setting implementation id");
 		try {
 			AdministrationService svc = Context.getAdministrationService();
 			String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
@@ -54,7 +60,8 @@ public class AtlasModuleActivator implements Activator {
 	/**
 	 * @see org.openmrs.module.Activator#shutdown()
 	 */
-	public void shutdown() {
+	@Override
+	public void willStop() {
 		log.info("Shutting down Atlas Module");
 		Object o = Context.getService(AtlasService.class);
 		AtlasService service = (AtlasService) o;
