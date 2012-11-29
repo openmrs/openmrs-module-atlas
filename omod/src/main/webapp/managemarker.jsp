@@ -309,6 +309,4 @@ if (typeof jQuery == 'undefined') {
 		</div>
 </div>
 
-</div>
-
 <%@ include file="/WEB-INF/template/footer.jsp"%>

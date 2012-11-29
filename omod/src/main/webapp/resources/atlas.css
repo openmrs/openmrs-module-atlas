@@ -65,6 +65,16 @@ span.site-type {
     margin-left: 3px;
     vertical-align: middle;
 }
+
+#atlas-edit-containerDiv{
+	width: 400px;
+	height: 500px;
+}
+
+#atlas-view-containerDiv{
+	width: 400px;
+	height: 500px;
+}
   
   #atlas-view-lblName {
   	font-weight: bold;
