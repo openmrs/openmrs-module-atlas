@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <module configVersion="1.2">
 	
 	<!-- Atlas Module Properties -->
@@ -16,7 +15,7 @@
 	
 	<!-- /Atlas Module Properties -->
 	
-	<require_version>1.6.0</require_version>
+	<require_version>1.7.0</require_version>
 	
 	<!-- Extensions -->
 	<extension>
@@ -110,4 +109,3 @@
 	
 
 </module>
-
