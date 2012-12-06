@@ -2,20 +2,18 @@
 <module configVersion="1.2">
 	
 	<!-- Atlas Module Properties -->
-	<id>atlas</id>
-	<name>Atlas Module</name>
-	<version>1.0</version>
-	<package>org.openmrs.module.@MODULE_ID@</package>
+	<id>${project.parent.artifactId}</id>
+	<name>${project.parent.name}</name>
+	<version>${project.parent.version}</version>
+	<package>${project.parent.groupId}.${project.parent.artifactId}</package>
 	<author>Victor Chircu</author>
-	<description>
-			The Atlas Module provides a simple mechanism for OpenMRS implementations to join the OpenMRS Atlas (http://go.openmrs.org/atlas), sharing awareness of their site with the community.
-	</description>
+	<description>${project.parent.description}</description>
 
-	<activator>@MODULE_PACKAGE@.AtlasModuleActivator</activator>
+	<activator>${project.parent.groupId}.${project.parent.artifactId}.AtlasModuleActivator</activator>
 	
 	<!-- /Atlas Module Properties -->
 	
-	<require_version>1.7.0</require_version>
+	<require_version>${openMRSVersion}</require_version>
 	
 	<!-- Extensions -->
 	<extension>
