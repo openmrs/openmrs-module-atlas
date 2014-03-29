@@ -131,6 +131,9 @@ public class AtlasServiceImpl implements AtlasService {
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY)) != null) {
 				atlasData.setIsDirty(Boolean.parseBoolean(globalProperty));
 			}
+                        if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ATLAS_VERSION)) != null) {
+				atlasData.setModuleVersion(globalProperty);
+			}
 			
 		}
 		catch (APIException apiEx) {
@@ -188,7 +191,7 @@ public class AtlasServiceImpl implements AtlasService {
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, data.getUsageDisclamerAccepted().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, data.getIncludeSystemConfiguration().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled().toString(), svc);
-			
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_ATLAS_VERSION, data.getModuleVersion(), svc);
 			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
@@ -288,7 +291,7 @@ public class AtlasServiceImpl implements AtlasService {
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data.getIncludeNumberOfPatients().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data.getIncludeNumberOfEncounters().toString(), svc);
-			
+			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_ATLAS_VERSION, data.getModuleVersion(), svc);
 			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
@@ -427,9 +430,9 @@ public class AtlasServiceImpl implements AtlasService {
 		}
 		//sb.append("\"contact_details\" :  {");
 		sb.append("\"email\" : \"" + data.getContactEmailAddress() + "\",");
-		sb.append("\"contact\" : \"" + data.getContactName() + "\"");
+		sb.append("\"contact\" : \"" + data.getContactName() + "\",");
 		//sb.append("}");
-		
+		sb.append("\"atlasVersion\" : \"" + data.getModuleVersion() + "\"");
 		if (data.getIncludeSystemConfiguration()) {
 			sb.append(", \"data\" : {");
 			sb.append("\"version\" : \"" + OpenmrsConstants.OPENMRS_VERSION + "\",");
@@ -535,7 +538,7 @@ public class AtlasServiceImpl implements AtlasService {
 	private void setIsDirty(Boolean isDirty) {
 		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY, isDirty.toString());
 	}
-	
+        
 	/**
 	 * Method that sends a delete message to the server
 	 */

@@ -26,6 +26,13 @@
 		<description>Allows user to set/update/delete atlas data</description>
 	</privilege>
 
+        <globalProperty>
+		<property>@MODULE_ID@.moduleVersion</property>
+		<defaultValue>${project.parent.version}</defaultValue>
+		<description>
+		    Atlas Module Version
+		</description>
+	</globalProperty>
 
 	
 	<globalProperty>

@@ -64,6 +64,8 @@ public class AtlasConstants {
 	public final static String GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION = "atlas.includeSystemConfiguration";
 	
 	public final static String GLOBALPROPERTY_IS_DIRTY = "atlas.isDirty";
+        
+        public final static String GLOBALPROPERTY_ATLAS_VERSION = "atlas.moduleVersion";
 	
 	public final static String POST_ATLAS_DATA_TASK_NAME = "Post Atlas Data Task";
 	
