@@ -67,8 +67,6 @@ public class AtlasData {
 	private Integer implementationType;
 	
 	private Boolean isDirty;
-        
-        private String moduleVersion;
 	
 	public AtlasData() {
 		this.contactEmailAddress = "";
@@ -92,7 +90,6 @@ public class AtlasData {
 		this.implementationType = 0;
 		this.zoom = 3;
 		this.isDirty = true;
-                this.moduleVersion = "";
 	}
 	
 	/**
@@ -421,20 +418,6 @@ public class AtlasData {
 		this.isDirty = isDirty;
 	}
 	
-        /**
-	 * @return the moduleVersion
-	 */
-	public String getModuleVersion() {
-		return moduleVersion;
-	}
-	
-	/**
-	 * @param moduleVersion the moduleVerison to set
-	 */
-	public void setModuleVersion(String moduleVersion) {
-		this.moduleVersion = moduleVersion;
-	}
-        
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -450,8 +433,7 @@ public class AtlasData {
 		        + includeNumberOfEncounters.toString() + "||" + "\nNr of patients: " + numberOfPatients + "||"
 		        + "\nNr of observations: " + numberOfObservations + "||" + "\nNr of visits: " + numberOfEncounters + "||"
 		        + "\nUsage disclamer accepted: " + usageDisclamerAccepted + "||" + "\nInclude System Configuration: "
-		        + includeSystemConfiguration + "||" + "\nModule is enabled: " + moduleEnabled + "||"
-                        + "\nAtlas module version: "+ moduleVersion+ "||";
+		        + includeSystemConfiguration + "||" + "\nModule is enabled: " + moduleEnabled + "||";
 		
 		return text;
 	}

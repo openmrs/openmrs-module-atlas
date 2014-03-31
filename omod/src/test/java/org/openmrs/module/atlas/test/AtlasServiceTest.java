@@ -74,7 +74,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		        .getUsageDisclamerAccepted().toString()));
 		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, data
 		        .getIncludeSystemConfiguration().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ATLAS_VERSION, data.getModuleVersion()
+		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
 		        .toString()));
 	}
 	
@@ -105,8 +105,6 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, data
 		        .getIncludeSystemConfiguration().toString()));
 		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
-		        .toString()));
-                svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ATLAS_VERSION, data.getModuleVersion()
 		        .toString()));
 	}
 	
@@ -213,7 +211,6 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		assertTrue("implementationType should be 0", newData.getImplementationType() == 0);
 		assertTrue("longitude should be 0.0", newData.getLongitude() == 0.0);
 		assertTrue("latitude should be 0.0", newData.getLatitude() == 0.0);
-                assertTrue("atlas version should be null", newData.getModuleVersion() == "");
 	}
 	
 	/**
@@ -343,7 +340,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		newData.setUsageDisclamerAccepted(usageDisclamerAccepted);
 		newData.setModuleEnabled(moduleEnabled);
 		newData.setIncludeSystemConfiguration(includeSystemConfiguration);
-
+		
 		atlasSrv.setAtlasData(newData);
 		
 		newData.setLatitude(0D);
