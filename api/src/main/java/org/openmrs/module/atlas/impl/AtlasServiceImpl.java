@@ -403,7 +403,7 @@ public class AtlasServiceImpl implements AtlasService {
 		AtlasData data = getAtlasData();
 		StringBuilder sb = new StringBuilder();
 		String name = data.getName();
-                String atlasVersion = ModuleFactory.getModule​ById("atlas").getVersion();
+                String atlasVersion = ModuleFactory.getModuleById("atlas").getVersion();
 		if (name == "" && isPreview) {
 			name = "Preview Name";
 		}
