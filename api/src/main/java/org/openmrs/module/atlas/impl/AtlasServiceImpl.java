@@ -403,6 +403,7 @@ public class AtlasServiceImpl implements AtlasService {
 		AtlasData data = getAtlasData();
 		StringBuilder sb = new StringBuilder();
 		String name = data.getName();
+                String atlasVersion = ModuleFactory.getModuleById("atlas").getVersion();
 		if (name == "" && isPreview) {
 			name = "Preview Name";
 		}
@@ -427,9 +428,9 @@ public class AtlasServiceImpl implements AtlasService {
 		}
 		//sb.append("\"contact_details\" :  {");
 		sb.append("\"email\" : \"" + data.getContactEmailAddress() + "\",");
-		sb.append("\"contact\" : \"" + data.getContactName() + "\"");
+		sb.append("\"contact\" : \"" + data.getContactName() + "\",");
 		//sb.append("}");
-		
+		sb.append("\"atlasVersion\" : \"" + atlasVersion + "\"");
 		if (data.getIncludeSystemConfiguration()) {
 			sb.append(", \"data\" : {");
 			sb.append("\"version\" : \"" + OpenmrsConstants.OPENMRS_VERSION + "\",");
