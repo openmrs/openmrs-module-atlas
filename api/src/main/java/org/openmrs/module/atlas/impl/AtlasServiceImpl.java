@@ -614,5 +614,20 @@ public class AtlasServiceImpl implements AtlasService {
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTime();
 	}
+
+    public void setIncludeNumberOfPatients(Boolean includeNumberOfPatients) throws APIException {
+        setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, includeNumberOfPatients.toString());
+        setIsDirty(true);
+    }
+
+    public void setIncludeNumberOfEncounters(Boolean includeNumberOfEncounters) throws APIException {
+        setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, includeNumberOfEncounters.toString());
+        setIsDirty(true);
+    }
+
+    public void setIncludeNumberOfObservations(Boolean includeNumberOfObservations) throws APIException {
+        setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, includeNumberOfObservations.toString());
+        setIsDirty(true);
+    }
 	
 }

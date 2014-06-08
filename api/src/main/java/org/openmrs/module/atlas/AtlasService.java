@@ -177,4 +177,37 @@ public interface AtlasService {
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	String getJson(Boolean isPreview) throws APIException;
+
+    /**
+	 * Method that sets the atlas.includeNumberOfPatients global property
+	 * 
+	 * @param includeNumberOfPatients
+	 * @throws APIException
+	 * 
+	 * @should set atlas.isDirty GlobalProperty to true
+	 */
+    @Authorized({ "Manage Atlas Data" })
+    public void setIncludeNumberOfPatients(Boolean includeNumberOfPatients) throws APIException;
+    
+    /**
+	 * Method that sets the atlas.includeNumberOfEncounters global property
+	 * 
+	 * @param includeNumberOfEncounters
+	 * @throws APIException
+	 * 
+	 * @should set atlas.isDirty GlobalProperty to true
+	 */
+    @Authorized({ "Manage Atlas Data" })
+    public void setIncludeNumberOfEncounters(Boolean includeNumberOfEncounters) throws APIException;
+
+    /**
+	 * Method that sets the atlas.includeNumberOfObservations global property
+	 * 
+	 * @param includeNumberOfObservations
+	 * @throws APIException
+	 * 
+	 * @should set atlas.isDirty GlobalProperty to true
+	 */
+    @Authorized({ "Manage Atlas Data" })
+    public void setIncludeNumberOfObservations(Boolean includeNumberOfObservations) throws APIException;
 }

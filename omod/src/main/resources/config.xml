@@ -26,7 +26,12 @@
 		<description>Allows user to set/update/delete atlas data</description>
 	</privilege>
 
-
+	<aware_of_modules>
+		<aware_of_module>org.openmrs.module.uiframework</aware_of_module>
+		<aware_of_module>org.openmrs.module.appui</aware_of_module>
+		<aware_of_module>org.openmrs.module.emrapi</aware_of_module>
+		<aware_of_module>org.openmrs.module.appframework</aware_of_module>
+	</aware_of_modules>
 	
 	<globalProperty>
 		<property>@MODULE_ID@.numberOfPatients</property>
@@ -60,6 +65,9 @@
 				<include method="enableAtlasModule"/>
 				<include method="disableAtlasModule"/>
 				<include method="setIncludeSystemConfiguration"/>
+                <include method="setIncludeNbPatients"/>
+                <include method="setIncludeNbEncounters"/>
+                <include method="setIncludeNbObs"/>
 				<include method="setPosition"/>
 				<include method="updateAndGetStatistics"/>
 				<include method="setZoom"/>
@@ -78,6 +86,12 @@
 			DWRAtlasService.disableAtlasModule(String disclaimerAcceptedStr);
 			
 			DWRAtlasService.setIncludeSystemConfiguration(String includeSystemConfigurationStr);
+            
+            DWRAtlasService.setIncludeNbPatients(String includeNbPatientsStr);
+            
+            DWRAtlasService.setIncludeNbEncounters(String includeNumberOfEncountersStr);
+            
+            DWRAtlasService.setIncludeNbObs(String includeNumberOfObservationsStr);
 			
 			DWRAtlasService.setPosition(String latStr, String lngStr);
 			

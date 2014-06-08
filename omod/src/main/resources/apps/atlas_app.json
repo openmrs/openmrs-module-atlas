@@ -10,7 +10,7 @@
                 "type": "link",
                 "order": 10,
                 "label": "atlas.appLink",
-                "url": "module/atlas/managemarker.form",
+                "url": "atlas/map.page",
                 "icon": "icon-globe",
                 "requiredPrivilege": "App: atlas"
             }

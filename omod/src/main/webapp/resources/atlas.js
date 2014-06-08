@@ -8,22 +8,22 @@ var $typeWindow;
 var imgPlaceholder = '../../moduleResources/atlas/OpenMrs-logo.png';
 
 $j(document).ready (function() {
-	containerEdit = document.getElementById('atlas-edit-containerDiv');
-	containerView = document.getElementById('atlas-view-containerDiv'); 
-	BindPlaceHolder(containerEdit);
-	StyleContainers();
+//	containerEdit = document.getElementById('atlas-edit-containerDiv');
+//	containerView = document.getElementById('atlas-view-containerDiv'); 
+//	BindPlaceHolder(containerEdit);
+//	StyleContainers();
 
-	$j(containerEdit).hide();
-	$j(containerView).hide();
- 	InitializeMap();
- 	bindSearchBox();
+//	$j(containerEdit).hide();
+//	$j(containerView).hide();
+// 	InitializeMap();
+// 	bindSearchBox();
  	BindPlaceHolder($j('#atlas-map-rightColumnDiv'));
  	
  	initializeGutter();
  	
- 	$typeWindow = $j("#changeTypeDialog");
- 	BindEventsChangeTypeModalWindow();
- 	initializeImplementationType();
+// 	$typeWindow = $j("#changeTypeDialog");
+// 	BindEventsChangeTypeModalWindow();
+// 	initializeImplementationType();
  	initializeWhatWillBeSentModalWindow();
  	getStatisticsFromServer();
 });

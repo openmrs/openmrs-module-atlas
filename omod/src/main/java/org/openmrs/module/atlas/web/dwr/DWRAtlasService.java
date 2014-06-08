@@ -63,6 +63,15 @@ public class DWRAtlasService {
 	public void setIncludeSystemConfiguration(String includeSystemConfigurationStr) {
 		getAtlasService().setIncludeSystemConfiguration(Boolean.parseBoolean(includeSystemConfigurationStr));
 	}
+    public void setIncludeNbPatients(String includeNbPatientsStr) {
+		getAtlasService().setIncludeNumberOfPatients(Boolean.parseBoolean(includeNbPatientsStr));
+	}
+    public void setIncludeNbEncounters(String includeNumberOfEncountersStr) {
+		getAtlasService().setIncludeNumberOfEncounters(Boolean.parseBoolean(includeNumberOfEncountersStr));
+	}
+    public void setIncludeNbObs(String includeNumberOfObservationsStr) {
+		getAtlasService().setIncludeNumberOfObservations(Boolean.parseBoolean(includeNumberOfObservationsStr));
+	}
 	
 	public void setPosition(String latStr, String lngStr) {
 		getAtlasService().setPosition(Double.parseDouble(latStr), Double.parseDouble(lngStr));
