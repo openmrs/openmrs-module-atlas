@@ -1,0 +1,19 @@
+[
+    {
+        "id": "atlas",
+        "description": "atlas.description",
+        "order": 10,
+        "extensions": [
+            {
+                "id": "atlasHomepageLink",
+                "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+                "type": "link",
+                "order": 10,
+                "label": "atlas.appLink",
+                "url": "module/atlas/managemarker.form",
+                "icon": "icon-globe",
+                "requiredPrivilege": "App: atlas"
+            }
+        ]
+    }
+]
