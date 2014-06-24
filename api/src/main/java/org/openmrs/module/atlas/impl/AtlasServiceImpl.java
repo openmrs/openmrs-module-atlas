@@ -265,7 +265,7 @@ public class AtlasServiceImpl implements AtlasService {
 		unregisterTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME);
 		setModuleEnabled(false);
 		setUsageDisclaimerAccepted(usageDisclaimerAccepted);
-		sendDeleteMessageToServer();
+		//sendDeleteMessageToServer();
 	}
 	
 	/**
@@ -408,15 +408,6 @@ public class AtlasServiceImpl implements AtlasService {
 			name = "Preview Name";
 		}
 		sb.append("{\"id\" : \"" + data.getId() + "\", ");
-		sb.append("\"geolocation\" :  {\"latitude\" : " + data.getLatitude() + ", \"longitude\" : " + data.getLongitude()
-		        + "}, ");
-		sb.append("\"name\" : \"" + name + "\",");
-		if (data.getImplementationType() != 0) {
-			sb.append("\"type\" : \"" + ImplementationType.values()[data.getImplementationType()] + "\",");
-		}
-		sb.append("\"url\" : \"" + data.getWebsite() + "\",");
-		sb.append("\"notes\" : \"" + data.getNotes() + "\",");
-		sb.append("\"image\" : \"" + data.getImageURL() + "\",");
 		if (data.getIncludeNumberOfPatients()) {
 			sb.append("\"patients\" : \"" + data.getNumberOfPatients() + "\",");
 		}
@@ -426,10 +417,6 @@ public class AtlasServiceImpl implements AtlasService {
 		if (data.getIncludeNumberOfEncounters()) {
 			sb.append("\"encounters\" : \"" + data.getNumberOfEncounters() + "\",");
 		}
-		//sb.append("\"contact_details\" :  {");
-		sb.append("\"email\" : \"" + data.getContactEmailAddress() + "\",");
-		sb.append("\"contact\" : \"" + data.getContactName() + "\",");
-		//sb.append("}");
 		sb.append("\"atlasVersion\" : \"" + atlasVersion + "\"");
 		if (data.getIncludeSystemConfiguration()) {
 			sb.append(", \"data\" : {");
