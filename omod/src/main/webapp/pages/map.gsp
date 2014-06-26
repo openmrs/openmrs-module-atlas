@@ -2,7 +2,7 @@
 ui.decorateWith("appui", "standardEmrPage")
 ui.includeJavascript("atlas", "atlas.js")
 ui.includeCss("atlas", "bootstrap-btn.css")
-ui.includeCss("atlas", "atlas.css")
+ui.includeCss("atlas", "atlas-2.0.css")
 %>
 <script src="/${ contextPath }/dwr/interface/DWRAtlasService.js"></script>
 <script src="/${ contextPath }/dwr/engine.js"></script>
@@ -14,7 +14,7 @@ ui.includeCss("atlas", "atlas.css")
     ];
     var connected;
     function updateModulefromServer() {
-        connected = isModuleConnect("https://atlas.local/module/auth?uuid=${data.id}");
+        connected = isModuleConnect("${data.serverUrl}/auth?uuid=${data.id}&callback=getAuth");
     }
     function receiveMessage(event){
       updateModulefromServer();
@@ -22,12 +22,14 @@ ui.includeCss("atlas", "atlas.css")
     }
     jq(document).ready(function() {
         addEventListener("message", receiveMessage, false);
-        updateModulefromServer();
+        initializeAtlas();
+        initializeDialog();
     });
 </script>
 <body>
     <div id="home">
-        <iframe src="https://atlas.local/module?uuid=${data.id}" name="atlas" id="atlas"></iframe>
+        <iframe src="${data.serverUrl}?uuid=${data.id}&patients=${data.numberOfPatients}&encounters=
+                ${data.numberOfEncounters}&observations=${data.numberOfObservations}" name="atlas" id="atlas"></iframe>
         <div class="note-container" id="module-control" style="display:none">
             <div class="note" id="disabled" style="background-color: rgba(255, 95, 95, 0.73);  
             <% if (data.moduleEnabled) {%> display: none; <% } %> margin-left: -100px;">
