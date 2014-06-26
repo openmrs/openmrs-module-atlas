@@ -24,31 +24,8 @@ import org.openmrs.module.atlas.AtlasService;
  */
 public class DWRAtlasService {
 	
-	public void saveAtlasBubbleData(String latStr, String lngStr, String name, String implementationTypeStr, String website,
-	                                String imageURL, String notes, String contactName, String contactEmail,
-	                                String includeNumberOfPatientsStr, String includeNumberOfObservationsStr,
-	                                String includeNumberOfEncountersStr) {
-		
-		Double lat = Double.valueOf(latStr);
-		Double lng = Double.valueOf(lngStr);
-		Integer implementationType = Integer.parseInt(implementationTypeStr);
-		Boolean includeNumberOfObservations = Boolean.parseBoolean(includeNumberOfObservationsStr);
-		Boolean includeNumberOfPatients = Boolean.parseBoolean(includeNumberOfPatientsStr);
-		Boolean includeNumberOfEncounters = Boolean.parseBoolean(includeNumberOfEncountersStr);
-		
+	public void saveAtlasBubbleData() {
 		AtlasData data = new AtlasData();
-		data.setName(name);
-		data.setImplementationType(implementationType);
-		data.setWebsite(website);
-		data.setImageURL(imageURL);
-		data.setLatitude(lat);
-		data.setLongitude(lng);
-		data.setNotes(notes);
-		data.setContactName(contactName);
-		data.setContactEmailAddress(contactEmail);
-		data.setIncludeNumberOfPatients(includeNumberOfPatients);
-		data.setIncludeNumberOfObservations(includeNumberOfObservations);
-		data.setIncludeNumberOfEncounters(includeNumberOfEncounters);
 		getAtlasService().setAtlasBubbleData(data);
 	}
 	
@@ -56,33 +33,8 @@ public class DWRAtlasService {
 		getAtlasService().enableAtlasModule();
 	}
 	
-	public void disableAtlasModule(String disclaimerAcceptedStr) {
-		getAtlasService().disableAtlasModule(Boolean.parseBoolean(disclaimerAcceptedStr));
-	}
-	
-	public void setIncludeSystemConfiguration(String includeSystemConfigurationStr) {
-		getAtlasService().setIncludeSystemConfiguration(Boolean.parseBoolean(includeSystemConfigurationStr));
-	}
-    public void setIncludeNbPatients(String includeNbPatientsStr) {
-		getAtlasService().setIncludeNumberOfPatients(Boolean.parseBoolean(includeNbPatientsStr));
-	}
-    public void setIncludeNbEncounters(String includeNumberOfEncountersStr) {
-		getAtlasService().setIncludeNumberOfEncounters(Boolean.parseBoolean(includeNumberOfEncountersStr));
-	}
-    public void setIncludeNbObs(String includeNumberOfObservationsStr) {
-		getAtlasService().setIncludeNumberOfObservations(Boolean.parseBoolean(includeNumberOfObservationsStr));
-	}
-	
-	public void setPosition(String latStr, String lngStr) {
-		getAtlasService().setPosition(Double.parseDouble(latStr), Double.parseDouble(lngStr));
-	}
-	
-	public void setZoom(String zoomStr) {
-		getAtlasService().setZoom(Integer.parseInt(zoomStr));
-	}
-	
-	public void setUsageDisclaimer(String acceptedStr) {
-		getAtlasService().setUsageDisclaimerAccepted(Boolean.parseBoolean(acceptedStr));
+	public void disableAtlasModule() {
+		getAtlasService().disableAtlasModule();
 	}
 	
 	public String getJsonData() {

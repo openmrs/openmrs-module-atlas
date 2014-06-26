@@ -61,15 +61,8 @@
 				<include method="saveAtlasBubbleData"/>
 				<include method="enableAtlasModule"/>
 				<include method="disableAtlasModule"/>
-				<include method="setIncludeSystemConfiguration"/>
-                <include method="setIncludeNbPatients"/>
-                <include method="setIncludeNbEncounters"/>
-                <include method="setIncludeNbObs"/>
-				<include method="setPosition"/>
 				<include method="updateAndGetStatistics"/>
-				<include method="setZoom"/>
 				<include method="getJsonData"/>
-				<include method="setUsageDisclaimer"/>
 				<include method="postAtlasData"/>
 				<include method="getIsDirty"/>
 				
@@ -78,23 +71,7 @@
 
 		<signatures>
 			<![CDATA[import @MODULE_PACKAGE@.web.dwr.DWRAtlasService;
-			DWRAtlasService.saveAtlasBubbleData(String latStr,	String lngStr, String name, String implementationTypeStr, String website, String imageURL, String notes, String contactName, String contactEmail, String includeNumberOfPatientsStr, String includeNumberOfObservationsStr, String includeNumberOfEncountersStr);
-						
-			DWRAtlasService.disableAtlasModule(String disclaimerAcceptedStr);
-			
-			DWRAtlasService.setIncludeSystemConfiguration(String includeSystemConfigurationStr);
-            
-            DWRAtlasService.setIncludeNbPatients(String includeNbPatientsStr);
-            
-            DWRAtlasService.setIncludeNbEncounters(String includeNumberOfEncountersStr);
-            
-            DWRAtlasService.setIncludeNbObs(String includeNumberOfObservationsStr);
-			
-			DWRAtlasService.setPosition(String latStr, String lngStr);
-			
-			DWRAtlasService.setZoom(String zoomStr);
-			
-			DWRAtlasService.setUsageDisclaimer(String acceptedStr);
+			DWRAtlasService.disableAtlasModule();
 			]]>
 		</signatures>	
 	</dwr>

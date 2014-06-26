@@ -69,45 +69,6 @@ public class AtlasServiceImpl implements AtlasService {
 			String globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
 			
 			atlasData.setId(UUID.fromString(globalProperty));
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE)) != null) {
-				atlasData.setWebsite(globalProperty);
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME)) != null) {
-				atlasData.setName(globalProperty);
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE)) != null) {
-				atlasData.setImplementationType(Integer.valueOf(globalProperty));
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL)) != null) {
-				atlasData.setImageURL(globalProperty);
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE)) != null) {
-				atlasData.setLatitude(Double.valueOf(globalProperty));
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE)) != null) {
-				atlasData.setLongitude(Double.valueOf(globalProperty));
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ZOOM)) != null) {
-				atlasData.setZoom(Integer.valueOf(globalProperty));
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES)) != null) {
-				atlasData.setNotes(globalProperty);
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS)) != null) {
-				atlasData.setContactEmailAddress(globalProperty);
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME)) != null) {
-				atlasData.setContactName(globalProperty);
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS)) != null) {
-				atlasData.setIncludeNumberOfObservations(Boolean.parseBoolean(globalProperty));
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS)) != null) {
-				atlasData.setIncludeNumberOfPatients(Boolean.parseBoolean(globalProperty));
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS)) != null) {
-				atlasData.setIncludeNumberOfEncounters(Boolean.parseBoolean(globalProperty));
-			}
 			
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS)) != null) {
 				atlasData.setNumberOfObservations(globalProperty);
@@ -119,14 +80,8 @@ public class AtlasServiceImpl implements AtlasService {
 				atlasData.setNumberOfEncounters(globalProperty);
 			}
 			
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION)) != null) {
-				atlasData.setIncludeSystemConfiguration(Boolean.parseBoolean(globalProperty));
-			}
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED)) != null) {
 				atlasData.setModuleEnabled(Boolean.parseBoolean(globalProperty));
-			}
-			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED)) != null) {
-				atlasData.setUsageDisclamerAccepted(Boolean.parseBoolean(globalProperty));
 			}
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY)) != null) {
 				atlasData.setIsDirty(Boolean.parseBoolean(globalProperty));
@@ -173,22 +128,7 @@ public class AtlasServiceImpl implements AtlasService {
 		AdministrationService svc = null;
 		try {
 			svc = Context.getAdministrationService();
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data.getContactEmailAddress(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_ZOOM, data.getZoom().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data.getIncludeNumberOfPatients().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data.getIncludeNumberOfEncounters().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, data.getUsageDisclamerAccepted().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, data.getIncludeSystemConfiguration().toString(), svc);
 			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled().toString(), svc);
-			
 			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
@@ -253,7 +193,6 @@ public class AtlasServiceImpl implements AtlasService {
 	public void enableAtlasModule() throws APIException {
 		registerPostAtlasDataTask(DEFAULT_ATLAS_DATA_TASK_INTERVAL); //7 days(in seconds)
 		setModuleEnabled(true);
-		setUsageDisclaimerAccepted(true);
 		postAtlasData();
 	}
 	
@@ -261,11 +200,9 @@ public class AtlasServiceImpl implements AtlasService {
 	 * @see org.openmrs.module.atlas.AtlasService#disableAtlasModule()
 	 */
 	@Override
-	public void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException {
+	public void disableAtlasModule() throws APIException {
 		unregisterTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME);
 		setModuleEnabled(false);
-		setUsageDisclaimerAccepted(usageDisclaimerAccepted);
-		//sendDeleteMessageToServer();
 	}
 	
 	/**
@@ -277,66 +214,12 @@ public class AtlasServiceImpl implements AtlasService {
 		try {
 			svc = Context.getAdministrationService();
 			String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
-			
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data.getImplementationType().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES, data.getNotes(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data.getContactEmailAddress(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data.getIncludeNumberOfObservations().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data.getIncludeNumberOfPatients().toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data.getIncludeNumberOfEncounters().toString(), svc);
-			
 			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
 				log.error("Could not set atlas data. Exception:" + apiEx.getMessage());
 		}
-	}
-	
-	/**
-	 * @see org.openmrs.module.atlas.AtlasService#setIncludeSystemConfiguration()
-	 */
-	@Override
-	public void setIncludeSystemConfiguration(Boolean includeSystemConfiguration) throws APIException {
-		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, includeSystemConfiguration.toString());
-	}
-	
-	/**
-	 * @see org.openmrs.module.atlas.AtlasService#setUsageDisclaimerAccepted()
-	 */
-	@Override
-	public void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException {
-		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, usageDisclaimerAccepted.toString());
-	}
-	
-	/**
-	 * @see org.openmrs.module.atlas.AtlasService#setPosition()
-	 */
-	@Override
-	public void setPosition(Double lat, Double lng) throws APIException {
-		AdministrationService svc = null;
-		try {
-			svc = Context.getAdministrationService();
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, lat.toString(), svc);
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, lng.toString(), svc);
-			setIsDirty(true);
-		}
-		catch (APIException apiEx) {
-			if (log.isErrorEnabled())
-				log.error("Could not set position global properties. Exception:" + apiEx.getMessage());
-		}
-	}
-	
-	/**
-	 * @see org.openmrs.module.atlas.AtlasService#setZoom()
-	 */
-	@Override
-	public void setZoom(Integer zoom) throws APIException {
-		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_ZOOM, zoom.toString());
 	}
 	
 	/**
@@ -402,38 +285,25 @@ public class AtlasServiceImpl implements AtlasService {
 	public String getJson(Boolean isPreview) throws APIException {
 		AtlasData data = getAtlasData();
 		StringBuilder sb = new StringBuilder();
-		String name = data.getName();
                 String atlasVersion = ModuleFactory.getModuleById("atlas").getVersion();
-		if (name == "" && isPreview) {
-			name = "Preview Name";
-		}
 		sb.append("{\"id\" : \"" + data.getId() + "\", ");
-		if (data.getIncludeNumberOfPatients()) {
-			sb.append("\"patients\" : \"" + data.getNumberOfPatients() + "\",");
-		}
-		if (data.getIncludeNumberOfObservations()) {
-			sb.append("\"observations\" : \"" + data.getNumberOfObservations() + "\",");
-		}
-		if (data.getIncludeNumberOfEncounters()) {
-			sb.append("\"encounters\" : \"" + data.getNumberOfEncounters() + "\",");
-		}
+		sb.append("\"patients\" : \"" + data.getNumberOfPatients() + "\",");
+		sb.append("\"observations\" : \"" + data.getNumberOfObservations() + "\",");
+		sb.append("\"encounters\" : \"" + data.getNumberOfEncounters() + "\",");
 		sb.append("\"atlasVersion\" : \"" + atlasVersion + "\"");
-		if (data.getIncludeSystemConfiguration()) {
-			sb.append(", \"data\" : {");
-			sb.append("\"version\" : \"" + OpenmrsConstants.OPENMRS_VERSION + "\",");
-			Collection<Module> modules = ModuleFactory.getLoadedModules();
-			sb.append("\"modules\" : [");
-			for (Module mod : modules) {
-				sb.append("{\"id\": \"" + mod.getModuleId() + "\",");
-				sb.append("\"name\": \"" + mod.getName() + "\",");
-				sb.append("\"version\": \"" + mod.getVersion() + "\",");
-				sb.append("\"active\" : \"" + mod.isStarted() + "\"},");
-			}
-			//delete last "," 
-			sb.deleteCharAt(sb.length() - 1);
-			sb.append("]}");
-			
-		}
+        sb.append(", \"data\" : {");
+        sb.append("\"version\" : \"" + OpenmrsConstants.OPENMRS_VERSION + "\",");
+        Collection<Module> modules = ModuleFactory.getLoadedModules();
+        sb.append("\"modules\" : [");
+        for (Module mod : modules) {
+            sb.append("{\"id\": \"" + mod.getModuleId() + "\",");
+            sb.append("\"name\": \"" + mod.getName() + "\",");
+            sb.append("\"version\": \"" + mod.getVersion() + "\",");
+            sb.append("\"active\" : \"" + mod.isStarted() + "\"},");
+        }
+        //delete last "," 
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("]}");
 		sb.append("}");
 		return sb.toString();
 	}
@@ -601,20 +471,5 @@ public class AtlasServiceImpl implements AtlasService {
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTime();
 	}
-
-    public void setIncludeNumberOfPatients(Boolean includeNumberOfPatients) throws APIException {
-        setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, includeNumberOfPatients.toString());
-        setIsDirty(true);
-    }
-
-    public void setIncludeNumberOfEncounters(Boolean includeNumberOfEncounters) throws APIException {
-        setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, includeNumberOfEncounters.toString());
-        setIsDirty(true);
-    }
-
-    public void setIncludeNumberOfObservations(Boolean includeNumberOfObservations) throws APIException {
-        setGlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, includeNumberOfObservations.toString());
-        setIsDirty(true);
-    }
 	
 }

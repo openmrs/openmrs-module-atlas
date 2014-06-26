@@ -73,7 +73,7 @@ public interface AtlasService {
 	 * @should set the atlas.usageDisclaimerAccepted to the usageDisclaimerAccepted parameter value
 	 */
 	@Authorized({ "Manage Atlas Data" })
-	void disableAtlasModule(Boolean usageDisclaimerAccepted) throws APIException;
+	void disableAtlasModule() throws APIException;
 	
 	/**
 	 * Method that sets only the bubble related Atlas Data NOTE: Even if this method receives all
@@ -87,47 +87,6 @@ public interface AtlasService {
 	 */
 	@Authorized({ "Manage Atlas Data" })
 	void setAtlasBubbleData(AtlasData data) throws APIException;
-	
-	/**
-	 * Method that sets the position (latitude and longitude) of the implementation
-	 * 
-	 * @param lat The latitude coordinate
-	 * @param lng The longitude coordinate
-	 * @throws APIException
-	 * 
-	 * @should set atlas.isDirty GlobalProperty to true
-	 */
-	@Authorized({ "Manage Atlas Data" })
-	void setPosition(Double lat, Double lng) throws APIException;
-	
-	/**
-	 * Method that sets the zoom level of the map
-	 * 
-	 * @param zoom The zoom level
-	 * @throws APIException
-	 */
-	@Authorized({ "Manage Atlas Data" })
-	void setZoom(Integer zoom) throws APIException;
-	
-	/**
-	 * Method that sets the atlas.includeSystemConfiguration global property
-	 * 
-	 * @param includeSystemConfiguration
-	 * @throws APIException
-	 * 
-	 * @should set atlas.isDirty GlobalProperty to true
-	 */
-	@Authorized({ "Manage Atlas Data" })
-	void setIncludeSystemConfiguration(Boolean includeSystemConfiguration) throws APIException;
-	
-	/**
-	 * Method that sets the atlas.usageDisclaimerAccepted global property
-	 * 
-	 * @param usageDisclaimerAccepted
-	 * @throws APIException
-	 */
-	@Authorized({ "Manage Atlas Data" })
-	void setUsageDisclaimerAccepted(Boolean usageDisclaimerAccepted) throws APIException;
 	
 	/**
 	 * Method that gets the atlas data from global property and posts it to the OpenMRS server
@@ -178,36 +137,4 @@ public interface AtlasService {
 	@Authorized({ "Manage Atlas Data" })
 	String getJson(Boolean isPreview) throws APIException;
 
-    /**
-	 * Method that sets the atlas.includeNumberOfPatients global property
-	 * 
-	 * @param includeNumberOfPatients
-	 * @throws APIException
-	 * 
-	 * @should set atlas.isDirty GlobalProperty to true
-	 */
-    @Authorized({ "Manage Atlas Data" })
-    public void setIncludeNumberOfPatients(Boolean includeNumberOfPatients) throws APIException;
-    
-    /**
-	 * Method that sets the atlas.includeNumberOfEncounters global property
-	 * 
-	 * @param includeNumberOfEncounters
-	 * @throws APIException
-	 * 
-	 * @should set atlas.isDirty GlobalProperty to true
-	 */
-    @Authorized({ "Manage Atlas Data" })
-    public void setIncludeNumberOfEncounters(Boolean includeNumberOfEncounters) throws APIException;
-
-    /**
-	 * Method that sets the atlas.includeNumberOfObservations global property
-	 * 
-	 * @param includeNumberOfObservations
-	 * @throws APIException
-	 * 
-	 * @should set atlas.isDirty GlobalProperty to true
-	 */
-    @Authorized({ "Manage Atlas Data" })
-    public void setIncludeNumberOfObservations(Boolean includeNumberOfObservations) throws APIException;
 }

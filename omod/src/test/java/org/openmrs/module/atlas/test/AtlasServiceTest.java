@@ -42,9 +42,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	public AtlasData getTestAtlasData() {
 		AtlasData data = new AtlasData();
-		data.setName("Module_BDT");
 		data.setId(UUID.fromString(id));
-		
 		return data;
 	}
 	
@@ -52,28 +50,6 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		AdministrationService svc = Context.getAdministrationService();
 		
 		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data
-		        .getImplementationType().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data
-		        .getContactEmailAddress()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES, data.getNotes()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data
-		        .getIncludeNumberOfObservations().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data
-		        .getIncludeNumberOfPatients().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data
-		        .getIncludeNumberOfEncounters().toString()));
-		
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, data
-		        .getUsageDisclamerAccepted().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, data
-		        .getIncludeSystemConfiguration().toString()));
 		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
 		        .toString()));
 	}
@@ -82,28 +58,6 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		AdministrationService svc = Context.getAdministrationService();
 		
 		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NAME, data.getName()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMPLEMENTATION_TYPE, data
-		        .getImplementationType().toString()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_WEBSITE, data.getWebsite()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_IMAGE_URL, data.getImageURL()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_EMAIL_ADDRESS, data
-		        .getContactEmailAddress()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_CONTACT_NAME, data.getContactName()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NOTES, data.getNotes()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LATITUDE, data.getLatitude().toString()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_LONGITUDE, data.getLongitude().toString()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_OBSERVATIONS, data
-		        .getIncludeNumberOfObservations().toString()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_PATIENTS, data
-		        .getIncludeNumberOfPatients().toString()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_NUMBER_OF_ENCOUNTERS, data
-		        .getIncludeNumberOfEncounters().toString()));
-		
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, data
-		        .getUsageDisclamerAccepted().toString()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION, data
-		        .getIncludeSystemConfiguration().toString()));
 		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
 		        .toString()));
 	}
@@ -115,40 +69,11 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	@Test
 	public void disableAtlasModule_shouldUnregisterThePostAtlasDataQueueTask() throws Exception {
 		atlasSrv.enableAtlasModule();
-		atlasSrv.disableAtlasModule(true);
+		atlasSrv.disableAtlasModule();
 		
 		TaskDefinition taskDef = Context.getSchedulerService().getTaskByName(AtlasConstants.POST_ATLAS_DATA_TASK_NAME);
 		assertTrue("The task should be null", taskDef == null);
 	}
-	
-	/**
-	 * @see AtlasService#disableAtlasModule(Boolean)
-	 * @verifies set the atlas.usageDisclaimerAccepted to the usageDisclaimerAccepted parameter
-	 *           value
-	 */
-	@Test
-	public void disableAtlasModule_shouldSetTheAtlasusageDisclaimerAcceptedToTheUsageDisclaimerAcceptedParameterValue()
-	                                                                                                                   throws Exception {
-		atlasSrv.disableAtlasModule(false);
-		AtlasData updatedData = atlasSrv.getAtlasData();
-		assertTrue("The UsageDisclaimerAccepted should be false", updatedData.getUsageDisclamerAccepted() == false);
-		
-		atlasSrv.disableAtlasModule(true);
-		updatedData = atlasSrv.getAtlasData();
-		assertTrue("The UsageDisclaimerAccepted should be true", updatedData.getUsageDisclamerAccepted() == true);
-		
-	}
-	
-	//todo victor
-	//	/**
-	//	 * @see AtlasService#disableAtlasModule(Boolean)
-	//	 * @verifies send a delete message to the server
-	//	 */
-	//	@Test
-	//	public void disableAtlasModule_shouldSendADeleteMessageToTheServer() throws Exception {
-	//		//TODO auto-generated
-	//		Assert.fail("Not yet implemented");
-	//	}
 	
 	/**
 	 * @see AtlasService#enableAtlasModule()
@@ -161,23 +86,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		TaskDefinition taskDef = Context.getSchedulerService().getTaskByName(AtlasConstants.POST_ATLAS_DATA_TASK_NAME);
 		assertTrue("The task should not be null", taskDef != null);
 		
-		atlasSrv.disableAtlasModule(true);
-	}
-	
-	/**
-	 * @see AtlasService#enableAtlasModule()
-	 * @verifies set the atlas.usageDisclaimerAccepted to true
-	 */
-	@Test
-	public void enableAtlasModule_shouldSetTheAtlasusageDisclaimerAcceptedToTrue() throws Exception {
-		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED, "false");
-		atlasSrv.enableAtlasModule();
-		
-		Boolean disclaimer = Boolean.parseBoolean(getGlobalPropertyObject(
-		    AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED).getPropertyValue());
-		assertTrue("The UsageDisclaimerAccepted should be true", disclaimer == true);
-		
-		atlasSrv.disableAtlasModule(true);
+		atlasSrv.disableAtlasModule();
 	}
 	
 	/**
@@ -190,27 +99,11 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	                                                                                                                                                             throws Exception {
 		AtlasData newData = atlasSrv.getAtlasData();
 		
-		assertTrue("notes should be empty", newData.getNotes() == "");
-		assertTrue("notes should be empty", newData.getNotes() == "");
-		assertTrue("contactEmailAddress should be empty", newData.getContactEmailAddress() == "");
-		assertTrue("contactName should be empty", newData.getContactName() == "");
-		assertTrue("imageURL should be empty", newData.getImageURL() == "");
-		assertTrue("website should be empty", newData.getWebsite() == "");
-		assertTrue("notes should be empty", newData.getNotes() == "");
-		assertTrue("includeSystemConfiguration should be true", newData.getIncludeSystemConfiguration() == true);
-		assertTrue("usageDisclamerAccepted should be false", newData.getUsageDisclamerAccepted() == false);
 		assertTrue("isDirty should be true", newData.getIsDirty() == true);
 		assertTrue("moduleEnabled should be false", newData.getModuleEnabled() == false);
-		assertTrue("includeNumberOfPatients should be false", newData.getIncludeNumberOfPatients() == false);
-		assertTrue("includeNumberOfObservations should be false", newData.getIncludeNumberOfObservations() == false);
-		assertTrue("includeNumberOfEncounters should be false", newData.getIncludeNumberOfEncounters() == false);
 		assertTrue("the number of Patients should be \"?\"", newData.getNumberOfPatients() == "?");
 		assertTrue("the number of Observations should be \"?\"", newData.getNumberOfObservations() == "?");
 		assertTrue("the number of Encounters should be \"?\"", newData.getNumberOfEncounters() == "?");
-		assertTrue("the zoom should be 3", newData.getZoom() == 3);
-		assertTrue("implementationType should be 0", newData.getImplementationType() == 0);
-		assertTrue("longitude should be 0.0", newData.getLongitude() == 0.0);
-		assertTrue("latitude should be 0.0", newData.getLatitude() == 0.0);
 	}
 	
 	/**
@@ -276,7 +169,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		        .getPropertyValue());
 		assertTrue("IsDirty should be false", isDirty == false);
 		
-		atlasSrv.disableAtlasModule(false);
+		atlasSrv.disableAtlasModule();
 	}
 	
 	/**
@@ -326,48 +219,20 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	@Test
 	public void setAtlasBubbleData_shouldOnlySetTheAtlasDataGlobalPropertiesThatAreRelatedToTheAtlasBubble()
 	                                                                                                        throws Exception {
-		Double latitude = 123D;
-		Double longitude = 123D;
-		Integer zoom = 12;
-		Boolean usageDisclamerAccepted = true;
 		Boolean moduleEnabled = true;
-		Boolean includeSystemConfiguration = true;
 		
 		AtlasData newData = getTestAtlasData();
-		newData.setLatitude(latitude);
-		newData.setLongitude(longitude);
-		newData.setZoom(zoom);
-		newData.setUsageDisclamerAccepted(usageDisclamerAccepted);
 		newData.setModuleEnabled(moduleEnabled);
-		newData.setIncludeSystemConfiguration(includeSystemConfiguration);
 		
 		atlasSrv.setAtlasData(newData);
-		
-		newData.setLatitude(0D);
-		newData.setLongitude(0D);
-		newData.setZoom(0);
-		newData.setUsageDisclamerAccepted(!usageDisclamerAccepted);
+
 		newData.setModuleEnabled(!moduleEnabled);
-		newData.setIncludeSystemConfiguration(!includeSystemConfiguration);
 		
 		atlasSrv.setAtlasBubbleData(newData);
-		
-		assertTrue(
-		    "Non bubble properties should not have changed",
-		    Double.parseDouble(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_LATITUDE).getPropertyValue()) == latitude);
-		assertTrue(
-		    "Non bubble properties should not have changed",
-		    Double.parseDouble(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_LONGITUDE).getPropertyValue()) == longitude);
-		assertTrue("Non bubble properties should not have changed",
-		    Integer.parseInt(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_ZOOM).getPropertyValue()) == zoom);
-		assertTrue("Non bubble properties should not have changed", Boolean.parseBoolean(getGlobalPropertyObject(
-		    AtlasConstants.GLOBALPROPERTY_USAGE_DISCLAIMER_ACCEPTED).getPropertyValue()) == usageDisclamerAccepted);
+        
 		assertTrue(
 		    "Non bubble properties should not have changed",
 		    Boolean.parseBoolean(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED).getPropertyValue()) == moduleEnabled);
-		assertTrue("Non bubble properties should not have changed", Boolean.parseBoolean(getGlobalPropertyObject(
-		    AtlasConstants.GLOBALPROPERTY_INCLUDE_SYSTEM_CONFIGURATION).getPropertyValue()) == includeSystemConfiguration);
-		
 	}
 	
 	/**
@@ -393,32 +258,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		assertTrue("IsDirty should be true.",
 		    Boolean.parseBoolean(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_IS_DIRTY).getPropertyValue()) == true);
 	}
-	
-	/**
-	 * @see AtlasService#setIncludeSystemConfiguration(Boolean)
-	 * @verifies set atlas.isDirty GlobalProperty to true
-	 */
-	@Test
-	public void setIncludeSystemConfiguration_shouldNotModifyAtlasisDirtyGlobalProperty() throws Exception {
-		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY, "false");
-		atlasSrv.setIncludeSystemConfiguration(true);
-		assertTrue(
-		    "IsDirty should remained unchanged (should be false).",
-		    Boolean.parseBoolean(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_IS_DIRTY).getPropertyValue()) == false);
-	}
-	
-	/**
-	 * @see AtlasService#setPosition(Double,Double)
-	 * @verifies set atlas.isDirty GlobalProperty to true
-	 */
-	@Test
-	public void setPosition_shouldSetAtlasisDirtyGlobalPropertyToTrue() throws Exception {
-		atlasSrv.setPosition(2D, 2D);
-		assertTrue("IsDirty should be true.",
-		    Boolean.parseBoolean(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_IS_DIRTY).getPropertyValue()) == true);
-	}
-	
-		
+    
 		/**
 		 * @see AtlasService#updateAndGetStatistics()
 		 * @verifies update statistics when one of them has the default value ("?") in GlobalProperties

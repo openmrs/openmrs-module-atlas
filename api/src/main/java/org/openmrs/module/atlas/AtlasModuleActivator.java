@@ -65,7 +65,7 @@ public class AtlasModuleActivator extends BaseModuleActivator {
 		log.info("Shutting down Atlas Module");
 		Object o = Context.getService(AtlasService.class);
 		AtlasService service = (AtlasService) o;
-		service.disableAtlasModule(false);
+		service.disableAtlasModule();
 	}
 	
 }
