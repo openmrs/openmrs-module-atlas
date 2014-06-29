@@ -33,6 +33,7 @@ function isModuleConnect(url) {
         } else {
             $j('#module-control').hide();
             $j('#unlinked').show();
+            disableAtlasModuleOnServer();
             return (connected = false);
         }
     })
@@ -41,6 +42,8 @@ function isModuleConnect(url) {
         $j('#unlinked').hide();
         if (jqXHR.status !== 401)
             alert("Module is not connnected - Please try again ! - ");
+        else
+            disableAtlasModuleOnServer()
         return (connected = false);
     });
 }
