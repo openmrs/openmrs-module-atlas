@@ -34,6 +34,8 @@ public class AtlasData {
 	
 	private Boolean isDirty;
 	
+    private String serverUrl;
+    
 	public AtlasData() {
 
 		this.id = null;
@@ -42,6 +44,7 @@ public class AtlasData {
 		this.numberOfEncounters = "?";
 		this.moduleEnabled = false;
 		this.isDirty = true;
+        this.serverUrl = "";
 	}
 	
 	/**
@@ -134,7 +137,19 @@ public class AtlasData {
 	public void setIsDirty(Boolean isDirty) {
 		this.isDirty = isDirty;
 	}
-	
+    
+    /**
+	 * @return the serverUrl
+	 */
+	public String getServerUrl() {
+		return serverUrl;
+	}
+		/**
+	 * @param serverUrl the serverUrl to set
+	 */
+	public void setServerUrl(String serverUrl) {
+		this.serverUrl = serverUrl;
+	}
 	/**
 	 * @see java.lang.Object#toString()
      * @return String
@@ -144,7 +159,8 @@ public class AtlasData {
 		String text = "";
 		text = "Atlast Data" + "\nID: " + id + "||" + "\nNr of patients: " + numberOfPatients + "||"
 		        + "\nNr of observations: " + numberOfObservations + "||" + "\nNr of visits: " + numberOfEncounters + "||"
-		        + "\nUsage disclamer accepted: " + "||" + "\nModule is enabled: " + moduleEnabled + "||";
+		        + "\nUsage disclamer accepted: " + "||" + "\nModule is enabled: " + moduleEnabled + "\nServer URL:"
+                + serverUrl + "||";
 		
 		return text;
 	}

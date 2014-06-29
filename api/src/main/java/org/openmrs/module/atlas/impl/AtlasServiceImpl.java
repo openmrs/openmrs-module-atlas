@@ -60,7 +60,6 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#getAtlasData()
 	 */
-	@Override
 	public AtlasData getAtlasData() throws APIException {
 		AdministrationService svc = null;
 		AtlasData atlasData = new AtlasData();
@@ -86,7 +85,8 @@ public class AtlasServiceImpl implements AtlasService {
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY)) != null) {
 				atlasData.setIsDirty(Boolean.parseBoolean(globalProperty));
 			}
-			
+                atlasData.setServerUrl(AtlasConstants.SERVER_URL);
+
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
@@ -99,10 +99,8 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#getIsDirty()
 	 */
-	@Override
 	public Boolean getIsDirty() throws APIException {
 		AdministrationService svc = null;
-		AtlasData atlasData = new AtlasData();
 		try {
 			svc = Context.getAdministrationService();
 			String globalProperty;
@@ -123,7 +121,6 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#setAtlasData(org.openmrs.module.atlas.AtlasData)
 	 */
-	@Override
 	public void setAtlasData(AtlasData data) throws APIException {
 		AdministrationService svc = null;
 		try {
@@ -140,7 +137,6 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#updateAndGetStatistics()
 	 */
-	@Override
 	public String[] updateAndGetStatistics() throws APIException {
 		AdministrationService svc = null;
 		String[] statsList = new String[3];
@@ -189,7 +185,6 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#enableAtlasModule()
 	 */
-	@Override
 	public void enableAtlasModule() throws APIException {
 		registerPostAtlasDataTask(DEFAULT_ATLAS_DATA_TASK_INTERVAL); //7 days(in seconds)
 		setModuleEnabled(true);
@@ -199,7 +194,6 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#disableAtlasModule()
 	 */
-	@Override
 	public void disableAtlasModule() throws APIException {
 		unregisterTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME);
 		setModuleEnabled(false);
@@ -208,7 +202,6 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#setAtlasBubbleData()
 	 */
-	@Override
 	public void setAtlasBubbleData(AtlasData data) throws APIException {
 		AdministrationService svc = null;
 		try {
@@ -225,13 +218,12 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#postAtlasData()
 	 */
-	@Override
 	public void postAtlasData() throws APIException {
-		//update statistics
+
 		Long nrOfObservations = getStatisticsDAO().getNumberOfObservations();
 		Long nrOfEncounters = getStatisticsDAO().getNumberOfEncounters();
 		Long nrOfPatients = getStatisticsDAO().getNumberOfPatients();
-		//reset dirty flag whenever data is sent to server
+
 		setIsDirty(false);
 		AdministrationService svc = null;
 		try {
@@ -242,11 +234,10 @@ public class AtlasServiceImpl implements AtlasService {
 			        .valueOf(nrOfEncounters)));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS, String
 			        .valueOf(nrOfPatients)));
-			
-			//get data
+																																																																																																																																																																																																																																																																																																							
 			String jsonData = getJson(false);
 			
-			URL u = new URL(AtlasConstants.SERVER_URL);
+			URL u = new URL(AtlasConstants.SERVER_PING_URL);
 			HttpURLConnection connection = (HttpURLConnection) u.openConnection();
 			connection.setConnectTimeout(30000);
 			connection.setReadTimeout(30000);
@@ -261,9 +252,9 @@ public class AtlasServiceImpl implements AtlasService {
 			log.info("Trying to post the following data:" + jsonData);
 			int status = connection.getResponseCode();
 			if (status == 200) {
-				log.info("Atlas data sent to server at " + AtlasConstants.SERVER_URL + " successfully (status 200)");
+				log.info("Atlas data sent to server at " + AtlasConstants.SERVER_PING_URL + " successfully (status 200)");
 			} else {
-				log.info("The atlas data failed to reach the server at " + AtlasConstants.SERVER_URL + " (status " + status
+				log.info("The atlas data failed to reach the server at " + AtlasConstants.SERVER_PING_URL + " (status " + status
 				        + ").");
 			}
 			
@@ -281,7 +272,6 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#getJson()
 	 */
-	@Override
 	public String getJson(Boolean isPreview) throws APIException {
 		AtlasData data = getAtlasData();
 		StringBuilder sb = new StringBuilder();
@@ -403,7 +393,7 @@ public class AtlasServiceImpl implements AtlasService {
 			svc = Context.getAdministrationService();
 			String id = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
 			
-			URL u = new URL(AtlasConstants.SERVER_URL + "?id=" + id + "&secret=victor");
+			URL u = new URL(AtlasConstants.SERVER_PING_URL + "?id=" + id + "&secret=victor");
 			HttpURLConnection connection = (HttpURLConnection) u.openConnection();
 			connection.setConnectTimeout(30000);
 			connection.setReadTimeout(30000);
@@ -412,10 +402,10 @@ public class AtlasServiceImpl implements AtlasService {
 			
 			int status = connection.getResponseCode();
 			if (status == 200) {
-				log.debug("An atlas data delete message has been recieved by the server at " + AtlasConstants.SERVER_URL
+				log.debug("An atlas data delete message has been recieved by the server at " + AtlasConstants.SERVER_PING_URL
 				        + " (status 200).");
 			} else {
-				log.debug("The atlas data delete message failed to reach the server at " + AtlasConstants.SERVER_URL
+				log.debug("The atlas data delete message failed to reach the server at " + AtlasConstants.SERVER_PING_URL
 				        + " (status " + status + ").");
 			}
 			
