@@ -25,6 +25,7 @@
 .atlas-show-dialog {
     margin-top: 10px;
     font-size: 70%;
+    cursor: pointer;
 }
 .text {
     color: #1F1E3A;
