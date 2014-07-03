@@ -28,8 +28,7 @@ ui.includeCss("atlas", "atlas-2.0.css")
 </script>
 <body>
     <div id="home">
-        <iframe src="${data.serverUrl}?uuid=${data.id}&patients=${data.numberOfPatients}&encounters=
-                ${data.numberOfEncounters}&observations=${data.numberOfObservations}" name="atlas" id="atlas"></iframe>
+        <iframe src="${data.serverUrlEncoded}" name="atlas" id="atlas"></iframe>
         <div class="note-container" id="module-control" style="display:none">
             <div class="note" id="disabled" style="background-color: rgba(255, 95, 95, 0.73);  
             <% if (data.moduleEnabled) {%> display: none; <% } %> margin-left: -100px;">

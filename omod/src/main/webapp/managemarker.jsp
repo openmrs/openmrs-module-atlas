@@ -35,8 +35,7 @@
 <openmrs:require privilege="Manage Atlas Data" otherwise="/login.htm"
                  redirect="/index.htm" />
 <div id="atlas-map" >
-        <iframe src="${atlasData.serverUrl}?uuid=${atlasData.id}&patients=${atlasData.numberOfPatients}&encounters=
-                ${atlasData.numberOfEncounters}&observations=${atlasData.numberOfObservations}" 
+        <iframe src="${atlasData.serverUrlEncoded}" 
                 name="atlas" style="height: 550px;width: 100%" id="atlas"></iframe>
 
     <div class="note-container" id="module-control" style="display:none">

@@ -13,6 +13,7 @@
  */
 package org.openmrs.module.atlas;
 
+import java.net.URLEncoder;
 import java.util.UUID;
 
 /**
@@ -143,6 +144,18 @@ public class AtlasData {
 	 */
 	public String getServerUrl() {
 		return serverUrl;
+	}
+    
+    /**
+	 * @return the serverUrlEncoded
+	 */
+	public String getServerUrlEncoded() {
+        String patients = (numberOfPatients.equals("?")) ? "" : numberOfPatients;
+        String encounters = (numberOfEncounters.equals("?")) ? "" : numberOfEncounters;
+        String observations = (numberOfObservations.equals("?")) ? "" : numberOfObservations;
+        
+		return serverUrl+"?uuid="+id+"&patients=" + patients + "&encounters="
+            + encounters+"&observations=" + observations;
 	}
 		/**
 	 * @param serverUrl the serverUrl to set
