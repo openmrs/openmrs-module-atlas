@@ -275,14 +275,15 @@ public class AtlasServiceImpl implements AtlasService {
 	public String getJson(Boolean isPreview) throws APIException {
 		AtlasData data = getAtlasData();
 		StringBuilder sb = new StringBuilder();
-                String atlasVersion = ModuleFactory.getModuleById("atlas").getVersion();
+        String atlasVersion = ModuleFactory.getModuleById("atlas").getVersion();
+        String openMRSVersion = getOpenMRSVersion();
 		sb.append("{\"id\" : \"" + data.getId() + "\", ");
 		sb.append("\"patients\" : \"" + data.getNumberOfPatients() + "\",");
 		sb.append("\"observations\" : \"" + data.getNumberOfObservations() + "\",");
 		sb.append("\"encounters\" : \"" + data.getNumberOfEncounters() + "\",");
 		sb.append("\"atlasVersion\" : \"" + atlasVersion + "\"");
         sb.append(", \"data\" : {");
-        sb.append("\"version\" : \"" + OpenmrsConstants.OPENMRS_VERSION + "\",");
+        sb.append("\"version\" : \"" + openMRSVersion + "\",");
         Collection<Module> modules = ModuleFactory.getLoadedModules();
         sb.append("\"modules\" : [");
         for (Module mod : modules) {
@@ -461,5 +462,15 @@ public class AtlasServiceImpl implements AtlasService {
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTime();
 	}
-	
+    
+	public String getOpenMRSVersion() {
+        String version = "";
+        String coreVersion = OpenmrsConstants.OPENMRS_VERSION;
+        if (ModuleFactory.getModuleById("referenceapplication") == null || 
+            !ModuleFactory.getModuleById("referenceapplication").isStarted())
+            return coreVersion;
+        String refAppVersion = ModuleFactory.getModuleById("referenceapplication").getVersion();
+        version = refAppVersion.equals("1.0.1") ? "2.0" : version;
+        return version;
+    }
 }
