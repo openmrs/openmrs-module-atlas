@@ -18,6 +18,9 @@ ui.includeCss("atlas", "atlas-2.0.css")
     }
     function receiveMessage(event){
       updateModulefromServer();
+      if (event.data === "save")
+        sendPostCommandToServer();
+        
       addEventListener("message", receiveMessage, false);
     }
     jq(document).ready(function() {

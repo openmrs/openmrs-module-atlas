@@ -18,6 +18,8 @@
     }
     function receiveMessage(event) {
         updateModulefromServer();
+        if (event.data === "save")
+            sendPostCommandToServer();
         addEventListener("message", receiveMessage, false);
     }
     jq(document).ready(function() {
