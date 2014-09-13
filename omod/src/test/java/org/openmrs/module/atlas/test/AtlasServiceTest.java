@@ -1,24 +1,22 @@
 package org.openmrs.module.atlas.test;
 
-import static org.junit.Assert.*;
-
-import java.util.UUID;
-
-import org.junit.Test;
-
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.openmrs.GlobalProperty;
+import org.openmrs.api.APIException;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.atlas.AtlasConstants;
 import org.openmrs.module.atlas.AtlasData;
 import org.openmrs.module.atlas.AtlasService;
-import org.openmrs.api.APIException;
-import org.openmrs.module.atlas.impl.AtlasServiceImpl;
-import org.openmrs.scheduler.Task;
 import org.openmrs.scheduler.TaskDefinition;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
+
+import java.util.UUID;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
@@ -101,9 +99,10 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		
 		assertTrue("isDirty should be true", newData.getIsDirty() == true);
 		assertTrue("moduleEnabled should be false", newData.getModuleEnabled() == false);
-		assertTrue("the number of Patients should be \"?\"", newData.getNumberOfPatients() == "?");
-		assertTrue("the number of Observations should be \"?\"", newData.getNumberOfObservations() == "?");
-		assertTrue("the number of Encounters should be \"?\"", newData.getNumberOfEncounters() == "?");
+		assertTrue("sendCounts should be false", newData.getSendCounts() == false);
+		assertTrue("the number of Patients should be \"\"", newData.getNumberOfPatients() == "");
+		assertTrue("the number of Observations should be \"\"", newData.getNumberOfObservations() == "");
+		assertTrue("the number of Encounters should be \"\"", newData.getNumberOfEncounters() == "");
 	}
 	
 	/**
@@ -171,7 +170,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		
 		atlasSrv.disableAtlasModule();
 	}
-	
+
 	/**
 	 * @see AtlasService#postAtlasData()
 	 * @verifies update the atlas.numberOfPatients GlobalProperty with the number of non-voided
@@ -259,35 +258,85 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		    Boolean.parseBoolean(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_IS_DIRTY).getPropertyValue()) == true);
 	}
     
-		/**
-		 * @see AtlasService#updateAndGetStatistics()
-		 * @verifies update statistics when one of them has the default value ("?") in GlobalProperties
-		 */
-		@Test
-		public void updateAndGetStatistics_shouldUpdateStatisticsWhenOneOfThemHasTheDefaultValueInGlobalProperties() throws Exception {
-			//this step is usually done when the module is activated, so we do it in code here
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS, "?");
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS, "?");
-			setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_ENCOUNTERS, "?");
-			
-			String[] stats = atlasSrv.updateAndGetStatistics();
-			
-			for (int i=0; i<3; ++i) {
-				if (stats[i] == "?") {
-					fail("None of the returned values should be \"?\"");
-				}
+	/**
+	 * @see AtlasService#updateAndGetStatistics()
+	 * @verifies update statistics when one of them has the default value ("?") in GlobalProperties
+	 */
+	@Test
+	public void updateAndGetStatistics_shouldUpdateStatisticsWhenOneOfThemHasTheDefaultValueInGlobalProperties() throws Exception {
+		//this step is usually done when the module is activated, so we do it in code here
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS, "?");
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS, "?");
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_ENCOUNTERS, "?");
+
+		String[] stats = atlasSrv.updateAndGetStatistics();
+
+		for (int i=0; i<3; ++i) {
+			if (stats[i] == "?") {
+				fail("None of the returned values should be \"?\"");
 			}
-			
-			GlobalProperty prop = getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS);
-			assertTrue("After updateAndGetStatistics, value of numberOfObservations should not be \"?\"", prop.getPropertyValue() != "?");
-			
-			prop = getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS);
-			assertTrue("After updateAndGetStatistics, value of numberOfPatients should not be \"?\"", prop.getPropertyValue() != "?");
-			
-			prop = getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_ENCOUNTERS);
-			assertTrue("After updateAndGetStatistics, value of numberOfEncounters should not be \"?\"", prop.getPropertyValue() != "?");
 		}
-	
+
+		GlobalProperty prop = getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS);
+		assertTrue("After updateAndGetStatistics, value of numberOfObservations should not be \"?\"", prop.getPropertyValue() != "?");
+
+		prop = getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS);
+		assertTrue("After updateAndGetStatistics, value of numberOfPatients should not be \"?\"", prop.getPropertyValue() != "?");
+
+		prop = getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_ENCOUNTERS);
+		assertTrue("After updateAndGetStatistics, value of numberOfEncounters should not be \"?\"", prop.getPropertyValue() != "?");
+	}
+
+	/**
+	 * @see org.openmrs.module.atlas.AtlasService#disableAtlasModule() ()
+	 * @verifies disableAtlasModule set atlas.sendCounts to false
+	 */
+	@Test
+	public void disableAtlasModule_shouldSetSendCountsGlobalPropertyToFalse() throws Exception {
+		atlasSrv.enableAtlasModule();
+		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_SEND_COUNTS, "true");
+		atlasSrv.disableAtlasModule();
+		Boolean sendCounts = Boolean.parseBoolean(getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_SEND_COUNTS)
+				.getPropertyValue());
+		assertTrue("sendCounts should be false", sendCounts == false);
+	}
+
+	/**
+	 * @see AtlasService#getAtlasData()
+	 * @verifies that counts aren't empty if sendCount is set to true
+	 */
+	@Test
+	public void getAtlasData_shouldReturnCountsIfSendCountsIsSetToTrue()
+			throws Exception {
+		AtlasData atlasData = atlasSrv.getAtlasData();
+		atlasData.setModuleEnabled(true);
+		atlasData.setSendCounts(true);
+		atlasData.setNumberOfEncounters("10");
+		atlasData.setNumberOfPatients("11");
+		atlasData.setNumberOfObservations("12");
+		assertTrue("the number of Patients should be 11", atlasData.getNumberOfPatients() == "11");
+		assertTrue("the number of Observations should be 12", atlasData.getNumberOfObservations() == "12");
+		assertTrue("the number of Encounters should be 10", atlasData.getNumberOfEncounters() == "10");
+	}
+
+	/**
+	 * @see AtlasService#getAtlasData()
+	 * @verifies that counts are empty if sendCount is set to false
+	 */
+	@Test
+	public void getAtlasData_shouldReturnEmptyCountsIfSendCountsIsSetToFalse()
+			throws Exception {
+		AtlasData atlasData = atlasSrv.getAtlasData();
+		atlasData.setModuleEnabled(true);
+		atlasData.setSendCounts(false);
+		atlasData.setNumberOfEncounters("10");
+		atlasData.setNumberOfPatients("11");
+		atlasData.setNumberOfObservations("12");
+		assertTrue("the number of Patients should be \"\"", atlasData.getNumberOfPatients() == "");
+		assertTrue("the number of Observations should be \"\"", atlasData.getNumberOfObservations() == "");
+		assertTrue("the number of Encounters should be \"\"", atlasData.getNumberOfEncounters() == "");
+	}
+
 	private void setGlobalProperty(String name, String value) {
 		AdministrationService svc = null;
 		try {

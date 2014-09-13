@@ -13,8 +13,6 @@
  */
 package org.openmrs.module.atlas.web.dwr;
 
-import java.util.UUID;
-
 import org.openmrs.api.context.Context;
 import org.openmrs.module.atlas.AtlasData;
 import org.openmrs.module.atlas.AtlasService;
@@ -28,7 +26,7 @@ public class DWRAtlasService {
 		AtlasData data = new AtlasData();
 		getAtlasService().setAtlasBubbleData(data);
 	}
-	
+
 	public void enableAtlasModule() {
 		getAtlasService().enableAtlasModule();
 	}
@@ -56,4 +54,8 @@ public class DWRAtlasService {
 	private AtlasService getAtlasService() {
 		return (AtlasService) Context.getService(AtlasService.class);
 	}
+
+    public void setSendCounts(Boolean sendCounts) {
+        getAtlasService().setSendCounts(sendCounts);
+    }
 }
