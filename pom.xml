@@ -121,11 +121,11 @@
 	</pluginRepositories>
 	
 	<distributionManagement>
-	    <repository>
-	        <id>openmrs-repo-modules</id>
-	        <name>Modules</name>
-	        <url>http://mavenrepo.openmrs.org/nexus/content/repositories/modules/</url>
-	    </repository>
+        <repository>
+            <id>openmrs-repo-releases</id>
+            <name>OpenMRS Nexus Releases</name>
+            <url>http://mavenrepo.openmrs.org/nexus/content/repositories/releases</url>
+        </repository>
         <snapshotRepository>
             <id>openmrs-repo-snapshots</id>
             <name>OpenMRS Snapshots</name>
