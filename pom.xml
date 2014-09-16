@@ -8,15 +8,15 @@
 	<name>Atlas Module</name>
 	<description>
 		The Atlas Module provides a mechanism for an implementation to create and manage a bubble on the
-		OpenMRS Atlas (http://openmrs.org/atlas/) directly from their OpenMRS server.
+		OpenMRS Atlas (https://atlas.openmrs.org) directly from their OpenMRS server.
 	</description>
 
 	<url>https://wiki.openmrs.org/x/O4F1AQ</url>
 
 	<scm>
-		<connection>scm:git:https://github.com/openmrs/openmrs-module-atlas/</connection>
-		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-atlas/</developerConnection>
-		<url>https://github.com/openmrs/openmrs-module-atlas/</url>
+		<connection>scm:git:git@github.com:openmrs/openmrs-module-atlas.git</connection>
+		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-atlas.git</developerConnection>
+		<url>https://github.com/openmrs/openmrs-module-atlas</url>
 	</scm>
 
 	<modules>
@@ -126,6 +126,11 @@
 	        <name>Modules</name>
 	        <url>http://mavenrepo.openmrs.org/nexus/content/repositories/modules/</url>
 	    </repository>
+        <snapshotRepository>
+            <id>openmrs-repo-snapshots</id>
+            <name>OpenMRS Snapshots</name>
+            <url>http://mavenrepo.openmrs.org/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
 	</distributionManagement>
 
 </project>
