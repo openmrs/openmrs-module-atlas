@@ -6,7 +6,7 @@
         "extensions": [
             {
                 "id": "atlasHomepageLink",
-                "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+                "extensionPointId": "systemAdministration.apps",
                 "type": "link",
                 "order": 10,
                 "label": "atlas.appLink",
