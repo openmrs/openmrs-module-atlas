@@ -12,7 +12,7 @@
                 "label": "atlas.appLink",
                 "url": "atlas/map.page",
                 "icon": "icon-globe",
-                "requiredPrivilege": "App: Manage Atlas Data"
+                "requiredPrivilege": "App: atlas.manage"
             }
         ]
     }
