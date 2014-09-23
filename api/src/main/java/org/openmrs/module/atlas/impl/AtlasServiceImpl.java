@@ -491,7 +491,7 @@ public class AtlasServiceImpl implements AtlasService {
             !ModuleFactory.getModuleById("referenceapplication").isStarted())
             return coreVersion;
         String refAppVersion = ModuleFactory.getModuleById("referenceapplication").getVersion();
-        version = refAppVersion.equals("1.0.1") ? "2.0" : version;
+        version = refAppVersion.equals("1.0.1") ? "2.0" : refAppVersion;
         return version;
     }
 }
