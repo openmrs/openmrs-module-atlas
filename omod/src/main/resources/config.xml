@@ -55,6 +55,13 @@
 		    Stores the last calculated count of non-voided encounters in the system ("?" if never calculated).
 		</description>
 	</globalProperty>
+    <globalProperty>
+        <property>@MODULE_ID@.sendCounts</property>
+        <defaultValue>false</defaultValue>
+        <description>
+            Send counts to OpenMRS Atlas.
+        </description>
+    </globalProperty>
 	
 	
 	
@@ -69,7 +76,7 @@
 				<include method="getJsonData"/>
 				<include method="postAtlasData"/>
 				<include method="getIsDirty"/>
-				
+                <include method="setSendCounts"/>
 			</create>
 		</allow>
 
@@ -79,7 +86,7 @@
 			]]>
 		</signatures>	
 	</dwr>
-	
+
 	
 	<!-- Internationalization -->
 	<!-- All message codes should start with @MODULE_ID@.* -->
@@ -96,6 +103,6 @@
 		<file>messages_es.properties</file>
 	</messages>
 	<!-- /Internationalization -->
-	
+
 
 </module>

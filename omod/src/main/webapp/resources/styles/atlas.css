@@ -8,7 +8,7 @@
     left: 50%; 
     margin-left: -175px;
     max-width: 475px;
-    min-width: 300px;
+    min-width: 400px;
 }
 .note-container .note {
     padding: 10px;
@@ -19,18 +19,21 @@
     text-align: center!important;
 }
 .atlas-show-dialog {
-    margin-top: 10px;
+    margin-top: 3px;
     font-size: 70%;
     z-index: 4;
     cursor: pointer;
 }
 .text {
     color: #1F1E3A;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 .btn-group{
     z-index: 0;
 }
 .ui-dialog {
 	z-index: 4!important;
+}
+#counts-enabled, #counts-disabled {
+    display: table;
 }

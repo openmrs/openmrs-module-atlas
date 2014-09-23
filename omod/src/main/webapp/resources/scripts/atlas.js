@@ -22,7 +22,7 @@ function isModuleConnect(url) {
     $j.ajax({
         url: url,
         type: "GET",
-        dataType: "jsonp",
+        dataType: "jsonp"
     })
     .done(function(response) {
         auth = response;
@@ -43,7 +43,7 @@ function isModuleConnect(url) {
         if (jqXHR.status !== 401)
             alert("Module is not connnected - Please try again ! - ");
         else
-            disableAtlasModuleOnServer()
+            disableAtlasModuleOnServer();
         return (connected = false);
     });
 }
@@ -98,18 +98,26 @@ function disableAtlasModuleOnServer() {
 function getJsonDataFromServer() {
     DWRAtlasService.getJsonData(getJsonDataFromServerCallback);
 }
+
+function setSendCounts(sendCounts) {
+    DWRAtlasService.setSendCounts(sendCounts);
+}
 function getJsonDataFromServerCallback(jsonData) {
     $j('#atlas-dialog-jsonData').val(jsonData);
 }
 function initializeAtlas() {
     $btnEnabled = $j('#enabled-button');
     $btnDisabled = $j('#disabled-button');
+    $btnCountsEnabled = $j('#counts-enabled');
+    $btnCountsDisabled = $j('#counts-disabled');
     $divEnabled = $j('#enabled');
     $divDisabled = $j('#disabled');
     
     $btnEnabled.click(function(event) {
         $divDisabled.show();
         $divEnabled.hide();
+        $btnCountsDisabled.show();
+        $btnCountsEnabled.hide();
         disableAtlasModuleOnServer();
         event.preventDefault();
     });
@@ -118,6 +126,20 @@ function initializeAtlas() {
         $divEnabled.show();
         $divDisabled.hide();
         enableAtlasModuleOnServer();
+        event.preventDefault();
+    });
+
+    $btnCountsEnabled.click(function(event) {
+        $btnCountsDisabled.show();
+        $btnCountsEnabled.hide();
+        setSendCounts(false);
+        event.preventDefault();
+    });
+
+    $btnCountsDisabled.click(function(event) {
+        $btnCountsEnabled.show();
+        $btnCountsDisabled.hide();
+        setSendCounts(true);
         event.preventDefault();
     });
 }

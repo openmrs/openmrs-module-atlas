@@ -13,10 +13,6 @@
  */
 package org.openmrs.module.atlas.impl;
 
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.GlobalProperty;
@@ -25,18 +21,30 @@ import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
-import org.openmrs.module.atlas.*;
+import org.openmrs.module.atlas.AtlasConstants;
+import org.openmrs.module.atlas.AtlasData;
+import org.openmrs.module.atlas.AtlasService;
+import org.openmrs.module.atlas.PostAtlasDataQueueTask;
 import org.openmrs.module.atlas.db.StatisticsDAO;
 import org.openmrs.scheduler.SchedulerException;
 import org.openmrs.scheduler.Task;
 import org.openmrs.scheduler.TaskDefinition;
 import org.openmrs.util.OpenmrsConstants;
 
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.UUID;
+
 /**
  * AtlasService Implementation
  */
 public class AtlasServiceImpl implements AtlasService {
-	
+
 	private final static Long DEFAULT_ATLAS_DATA_TASK_INTERVAL = 60l * 60 * 24 * 7; //7 days (in seconds)
 	
 	private Log log = LogFactory.getLog(this.getClass());
@@ -52,7 +60,7 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 	
 	/**
-     * 
+     *
      */
 	public AtlasServiceImpl() {
 	}
@@ -66,9 +74,9 @@ public class AtlasServiceImpl implements AtlasService {
 		try {
 			svc = Context.getAdministrationService();
 			String globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
-			
+
 			atlasData.setId(UUID.fromString(globalProperty));
-			
+
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS)) != null) {
 				atlasData.setNumberOfObservations(globalProperty);
 			}
@@ -78,21 +86,24 @@ public class AtlasServiceImpl implements AtlasService {
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_ENCOUNTERS)) != null) {
 				atlasData.setNumberOfEncounters(globalProperty);
 			}
-			
+
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED)) != null) {
 				atlasData.setModuleEnabled(Boolean.parseBoolean(globalProperty));
 			}
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY)) != null) {
 				atlasData.setIsDirty(Boolean.parseBoolean(globalProperty));
 			}
-                atlasData.setServerUrl(AtlasConstants.SERVER_URL);
+            if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_SEND_COUNTS)) != null) {
+                atlasData.setSendCounts(Boolean.parseBoolean(globalProperty));
+            }
+            atlasData.setServerUrl(AtlasConstants.SERVER_URL);
 
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
 				log.error("Could not get atlas data. Exception:" + apiEx.getMessage());
 		}
-		
+
 		return atlasData;
 	}
 	
@@ -104,7 +115,7 @@ public class AtlasServiceImpl implements AtlasService {
 		try {
 			svc = Context.getAdministrationService();
 			String globalProperty;
-			
+
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY)) != null) {
 				return Boolean.parseBoolean(globalProperty);
 			} else {
@@ -147,28 +158,28 @@ public class AtlasServiceImpl implements AtlasService {
 			GlobalProperty nrOfEncountersProp = svc
 			        .getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_ENCOUNTERS);
 			GlobalProperty nrOfPatientsProp = svc.getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS);
-			
+
 			String nrOfObservations = nrOfObsProp.getPropertyValue();
 			String nrOfEncounters = nrOfEncountersProp.getPropertyValue();
 			String nrOfPatients = nrOfPatientsProp.getPropertyValue();
-			
+
 			if (nrOfObservations.equals("?") || nrOfEncounters.equals("?") || nrOfPatients.equals("?")) {
-				
+
 				//get updated statistics
 				nrOfObservations = String.valueOf(getStatisticsDAO().getNumberOfObservations());
 				nrOfEncounters = String.valueOf(getStatisticsDAO().getNumberOfEncounters());
 				nrOfPatients = String.valueOf(getStatisticsDAO().getNumberOfPatients());
-				
+
 				//update statistics
 				nrOfObsProp.setPropertyValue(nrOfObservations);
 				nrOfEncountersProp.setPropertyValue(nrOfEncounters);
 				nrOfPatientsProp.setPropertyValue(nrOfPatients);
-				
+
 				svc.saveGlobalProperty(nrOfObsProp);
 				svc.saveGlobalProperty(nrOfEncountersProp);
 				svc.saveGlobalProperty(nrOfPatientsProp);
 			}
-			
+
 			statsList[0] = String.valueOf(nrOfPatients);
 			statsList[1] = String.valueOf(nrOfEncounters);
 			statsList[2] = String.valueOf(nrOfObservations);
@@ -197,6 +208,7 @@ public class AtlasServiceImpl implements AtlasService {
 	public void disableAtlasModule() throws APIException {
 		unregisterTask(AtlasConstants.POST_ATLAS_DATA_TASK_NAME);
 		setModuleEnabled(false);
+		setSendCounts(false);
 	}
 	
 	/**
@@ -234,9 +246,9 @@ public class AtlasServiceImpl implements AtlasService {
 			        .valueOf(nrOfEncounters)));
 			svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_PATIENTS, String
 			        .valueOf(nrOfPatients)));
-																																																																																																																																																																																																																																																																																																							
+
 			String jsonData = getJson(false);
-			
+
 			URL u = new URL(AtlasConstants.SERVER_PING_URL);
 			HttpURLConnection connection = (HttpURLConnection) u.openConnection();
 			connection.setConnectTimeout(30000);
@@ -244,11 +256,11 @@ public class AtlasServiceImpl implements AtlasService {
 			connection.setDoOutput(true);
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/json");
-			
+
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
 			writer.write(jsonData);
 			writer.close();
-			
+
 			log.info("Trying to post the following data:" + jsonData);
 			int status = connection.getResponseCode();
 			if (status == 200) {
@@ -257,7 +269,7 @@ public class AtlasServiceImpl implements AtlasService {
 				log.info("The atlas data failed to reach the server at " + AtlasConstants.SERVER_PING_URL + " (status " + status
 				        + ").");
 			}
-			
+
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
@@ -292,7 +304,7 @@ public class AtlasServiceImpl implements AtlasService {
             sb.append("\"version\": \"" + mod.getVersion() + "\",");
             sb.append("\"active\" : \"" + mod.isStarted() + "\"},");
         }
-        //delete last "," 
+        //delete last ","
         sb.deleteCharAt(sb.length() - 1);
         sb.append("]}");
 		sb.append("}");
@@ -302,7 +314,7 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * Method that registers that registers an OpenMRS task that will periodically post the atlas
 	 * data to the OpenMRS server
-	 * 
+	 *
 	 * @param interval The number of seconds between posts
 	 * @return True if the task was registered, false otherwise
 	 */
@@ -314,7 +326,7 @@ public class AtlasServiceImpl implements AtlasService {
 	/**
 	 * Method that registers that registers an OpenMRS task that will periodically post the atlas
 	 * data to the OpenMRS server
-	 * 
+	 *
 	 * @param name The name of the task
 	 * @param description The tasks description
 	 * @param clazz The class that will do the actual posting
@@ -324,7 +336,7 @@ public class AtlasServiceImpl implements AtlasService {
 	private boolean registerTask(String name, String description, Class<? extends Task> clazz, long interval) {
 		try {
 			Context.addProxyPrivilege("Manage Scheduler");
-			
+
 			TaskDefinition taskDef = Context.getSchedulerService().getTaskByName(name);
 			if (taskDef == null) {
 				taskDef = new TaskDefinition();
@@ -338,7 +350,7 @@ public class AtlasServiceImpl implements AtlasService {
 				taskDef.setDescription(description);
 				Context.getSchedulerService().scheduleTask(taskDef);
 			}
-			
+
 		}
 		catch (SchedulerException ex) {
 			log.warn("Unable to register task '" + name + "' with scheduler", ex);
@@ -352,7 +364,7 @@ public class AtlasServiceImpl implements AtlasService {
 	
 	/**
 	 * Unregisters the named task
-	 * 
+	 *
 	 * @param name The task name
 	 */
 	private void unregisterTask(String name) {
@@ -369,7 +381,7 @@ public class AtlasServiceImpl implements AtlasService {
 	
 	/**
 	 * Method that sets the atlas.moduleEnabled global property
-	 * 
+	 *
 	 * @param moduleEnabled
 	 */
 	private void setModuleEnabled(Boolean moduleEnabled) {
@@ -378,13 +390,22 @@ public class AtlasServiceImpl implements AtlasService {
 	
 	/**
 	 * Method that sets the atlas.isDirty global property
-	 * 
+	 *
 	 * @param isDirty
 	 */
 	private void setIsDirty(Boolean isDirty) {
 		setGlobalProperty(AtlasConstants.GLOBALPROPERTY_IS_DIRTY, isDirty.toString());
 	}
-	
+
+    /**
+     * Method that sets the atlas.sendCounts global property
+     *
+     * @param sendCounts
+     */
+    public void setSendCounts(Boolean sendCounts)  throws APIException {
+        setGlobalProperty(AtlasConstants.GLOBALPROPERTY_SEND_COUNTS, sendCounts.toString());
+    }
+
 	/**
 	 * Method that sends a delete message to the server
 	 */
@@ -393,14 +414,14 @@ public class AtlasServiceImpl implements AtlasService {
 		try {
 			svc = Context.getAdministrationService();
 			String id = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
-			
+
 			URL u = new URL(AtlasConstants.SERVER_PING_URL + "?id=" + id + "&secret=victor");
 			HttpURLConnection connection = (HttpURLConnection) u.openConnection();
 			connection.setConnectTimeout(30000);
 			connection.setReadTimeout(30000);
 			connection.setDoOutput(true);
 			connection.setRequestMethod("DELETE");
-			
+
 			int status = connection.getResponseCode();
 			if (status == 200) {
 				log.debug("An atlas data delete message has been recieved by the server at " + AtlasConstants.SERVER_PING_URL
@@ -409,7 +430,7 @@ public class AtlasServiceImpl implements AtlasService {
 				log.debug("The atlas data delete message failed to reach the server at " + AtlasConstants.SERVER_PING_URL
 				        + " (status " + status + ").");
 			}
-			
+
 		}
 		catch (Exception apiEx) {
 			if (log.isErrorEnabled())
@@ -446,7 +467,7 @@ public class AtlasServiceImpl implements AtlasService {
 	}
 	/**
 	 * Method that returns the midnight before the date specified as a parameter
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -455,7 +476,7 @@ public class AtlasServiceImpl implements AtlasService {
 		Calendar cal = new GregorianCalendar();
 		if (date != null)
 			cal.setTime(date);
-		
+
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);

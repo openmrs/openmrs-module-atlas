@@ -13,7 +13,6 @@
  */
 package org.openmrs.module.atlas;
 
-import java.net.URLEncoder;
 import java.util.UUID;
 
 /**
@@ -34,6 +33,8 @@ public class AtlasData {
 	private Boolean moduleEnabled;
 	
 	private Boolean isDirty;
+
+    private Boolean sendCounts;
 	
     private String serverUrl;
     
@@ -46,6 +47,7 @@ public class AtlasData {
 		this.moduleEnabled = false;
 		this.isDirty = true;
         this.serverUrl = "";
+        this.sendCounts = false;
 	}
 	
 	/**
@@ -73,7 +75,10 @@ public class AtlasData {
 	 * @return the numberOfObservations
 	 */
 	public String getNumberOfObservations() {
-		return numberOfObservations;
+        if (sendCounts) {
+            return numberOfObservations;
+        }
+        return "";
 	}
 	
 	/**
@@ -87,7 +92,10 @@ public class AtlasData {
 	 * @return the numberOfPatients
 	 */
 	public String getNumberOfPatients() {
-		return numberOfPatients;
+        if (sendCounts) {
+            return numberOfPatients;
+        }
+        return "";
 	}
 	
 	/**
@@ -101,7 +109,10 @@ public class AtlasData {
 	 * @return the numberOfVisits
 	 */
 	public String getNumberOfEncounters() {
-		return numberOfEncounters;
+        if (sendCounts) {
+            return numberOfEncounters;
+        }
+        return "";
 	}
 	
 	/**
@@ -150,14 +161,14 @@ public class AtlasData {
 	 * @return the serverUrlEncoded
 	 */
 	public String getServerUrlEncoded() {
-        String patients = (numberOfPatients.equals("?")) ? "" : numberOfPatients;
-        String encounters = (numberOfEncounters.equals("?")) ? "" : numberOfEncounters;
-        String observations = (numberOfObservations.equals("?")) ? "" : numberOfObservations;
+        String patients = (getNumberOfPatients().equals("?")) ? "" : getNumberOfPatients();
+        String encounters = (getNumberOfEncounters().equals("?")) ? "" : getNumberOfEncounters();
+        String observations = (getNumberOfObservations().equals("?")) ? "" : getNumberOfObservations();
         
 		return serverUrl+"?uuid="+id+"&patients=" + patients + "&encounters="
-            + encounters+"&observations=" + observations;
+            + encounters+"&observations=" + observations + "&sendCounts=" + sendCounts;
 	}
-		/**
+	/**
 	 * @param serverUrl the serverUrl to set
 	 */
 	public void setServerUrl(String serverUrl) {
@@ -177,5 +188,13 @@ public class AtlasData {
 		
 		return text;
 	}
+
+    public Boolean getSendCounts() {
+        return sendCounts;
+    }
+
+    public void setSendCounts(Boolean sendCounts) {
+        this.sendCounts = sendCounts;
+    }
     
 }

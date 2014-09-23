@@ -137,4 +137,12 @@ public interface AtlasService {
 	@Authorized({ "Manage Atlas Data" })
 	String getJson(Boolean isPreview) throws APIException;
 
+    /**
+     * Method that sets the atlas.sendCounts global property
+     *
+     * @param sendCounts
+     */
+    @Authorized({ "Manage Atlas Data" })
+    void setSendCounts(Boolean sendCounts);
+
 }

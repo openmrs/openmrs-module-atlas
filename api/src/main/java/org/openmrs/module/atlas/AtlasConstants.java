@@ -30,6 +30,8 @@ public class AtlasConstants {
 	/* Atlas Bubble Data properties END */
 
 	public final static String GLOBALPROPERTY_MODULE_ENABLED = "atlas.moduleEnabled";
+
+    public final static String GLOBALPROPERTY_SEND_COUNTS = "atlas.sendCounts";
 	
 	public final static String GLOBALPROPERTY_IS_DIRTY = "atlas.isDirty";
 	
