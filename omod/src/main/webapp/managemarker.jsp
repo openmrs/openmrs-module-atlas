@@ -101,7 +101,7 @@
         </div>
     </div>
     <div class="note-container" style="display:none" id="unlinked">
-        <div class="note" style="background-color: rgba(255, 95, 95, 0.73); margin-left: -200px; width: 475px;">
+        <div class="note" style="background-color: rgba(255, 95, 95, 0.73); margin-left: -90px; width: 475px;">
             <div class="text">
                 <p style="text-align: center"><strong><spring:message code="atlas.unlinked"/></strong></p>
             </div>
