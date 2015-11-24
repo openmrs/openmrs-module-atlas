@@ -29,6 +29,8 @@ public class AtlasConstants {
 	
 	/* Atlas Bubble Data properties END */
 
+	public final static String GLOBALPROPERTY_STOP_ASKING_TO_CONFIGURE = "atlas.stopAskingToConfigure";
+
 	public final static String GLOBALPROPERTY_MODULE_ENABLED = "atlas.moduleEnabled";
 
     public final static String GLOBALPROPERTY_SEND_COUNTS = "atlas.sendCounts";
@@ -42,4 +44,6 @@ public class AtlasConstants {
 	public final static String SERVER_PING_URL = "https://atlas.openmrs.org/module/ping.php";
     
     public final static String SERVER_URL = "https://atlas.openmrs.org/module";
+
+	public static final String PRIV_MANAGE_ATLAS_DATA = "Manage Atlas Data";
 }

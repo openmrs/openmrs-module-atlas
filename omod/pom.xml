@@ -117,7 +117,6 @@
         <MODULE_NAME>${project.parent.name}</MODULE_NAME>
         <MODULE_VERSION>${project.parent.version}</MODULE_VERSION>
         <MODULE_PACKAGE>${project.parent.groupId}.${project.parent.artifactId}</MODULE_PACKAGE>
-        <appframeworkVersion>2.1</appframeworkVersion>
         <uiframeworkVersion>3.2</uiframeworkVersion>
         <appuiVersion>1.1</appuiVersion>
         <uicommonsVersion>1.0</uicommonsVersion>

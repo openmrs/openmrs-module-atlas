@@ -96,4 +96,10 @@ ui.includeCss("atlas", "atlas-2.0.css")
                 style="resize: none;"></textarea>
         </div>
     </div>
+
+    <% if (!data.moduleEnabled && !stopAskingToConfigure) { %>
+        <div>
+            <a href="?stopAskingToConfigure=true">${ ui.message("atlas.stopAskingToConfigure") }</a>
+        </div>
+    <% } %>
 </body>

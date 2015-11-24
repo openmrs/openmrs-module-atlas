@@ -11,6 +11,10 @@
 	<name>Atlas Module API</name>
 	<description>API project for Atlas Module</description>
 
+	<properties>
+		<appframeworkVersion>2.5-SNAPSHOT</appframeworkVersion>
+	</properties>
+
 	<dependencies>
 		<!-- 
 		Add other dependencies from lib:
@@ -44,6 +48,13 @@
 			<groupId>org.openmrs.test</groupId>
 			<artifactId>openmrs-test</artifactId>
 			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>appframework-api</artifactId>
+			<version>${appframeworkVersion}</version>
+			<type>jar</type>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<modules>

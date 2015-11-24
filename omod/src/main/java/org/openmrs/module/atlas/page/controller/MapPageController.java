@@ -10,6 +10,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.atlas.AtlasData;
 import org.openmrs.module.atlas.AtlasService;
 import org.openmrs.ui.framework.page.PageModel;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -17,9 +18,16 @@ import org.openmrs.ui.framework.page.PageModel;
  */
 public class MapPageController {
     
-    public void controller(PageModel model) {
-        AtlasService service = (AtlasService) Context.getService(AtlasService.class);
+    public void controller(PageModel model,
+                           @RequestParam(value = "stopAskingToConfigure", required = false) Boolean stopAskingToConfigure) {
+        AtlasService service = Context.getService(AtlasService.class);
+
+        if (stopAskingToConfigure != null && stopAskingToConfigure) {
+            service.setStopAskingToConfigure(true);
+        }
+
         AtlasData data = service.getAtlasData();
         model.addAttribute("data", data);
+        model.addAttribute("stopAskingToConfigure", service.getStopAskingToConfigure());
     }
 }

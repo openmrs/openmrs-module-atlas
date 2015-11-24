@@ -494,4 +494,28 @@ public class AtlasServiceImpl implements AtlasService {
         version = refAppVersion.equals("1.0.1") ? "2.0" : refAppVersion;
         return version;
     }
+
+	@Override
+	public void setStopAskingToConfigure(boolean stopAskingToConfigure) {
+		AdministrationService administrationService = Context.getAdministrationService();
+		GlobalProperty gp = administrationService.getGlobalPropertyObject(AtlasConstants.GLOBALPROPERTY_STOP_ASKING_TO_CONFIGURE);
+		if (gp == null) {
+			gp = new GlobalProperty();
+			gp.setProperty(AtlasConstants.GLOBALPROPERTY_STOP_ASKING_TO_CONFIGURE);
+		}
+		gp.setPropertyValue(Boolean.toString(stopAskingToConfigure));
+		administrationService.saveGlobalProperty(gp);
+	}
+
+	@Override
+	public boolean getStopAskingToConfigure() {
+		String gp = Context.getAdministrationService().getGlobalProperty(AtlasConstants.GLOBALPROPERTY_STOP_ASKING_TO_CONFIGURE);
+		try {
+			return Boolean.valueOf(gp);
+		}
+		catch (Exception ex) {
+			return false;
+		}
+	}
+
 }

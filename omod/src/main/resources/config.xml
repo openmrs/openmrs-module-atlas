@@ -18,6 +18,10 @@
 	<aware_of_modules>
 	    <aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
+
+	<require_modules>
+		<require_module>org.openmrs.module.appframework</require_module>
+	</require_modules>
 	
 	<!-- Extensions -->
 	<extension>
@@ -66,6 +70,13 @@
             Send counts to OpenMRS Atlas.
         </description>
     </globalProperty>
+	<globalProperty>
+		<property>@MODULE_ID@.stopAskingToConfigure</property>
+		<defaultValue>false</defaultValue>
+		<description>
+			When set to 'true', we stop pestering admins to configure the atlas.
+		</description>
+	</globalProperty>
 	
 	
 	

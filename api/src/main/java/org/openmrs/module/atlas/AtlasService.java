@@ -13,8 +13,6 @@
  */
 package org.openmrs.module.atlas;
 
-import java.util.List;
-
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public interface AtlasService {
-	
+
 	/**
 	 * Method returning the atlas data
 	 * 
@@ -37,8 +35,8 @@ public interface AtlasService {
 	 * @should throw java.lang.NullPointerException when atlas.id GlobalProperty does not exist
 	 * @should throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty is not a valid UUID
 	 * @should initialize with default values (see constructor in AtlasData.java) all AtlasData fields, except id, that do not have corresponding GlobalProperties
-	 * @Authorized({ "Manage Atlas Data" })
 	 */
+	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	AtlasData getAtlasData() throws APIException;
 	
 	/**
@@ -49,7 +47,7 @@ public interface AtlasService {
 	 * 
 	 * @should set atlas.isDirty GlobalProperty to true
 	 */
-	@Authorized({ "Manage Atlas Data" })
+	@Authorized({AtlasConstants.PRIV_MANAGE_ATLAS_DATA})
 	void setAtlasData(AtlasData data) throws APIException;
 	
 	/**
@@ -60,7 +58,7 @@ public interface AtlasService {
 	 * @should register a PostAtlasDataQueueTask
 	 * @should set the atlas.usageDisclaimerAccepted to true
 	 */
-	@Authorized({ "Manage Atlas Data" })
+	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	void enableAtlasModule() throws APIException;
 	
 	/**
@@ -72,7 +70,7 @@ public interface AtlasService {
 	 * @should unregister the PostAtlasDataQueueTask
 	 * @should set the atlas.usageDisclaimerAccepted to the usageDisclaimerAccepted parameter value
 	 */
-	@Authorized({ "Manage Atlas Data" })
+	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	void disableAtlasModule() throws APIException;
 	
 	/**
@@ -85,7 +83,7 @@ public interface AtlasService {
 	 * @should only set the AtlasData GlobalProperties that are related to the Atlas Bubble (see AtlasData.java)
 	 * @should set atlas.isDirty GlobalProperty to true
 	 */
-	@Authorized({ "Manage Atlas Data" })
+	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	void setAtlasBubbleData(AtlasData data) throws APIException;
 	
 	/**
@@ -98,7 +96,7 @@ public interface AtlasService {
 	 * @should update the atlas.numberOfEncounters GlobalProperty with the number of non-voided encounters
 	 * @should update the atlas.numberOfObservations GlobalProperty with the number of non-voided observations
 	 */
-	@Authorized({ "Manage Atlas Data" })
+	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	void postAtlasData() throws APIException;
 	
 	/**
@@ -113,7 +111,7 @@ public interface AtlasService {
 	 * 
 	 * @should update statistics when one of them has the default value ("?") in GlobalProperties
 	 */
-	@Authorized({ "Manage Atlas Data" })
+	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	String[] updateAndGetStatistics() throws APIException;
 	
 	/**
@@ -123,7 +121,7 @@ public interface AtlasService {
 	 * @return False if the atlas data has not changed since the last post, true otherwise
 	 * @throws APIException
 	 */
-	@Authorized({ "Manage Atlas Data" })
+	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	Boolean getIsDirty() throws APIException;
 	
 	/**
@@ -134,7 +132,7 @@ public interface AtlasService {
 	 * @return The String containing the json data that will be sent to the OpenMRS server.
 	 * @throws APIException
 	 */
-	@Authorized({ "Manage Atlas Data" })
+	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	String getJson(Boolean isPreview) throws APIException;
 
     /**
@@ -142,7 +140,16 @@ public interface AtlasService {
      *
      * @param sendCounts
      */
-    @Authorized({ "Manage Atlas Data" })
+    @Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
     void setSendCounts(Boolean sendCounts);
 
+	/**
+	 * Sets whether or not the user has said they no longer want to be asked to configure the Atlas
+	 */
+	void setStopAskingToConfigure(boolean stopAskingToConfigure);
+
+	/**
+	 * @return whether or not the user has said they no longer want to be asked to configure the Atlas
+     */
+	boolean getStopAskingToConfigure();
 }

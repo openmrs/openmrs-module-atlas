@@ -1,15 +1,11 @@
-package org.openmrs.module.atlas.test;
+package org.openmrs.module.atlas;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.GlobalProperty;
 import org.openmrs.api.APIException;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.atlas.AtlasConstants;
-import org.openmrs.module.atlas.AtlasData;
-import org.openmrs.module.atlas.AtlasService;
 import org.openmrs.scheduler.TaskDefinition;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
@@ -32,12 +28,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		data = getTestAtlasData();
 		saveTestAtlasDataToGlobalProperties(data);
 	}
-	
-	@After
-	public void runAfter() throws Exception {
-		deleteTestAtlasDataFromGlobalProperties(data);
-	}
-	
+
 	public AtlasData getTestAtlasData() {
 		AtlasData data = new AtlasData();
 		data.setId(UUID.fromString(id));
@@ -51,15 +42,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
 		        .toString()));
 	}
-	
-	public void deleteTestAtlasDataFromGlobalProperties(AtlasData data) {
-		AdministrationService svc = Context.getAdministrationService();
-		
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
-		svc.purgeGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
-		        .toString()));
-	}
-	
+
 	/**
 	 * @see AtlasService#disableAtlasModule(Boolean)
 	 * @verifies unregister the PostAtlasDataQueueTask
