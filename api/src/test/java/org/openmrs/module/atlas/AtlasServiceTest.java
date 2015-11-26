@@ -11,6 +11,8 @@ import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 import java.util.UUID;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -318,6 +320,17 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		assertTrue("the number of Patients should be \"\"", atlasData.getNumberOfPatients() == "");
 		assertTrue("the number of Observations should be \"\"", atlasData.getNumberOfObservations() == "");
 		assertTrue("the number of Encounters should be \"\"", atlasData.getNumberOfEncounters() == "");
+	}
+
+	@Test
+	public void testSetStopAskingToConfigure() throws Exception {
+		assertThat(atlasSrv.getStopAskingToConfigure(), is(false));
+
+		atlasSrv.setStopAskingToConfigure(true);
+		assertThat(atlasSrv.getStopAskingToConfigure(), is(true));
+
+		atlasSrv.setStopAskingToConfigure(false);
+		assertThat(atlasSrv.getStopAskingToConfigure(), is(false));
 	}
 
 	private void setGlobalProperty(String name, String value) {
