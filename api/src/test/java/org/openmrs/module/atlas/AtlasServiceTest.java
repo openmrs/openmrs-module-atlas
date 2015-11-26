@@ -28,6 +28,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	public void runBeforeEachTest() throws Exception {
 		atlasSrv = Context.getService(AtlasService.class); //new AtlasServiceImpl();//
 		data = getTestAtlasData();
+		deleteTestAtlasDataFromGlobalProperties(data); // in case data already exists
 		saveTestAtlasDataToGlobalProperties(data);
 	}
 
