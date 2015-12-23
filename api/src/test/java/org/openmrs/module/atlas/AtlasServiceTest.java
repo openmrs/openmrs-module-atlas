@@ -23,6 +23,9 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	AtlasService atlasSrv;
 	
 	AtlasData data;
+
+	GlobalProperty GlobalPropertyId;
+	GlobalProperty GlobalPropertyModuleEnabled;
 	
 	@Before
 	public void runBeforeEachTest() throws Exception {
@@ -40,9 +43,19 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	public void saveTestAtlasDataToGlobalProperties(AtlasData data) {
 		AdministrationService svc = Context.getAdministrationService();
 		
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
-		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
-		        .toString()));
+		GlobalPropertyId = new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString());
+		GlobalPropertyModuleEnabled = new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
+	        .toString());
+		
+		svc.saveGlobalProperty(GlobalPropertyId);
+		svc.saveGlobalProperty(GlobalPropertyModuleEnabled);
+	}
+	
+	public void deleteTestAtlasDataFromGlobalProperties(AtlasData data) {
+		AdministrationService svc = Context.getAdministrationService();
+		
+		svc.purgeGlobalProperty(GlobalPropertyId);
+		svc.purgeGlobalProperty(GlobalPropertyModuleEnabled);
 	}
 
 	/**
