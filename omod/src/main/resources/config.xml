@@ -38,6 +38,26 @@
     </require_modules>
     <!-- / Required Modules -->
 
+	<conditionalResources>
+	
+	    <conditionalResource>
+	
+	        <path>/lib/atlas-api-1.7.*</path>
+	
+	        <openmrsVersion>1.7-1.11</openmrsVersion>
+	
+	    </conditionalResource>
+	
+	    <conditionalResource>
+	
+	        <path>/lib/atlas-api-2.0.*</path>
+	
+	        <openmrsVersion>2.0</openmrsVersion>
+	
+	    </conditionalResource>
+	
+	</conditionalResources>
+
 	<globalProperty>
 		<property>@MODULE_ID@.numberOfPatients</property>
 		<defaultValue>?</defaultValue>
