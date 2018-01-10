@@ -181,7 +181,7 @@ public class AtlasData {
 	@Override
 	public String toString() {
 		String text = "";
-		text = "Atlast Data" + "\nID: " + id + "||" + "\nNr of patients: " + numberOfPatients + "||"
+		text = "Atlas Data" + "\nID: " + id + "||" + "\nNr of patients: " + numberOfPatients + "||"
 		        + "\nNr of observations: " + numberOfObservations + "||" + "\nNr of visits: " + numberOfEncounters + "||"
 		        + "\nUsage disclamer accepted: " + "||" + "\nModule is enabled: " + moduleEnabled + "\nServer URL:"
                 + serverUrl + "||";
