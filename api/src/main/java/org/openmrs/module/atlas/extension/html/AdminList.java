@@ -16,6 +16,8 @@ package org.openmrs.module.atlas.extension.html;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openmrs.api.context.Context;
+
 import org.openmrs.module.Extension;
 import org.openmrs.module.web.extension.AdministrationSectionExt;
 
@@ -50,8 +52,10 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("/module/atlas/managemarker.form", "atlas.manageMarkerLink");
-		
+		if(Context.getAuthenticatedUser() != null && Context.getAuthenticatedUser().hasPrivilege("atlas.manageAtlasData")) {
+			map.put("/module/atlas/managemarker.form", "atlas.manageMarkerLink");
+		}
+
 		return map;
 	}
 	
