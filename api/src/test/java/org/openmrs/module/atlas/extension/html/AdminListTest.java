@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Ignore;
 
+import org.openmrs.util.PrivilegeConstants;
+
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Extension.MEDIA_TYPE;
 import org.openmrs.module.atlas.extension.html.AdminList;
