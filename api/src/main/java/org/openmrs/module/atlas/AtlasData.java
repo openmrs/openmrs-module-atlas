@@ -22,7 +22,9 @@ import java.util.UUID;
 public class AtlasData {
 	
 	private UUID id;
-	
+
+	private UUID token;
+
 	/* /Bubble data */
 	private String numberOfPatients;
 	
@@ -41,6 +43,7 @@ public class AtlasData {
 	public AtlasData() {
 
 		this.id = null;
+		this.token = null;
 		this.numberOfObservations = "?";
 		this.numberOfPatients = "?";
 		this.numberOfEncounters = "?";
@@ -69,6 +72,20 @@ public class AtlasData {
 	 */
 	public void setId(UUID id) {
 		this.id = id;
+	}
+	
+	/**
+	 * @return the token
+	 */
+	public UUID getToken() {
+		return token;
+	}
+	
+	/**
+	 * @param id the token to set
+	 */
+	public void setToken(UUID token) {
+		this.token = token;
 	}
 	
 	/**
@@ -161,12 +178,7 @@ public class AtlasData {
 	 * @return the serverUrlEncoded
 	 */
 	public String getServerUrlEncoded() {
-        String patients = (getNumberOfPatients().equals("?")) ? "" : getNumberOfPatients();
-        String encounters = (getNumberOfEncounters().equals("?")) ? "" : getNumberOfEncounters();
-        String observations = (getNumberOfObservations().equals("?")) ? "" : getNumberOfObservations();
-        
-		return serverUrl+"?uuid="+id+"&patients=" + patients + "&encounters="
-            + encounters+"&observations=" + observations + "&sendCounts=" + sendCounts;
+		return serverUrl;
 	}
 	/**
 	 * @param serverUrl the serverUrl to set

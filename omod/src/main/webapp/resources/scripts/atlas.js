@@ -18,15 +18,15 @@ function initializeDialog() {
         dialog.close();
     });
 }
-function isModuleConnect(url) {
+function isModuleConnect(url, module_id, token) {
     $j.ajax({
         url: url,
-        type: "GET",
-        dataType: "jsonp"
+        type: "POST",
+        data: encodeURIComponent("module_id")+"="+encodeURIComponent(module_id)+"&"+encodeURIComponent("token")+"="+encodeURIComponent(token)
     })
     .done(function(response) {
         auth = response;
-        if (auth.length > 0) {
+        if (auth) {
             $j('#unlinked').hide();
             $j('#module-control').show();
             return (connected = true);

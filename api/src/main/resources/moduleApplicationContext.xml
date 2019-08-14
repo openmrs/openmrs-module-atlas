@@ -13,7 +13,7 @@
                         <bean class="org.openmrs.module.atlas.impl.AtlasServiceImpl">
                             <property name="statisticsDAO">
                                 <bean class="org.openmrs.module.atlas.db.hibernate.HibernateStatisticsDAO">
-                                    <property name="sessionFactory"><ref bean="sessionFactory"/></property>
+                                    <property name="sessionFactory"><ref bean="dbSessionFactory"/></property>
                                 </bean>
                             </property>
                         </bean>

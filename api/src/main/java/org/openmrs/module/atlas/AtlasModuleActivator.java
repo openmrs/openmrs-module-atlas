@@ -41,18 +41,32 @@ public class AtlasModuleActivator extends BaseModuleActivator {
 	@Override
 	public void started() {
 		log.info("Setting implementation id");
+		AdministrationService svc = Context.getAdministrationService();
+
 		try {
-			AdministrationService svc = Context.getAdministrationService();
 			String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
 			
-			//if not found, generate UUID for Atlas ID
+			//if id is not found, generate UUID for Atlas ID
 			if (idString == null || idString.trim().equals("")) {
 				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, UUID.randomUUID().toString()));
-			}
+			}	
 		}
 		catch (APIException apiEx) {
 			if (log.isErrorEnabled())
 				log.error("Could not set atlas id. Exception:" + apiEx.getMessage());
+		}
+
+		try {
+			String token = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_TOKEN);
+
+			//if token is not found, generate UUID for Atlas ID
+			if (token == null || token.trim().equals("")) {
+				svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_TOKEN, UUID.randomUUID().toString()));
+			}			
+		}
+		catch (APIException apiEx) {
+			if (log.isErrorEnabled())
+				log.error("Could not set atlas token. Exception:" + apiEx.getMessage());
 		}
 		
 	}

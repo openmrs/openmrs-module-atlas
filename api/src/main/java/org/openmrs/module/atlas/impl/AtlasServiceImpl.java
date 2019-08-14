@@ -74,8 +74,10 @@ public class AtlasServiceImpl implements AtlasService {
 		try {
 			svc = Context.getAdministrationService();
 			String globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
-
 			atlasData.setId(UUID.fromString(globalProperty));
+
+			globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_TOKEN);
+			atlasData.setToken(UUID.fromString(globalProperty));
 
 			if ((globalProperty = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS)) != null) {
 				atlasData.setNumberOfObservations(globalProperty);
@@ -218,7 +220,6 @@ public class AtlasServiceImpl implements AtlasService {
 		AdministrationService svc = null;
 		try {
 			svc = Context.getAdministrationService();
-			String idString = svc.getGlobalProperty(AtlasConstants.GLOBALPROPERTY_ID);
 			setIsDirty(true);
 		}
 		catch (APIException apiEx) {
@@ -287,14 +288,13 @@ public class AtlasServiceImpl implements AtlasService {
 	public String getJson(Boolean isPreview) throws APIException {
 		AtlasData data = getAtlasData();
 		StringBuilder sb = new StringBuilder();
-        String atlasVersion = ModuleFactory.getModuleById("atlas").getVersion();
         String openMRSVersion = getOpenMRSVersion();
 		sb.append("{\"id\" : \"" + data.getId() + "\", ");
+		sb.append("\"token\" : \"" + data.getToken() + "\",");
 		sb.append("\"patients\" : \"" + data.getNumberOfPatients() + "\",");
 		sb.append("\"observations\" : \"" + data.getNumberOfObservations() + "\",");
 		sb.append("\"encounters\" : \"" + data.getNumberOfEncounters() + "\",");
-		sb.append("\"atlasVersion\" : \"" + atlasVersion + "\"");
-        sb.append(", \"data\" : {");
+        sb.append("\"data\" : {");
         sb.append("\"version\" : \"" + openMRSVersion + "\",");
         Collection<Module> modules = ModuleFactory.getLoadedModules();
         sb.append("\"modules\" : [");
