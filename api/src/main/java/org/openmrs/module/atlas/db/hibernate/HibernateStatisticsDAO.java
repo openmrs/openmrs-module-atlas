@@ -25,6 +25,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.openmrs.api.db.hibernate.DbSessionFactory;
 
 /**
  * Hibernate implementation of the Statistics DAO
@@ -36,7 +37,7 @@ public class HibernateStatisticsDAO implements StatisticsDAO {
 	/**
 	 * Hibernate session factory
 	 */
-	private SessionFactory sessionFactory;
+	private DbSessionFactory sessionFactory;
 	
 	/**
 	 * Default public constructor
@@ -49,7 +50,7 @@ public class HibernateStatisticsDAO implements StatisticsDAO {
 	 * 
 	 * @param sessionFactory
 	 */
-	public void setSessionFactory(SessionFactory sessionFactory) {
+	public void setSessionFactory(DbSessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 	

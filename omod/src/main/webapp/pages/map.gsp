@@ -14,7 +14,7 @@ ui.includeCss("atlas", "atlas-2.0.css")
     ];
     var connected;
     function updateModulefromServer() {
-        connected = isModuleConnect("${data.serverUrl}/auth?uuid=${data.id}&callback=getAuth");
+        connected = isModuleConnect("${atlasData.serverUrl}", "${atlasData.id}", "${atlasData.token}");
     }
     function receiveMessage(event){
       updateModulefromServer();
@@ -96,6 +96,17 @@ ui.includeCss("atlas", "atlas-2.0.css")
                 style="resize: none;"></textarea>
         </div>
     </div>
+
+    <script>
+        window.addEventListener("message", function(event) {
+            if(event.data === "atlas loaded") {
+                var atlasFrame = document.getElementsByTagName('iframe')[0].contentWindow;
+                atlasFrame.postMessage("module_id:${atlasData.id}", "*");
+                atlasFrame.postMessage("token:${atlasData.token}", "*");
+                atlasFrame.postMessage("has_site:"+connected, "*");
+            } 
+        }, false);
+    </script>
 
     <% if (!data.moduleEnabled && !stopAskingToConfigure) { %>
         <div>

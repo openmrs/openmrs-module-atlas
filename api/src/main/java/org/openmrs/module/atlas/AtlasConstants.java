@@ -20,7 +20,9 @@ package org.openmrs.module.atlas;
 public class AtlasConstants {
 	
 	public final static String GLOBALPROPERTY_ID = "atlas.id";
-	
+
+	public final static String GLOBALPROPERTY_TOKEN = "atlas.token";
+
 	public final static String GLOBALPROPERTY_NUMBER_OF_PATIENTS = "atlas.numberOfPatients";
 	
 	public final static String GLOBALPROPERTY_NUMBER_OF_OBSERVATIONS = "atlas.numberOfObservations";
@@ -41,7 +43,7 @@ public class AtlasConstants {
 	
 	public final static String POST_ATLAS_DATA_TASK_DESCRIPTION = "Send Atlas information to OpenMRS on a weekly basis.";
 	
-	public final static String SERVER_PING_URL = "https://atlas.openmrs.org/module/ping.php";
+	public final static String SERVER_PING_URL = "https://atlas.openmrs.org/api/module/ping";
     
     public final static String SERVER_URL = "https://atlas.openmrs.org/module";
 

@@ -19,7 +19,9 @@ import static org.junit.Assert.fail;
 public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	String id = "73b13680-c4a0-11e0-962b-0800200c9a66";
-	
+
+	String token = "fcd9ad8f-6d0d-4853-bd28-cfab30ffc4a6";
+
 	AtlasService atlasSrv;
 	
 	AtlasData data;
@@ -34,6 +36,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	public AtlasData getTestAtlasData() {
 		AtlasData data = new AtlasData();
 		data.setId(UUID.fromString(id));
+		data.setToken(UUID.fromString(token));
 		return data;
 	}
 	
@@ -41,6 +44,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		AdministrationService svc = Context.getAdministrationService();
 		
 		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_ID, data.getId().toString()));
+		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_TOKEN, data.getToken().toString()));
 		svc.saveGlobalProperty(new GlobalProperty(AtlasConstants.GLOBALPROPERTY_MODULE_ENABLED, data.getModuleEnabled()
 		        .toString()));
 	}

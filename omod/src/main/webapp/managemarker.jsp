@@ -13,7 +13,7 @@
     var jq = jQuery.noConflict();
     var connected;
     function updateModulefromServer() {
-        connected = isModuleConnect("${atlasData.serverUrl}/auth?uuid=${atlasData.id}&callback=getAuth");
+        connected = isModuleConnect("${atlasData.serverUrl}", "${atlasData.id}", "${atlasData.token}");
     }
     function receiveMessage(event) {
         updateModulefromServer();
@@ -115,5 +115,15 @@
         style="resize: none;"></textarea>
 </div>
 
+<script>
+    window.addEventListener("message", function(event) {
+        if(event.data === "atlas loaded") {
+            var atlasFrame = document.getElementsByTagName('iframe')[0].contentWindow;
+            atlasFrame.postMessage("module_id:${atlasData.id}", "*");
+            atlasFrame.postMessage("token:${atlasData.token}", "*");
+            atlasFrame.postMessage("has_site:"+connected, "*");
+        } 
+    }, false);
+</script>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>
