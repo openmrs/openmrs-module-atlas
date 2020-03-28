@@ -28,7 +28,7 @@ public class AdminList extends AdministrationSectionExt {
 	
 	/**
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getMediaType()
-	 * @should The media type should be html
+	 * <strong>Should</strong> The media type should be html
 	 */
 	public Extension.MEDIA_TYPE getMediaType() {
 		return Extension.MEDIA_TYPE.html;
@@ -43,8 +43,8 @@ public class AdminList extends AdministrationSectionExt {
 	
 	/**
 	 * @see org.openmrs.module.web.extension.AdministrationSectionExt#getLinks()
-	 * @should the returned map should not be null
-	 * @should the list should contain a positive number of links
+	 * <strong>Should</strong> the returned map should not be null
+	 * <strong>Should</strong> the list should contain a positive number of links
 	 */
 	public Map<String, String> getLinks() {
 		
