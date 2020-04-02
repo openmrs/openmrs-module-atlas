@@ -12,7 +12,7 @@ public class AdminListTest {
 	
 	/**
 	 * @see AdminList#getLinks()
-	 * @verifies the returned map should not be null
+	 * <strong>Verifies</strong> the returned map should not be null
 	 */
 	@Test
 	public void getLinks_shouldTheReturnedMapShouldNotBeNull() throws Exception {
@@ -27,7 +27,7 @@ public class AdminListTest {
 	
 	/**
 	 * @see AdminList#getLinks()
-	 * @verifies the list should contain a positive number of links
+	 * <strong>Verifies</strong> the list should contain a positive number of links
 	 */
 	@Test
 	public void getLinks_shouldTheListShouldContainAPositiveNumberOfLinks() throws Exception {
@@ -40,7 +40,7 @@ public class AdminListTest {
 	
 	/**
 	 * @see AdminList#getMediaType()
-	 * @verifies The media type should be html
+	 * <strong>Verifies</strong> The media type should be html
 	 */
 	@Test
 	public void getMediaType_shouldTheMediaTypeShouldBeHtml() throws Exception {

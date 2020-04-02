@@ -32,9 +32,9 @@ public interface AtlasService {
 	 * @return The Atlas Data
 	 * @throws APIException
 	 * 
-	 * @should throw java.lang.NullPointerException when atlas.id GlobalProperty does not exist
-	 * @should throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty is not a valid UUID
-	 * @should initialize with default values (see constructor in AtlasData.java) all AtlasData fields, except id, that do not have corresponding GlobalProperties
+	 * <strong>Should</strong> throw java.lang.NullPointerException when atlas.id GlobalProperty does not exist
+	 * <strong>Should</strong> throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty is not a valid UUID
+	 * <strong>Should</strong> initialize with default values (see constructor in AtlasData.java) all AtlasData fields, except id, that do not have corresponding GlobalProperties
 	 */
 	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	AtlasData getAtlasData() throws APIException;
@@ -45,7 +45,7 @@ public interface AtlasService {
 	 * @param data The atlas data
 	 * @throws APIException
 	 * 
-	 * @should set atlas.isDirty GlobalProperty to true
+	 * <strong>Should</strong> set atlas.isDirty GlobalProperty to true
 	 */
 	@Authorized({AtlasConstants.PRIV_MANAGE_ATLAS_DATA})
 	void setAtlasData(AtlasData data) throws APIException;
@@ -55,8 +55,8 @@ public interface AtlasService {
 	 * 
 	 * @throws APIException
 	 * 
-	 * @should register a PostAtlasDataQueueTask
-	 * @should set the atlas.usageDisclaimerAccepted to true
+	 * <strong>Should</strong> register a PostAtlasDataQueueTask
+	 * <strong>Should</strong> set the atlas.usageDisclaimerAccepted to true
 	 */
 	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	void enableAtlasModule() throws APIException;
@@ -67,8 +67,8 @@ public interface AtlasService {
 	 * @param usageDisclaimerAccepted The value of the atlas.usageDisclaimerAccepted global property
 	 * @throws APIException
 	 * 
-	 * @should unregister the PostAtlasDataQueueTask
-	 * @should set the atlas.usageDisclaimerAccepted to the usageDisclaimerAccepted parameter value
+	 * <strong>Should</strong> unregister the PostAtlasDataQueueTask
+	 * <strong>Should</strong> set the atlas.usageDisclaimerAccepted to the usageDisclaimerAccepted parameter value
 	 */
 	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	void disableAtlasModule() throws APIException;
@@ -80,8 +80,8 @@ public interface AtlasService {
 	 * @param data The Atlas Data
 	 * @throws APIException
 	 * 
-	 * @should only set the AtlasData GlobalProperties that are related to the Atlas Bubble (see AtlasData.java)
-	 * @should set atlas.isDirty GlobalProperty to true
+	 * <strong>Should</strong> only set the AtlasData GlobalProperties that are related to the Atlas Bubble (see AtlasData.java)
+	 * <strong>Should</strong> set atlas.isDirty GlobalProperty to true
 	 */
 	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	void setAtlasBubbleData(AtlasData data) throws APIException;
@@ -91,10 +91,10 @@ public interface AtlasService {
 	 * 
 	 * @throws APIException
 	 * 
-	 * @should not modify atlas.isDirty GlobalProperty
-	 * @should update the atlas.numberOfPatients GlobalProperty with the number of non-voided patients
-	 * @should update the atlas.numberOfEncounters GlobalProperty with the number of non-voided encounters
-	 * @should update the atlas.numberOfObservations GlobalProperty with the number of non-voided observations
+	 * <strong>Should</strong> not modify atlas.isDirty GlobalProperty
+	 * <strong>Should</strong> update the atlas.numberOfPatients GlobalProperty with the number of non-voided patients
+	 * <strong>Should</strong> update the atlas.numberOfEncounters GlobalProperty with the number of non-voided encounters
+	 * <strong>Should</strong> update the atlas.numberOfObservations GlobalProperty with the number of non-voided observations
 	 */
 	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	void postAtlasData() throws APIException;
@@ -109,7 +109,7 @@ public interface AtlasService {
 	 *         observations, in this order
 	 * @throws APIException
 	 * 
-	 * @should update statistics when one of them has the default value ("?") in GlobalProperties
+	 * <strong>Should</strong> update statistics when one of them has the default value ("?") in GlobalProperties
 	 */
 	@Authorized({ AtlasConstants.PRIV_MANAGE_ATLAS_DATA })
 	String[] updateAndGetStatistics() throws APIException;

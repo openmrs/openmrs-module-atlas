@@ -51,7 +51,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 
 	/**
 	 * @see AtlasService#disableAtlasModule(Boolean)
-	 * @verifies unregister the PostAtlasDataQueueTask
+	 * <strong>Verifies</strong> unregister the PostAtlasDataQueueTask
 	 */
 	@Test
 	public void disableAtlasModule_shouldUnregisterThePostAtlasDataQueueTask() throws Exception {
@@ -64,7 +64,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see AtlasService#enableAtlasModule()
-	 * @verifies register a PostAtlasDataQueueTask
+	 * <strong>Verifies</strong> register a PostAtlasDataQueueTask
 	 */
 	@Test
 	public void enableAtlasModule_shouldRegisterAPostAtlasDataQueueTask() throws Exception {
@@ -78,7 +78,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see AtlasService#getAtlasData()
-	 * @verifies initialize with default values (see constructor in AtlasData.java) all AtlasData
+	 * <strong>Verifies</strong> initialize with default values (see constructor in AtlasData.java) all AtlasData
 	 *           fields, except id, that do not have corresponding GlobalProperties
 	 */
 	@Test
@@ -96,7 +96,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see AtlasService#getAtlasData()
-	 * @verifies throw java.lang.NullPointerException when atlas.id GlobalPproperty does not exist
+	 * <strong>Verifies</strong> throw java.lang.NullPointerException when atlas.id GlobalPproperty does not exist
 	 */
 	@Test
 	public void getAtlasData_shouldThrowJavalangIllegalArgumentExceptionWhenAtlasidGlobalPropertyDoesNotExist()
@@ -123,7 +123,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see AtlasService#getAtlasData()
-	 * @verifies throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty is not a
+	 * <strong>Verifies</strong> throw java.lang.IllegalArgumentException when atlas.id GlobalPproperty is not a
 	 *           valid UUID
 	 */
 	@Test
@@ -147,7 +147,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see AtlasService#postAtlasData()
-	 * @verifies set atlas.isDirty GlobalProperty to false
+	 * <strong>Verifies</strong> set atlas.isDirty GlobalProperty to false
 	 */
 	@Test
 	public void postAtlasData_shouldSetAtlasisDirtyGlobalPropertyToFalse() throws Exception {
@@ -162,7 +162,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 
 	/**
 	 * @see AtlasService#postAtlasData()
-	 * @verifies update the atlas.numberOfPatients GlobalProperty with the number of non-voided
+	 * <strong>Verifies</strong> update the atlas.numberOfPatients GlobalProperty with the number of non-voided
 	 *           patients
 	 */
 	@Test
@@ -176,7 +176,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 		/**
 		 * @see AtlasService#postAtlasData()
-		 * @verifies update the atlas.numberOfEncounters GlobalProperty with the number of non-voided encounters
+		 * <strong>Verifies</strong> update the atlas.numberOfEncounters GlobalProperty with the number of non-voided encounters
 		 */
 		@Test
 		public void postAtlasData_shouldUpdateTheAtlasnumberOfEncountersGlobalPropertyWithTheNumberOfNonvoidedEncounters() throws Exception {
@@ -189,7 +189,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 		
 		/**
 		 * @see AtlasService#postAtlasData()
-		 * @verifies update the atlas.numberOfObservations GlobalProperty with the number of non-voided observations
+		 * <strong>Verifies</strong> update the atlas.numberOfObservations GlobalProperty with the number of non-voided observations
 		 */
 		@Test
 		public void postAtlasData_shouldUpdateTheAtlasnumberOfObservationsGlobalPropertyWithTheNumberOfNonvoidedObservations() throws Exception {
@@ -201,7 +201,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see AtlasService#setAtlasBubbleData(AtlasData)
-	 * @verifies only set the AtlasData GlobalProperties that are related to the Atlas Bubble (see
+	 * <strong>Verifies</strong> only set the AtlasData GlobalProperties that are related to the Atlas Bubble (see
 	 *           AtlasData.java)
 	 */
 	@Test
@@ -225,7 +225,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see AtlasService#setAtlasBubbleData(AtlasData)
-	 * @verifies set atlas.isDirty GlobalProperty to true
+	 * <strong>Verifies</strong> set atlas.isDirty GlobalProperty to true
 	 */
 	@Test
 	public void setAtlasBubbleData_shouldSetAtlasisDirtyGlobalPropertyToTrue() throws Exception {
@@ -237,7 +237,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 	
 	/**
 	 * @see AtlasService#setAtlasData(AtlasData)
-	 * @verifies set atlas.isDirty GlobalProperty to true
+	 * <strong>Verifies</strong> set atlas.isDirty GlobalProperty to true
 	 */
 	@Test
 	public void setAtlasData_shouldSetAtlasisDirtyGlobalPropertyToTrue() throws Exception {
@@ -249,7 +249,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
     
 	/**
 	 * @see AtlasService#updateAndGetStatistics()
-	 * @verifies update statistics when one of them has the default value ("?") in GlobalProperties
+	 * <strong>Verifies</strong> update statistics when one of them has the default value ("?") in GlobalProperties
 	 */
 	@Test
 	public void updateAndGetStatistics_shouldUpdateStatisticsWhenOneOfThemHasTheDefaultValueInGlobalProperties() throws Exception {
@@ -278,7 +278,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 
 	/**
 	 * @see org.openmrs.module.atlas.AtlasService#disableAtlasModule() ()
-	 * @verifies disableAtlasModule set atlas.sendCounts to false
+	 * <strong>Verifies</strong> disableAtlasModule set atlas.sendCounts to false
 	 */
 	@Test
 	public void disableAtlasModule_shouldSetSendCountsGlobalPropertyToFalse() throws Exception {
@@ -292,7 +292,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 
 	/**
 	 * @see AtlasService#getAtlasData()
-	 * @verifies that counts aren't empty if sendCount is set to true
+	 * <strong>Verifies</strong> that counts aren't empty if sendCount is set to true
 	 */
 	@Test
 	public void getAtlasData_shouldReturnCountsIfSendCountsIsSetToTrue()
@@ -310,7 +310,7 @@ public class AtlasServiceTest extends BaseModuleContextSensitiveTest {
 
 	/**
 	 * @see AtlasService#getAtlasData()
-	 * @verifies that counts are empty if sendCount is set to false
+	 * <strong>Verifies</strong> that counts are empty if sendCount is set to false
 	 */
 	@Test
 	public void getAtlasData_shouldReturnEmptyCountsIfSendCountsIsSetToFalse()
