@@ -34,10 +34,10 @@ ui.includeCss("atlas", "atlas-2.0.css")
 </script>
 <body>
     <div id="home">
-        <iframe src="${data.serverUrlEncoded}" name="atlas" id="atlas"></iframe>
+        <iframe src="${atlasData.serverUrlEncoded}" name="atlas" id="atlas"></iframe>
         <div class="note-container" id="module-control" style="display:none">
             <div class="note" id="disabled" style="background-color: rgba(255, 95, 95, 0.73);  
-            <% if (data.moduleEnabled) {%> display: none; <% } %> margin-left: -75px; min-width: 475px;">
+            <% if (atlasData.moduleEnabled) {%> display: none; <% } %> margin-left: -75px; min-width: 475px;">
                 <div class="text">
                     <p><strong>${ ui.message("atlas.disabled")}</strong></p>
                     <br><p><strong>${ ui.message("atlas.autoUpdates")}</strong></p>
@@ -48,7 +48,7 @@ ui.includeCss("atlas", "atlas-2.0.css")
                 </div>
                 <div class ="atlas-show-dialog"><i class="icon-info-sign small" style="vertical-align: middle"></i> ${ ui.message("atlas.dataSend")}</div>
             </div>
-            <div class="note" id="enabled" style="background-color: rgba(156, 214, 16, 0.83); <%  if (!data.moduleEnabled) {%>
+            <div class="note" id="enabled" style="background-color: rgba(156, 214, 16, 0.83); <%  if (!atlasData.moduleEnabled) {%>
                     display: none; <% } %> margin-left: 0px;">
                 
                 <div class="text">
@@ -61,12 +61,12 @@ ui.includeCss("atlas", "atlas-2.0.css")
                 <div class="text">
                     <p><strong>${ ui.message("atlas.sendCounts")}</strong></p>
                     <div id="counts-button" class="btn-group btn-toggle">
-                        <div id="counts-enabled" style="<%  if (!data.sendCounts) {%>
+                        <div id="counts-enabled" style="<%  if (!atlasData.sendCounts) {%>
                         display: none;<% } %> ">
                             <button class="btn btn-xs btn-default active">${ ui.message("atlas.buttonDisabled")}</button>
                             <button class="btn btn-xs btn-success active">${ ui.message("atlas.buttonEnabled")}</button>
                         </div>
-                        <div id="counts-disabled" style="<%  if (data.sendCounts) {%>
+                        <div id="counts-disabled" style="<%  if (atlasData.sendCounts) {%>
                         display: none;<% } %> ">
                             <button class="btn btn-xs btn-danger active">${ ui.message("atlas.buttonDisabled")}</button>
                             <button class="btn btn-xs btn-default active">${ ui.message("atlas.buttonEnabled")}</button>
@@ -108,7 +108,7 @@ ui.includeCss("atlas", "atlas-2.0.css")
         }, false);
     </script>
 
-    <% if (!data.moduleEnabled && !stopAskingToConfigure) { %>
+    <% if (!atlasData.moduleEnabled && !stopAskingToConfigure) { %>
         <div>
             <a href="?stopAskingToConfigure=true">${ ui.message("atlas.stopAskingToConfigure") }</a>
         </div>

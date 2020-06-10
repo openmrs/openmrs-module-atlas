@@ -27,7 +27,7 @@ public class MapPageController {
         }
 
         AtlasData data = service.getAtlasData();
-        model.addAttribute("data", data);
+        model.addAttribute("atlasData", data);
         model.addAttribute("stopAskingToConfigure", service.getStopAskingToConfigure());
     }
 }
