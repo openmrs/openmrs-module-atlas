@@ -4,7 +4,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>atlas</artifactId>
-	<version>2.2.6-SNAPSHOT</version>
+	<version>2.2.6</version>
 	<packaging>pom</packaging>
 	<name>Atlas Module</name>
 	<description>
@@ -18,7 +18,7 @@
 		<connection>scm:git:git@github.com:openmrs/openmrs-module-atlas.git</connection>
 		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-atlas.git</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-atlas</url>
-		<tag>HEAD</tag>
+		<tag>atlas-2.2.6</tag>
   	</scm>
 
 	<modules>
