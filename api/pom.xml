@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>atlas</artifactId>
 		<groupId>org.openmrs.module</groupId>
-		<version>2.2.8-SNAPSHOT</version>
+		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>atlas-api</artifactId>
@@ -44,6 +44,14 @@
 			<groupId>org.openmrs.test</groupId>
 			<artifactId>openmrs-test</artifactId>
 			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>legacyui-omod</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 	</dependencies>
 	<modules>
