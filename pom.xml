@@ -112,7 +112,7 @@
 	</dependencyManagement>
 
 	<properties>
-		<openMRSVersion>2.7.0</openMRSVersion>
+		<openMRSVersion>2.7.9</openMRSVersion>
 		<legacyUiVersion>2.0.0-SNAPSHOT</legacyUiVersion>
 		<javaxServeletVersion>4.0.1</javaxServeletVersion>
 	</properties>
